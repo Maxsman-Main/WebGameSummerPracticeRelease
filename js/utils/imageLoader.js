@@ -13,7 +13,9 @@ class ImageLoader {
         Object.keys(this.images).forEach(key => {
             this.images[key].onload = () => {
                 imagesLoaded++;
-                tic_func(imagesLoaded / img_array.length);
+                let progress = imagesLoaded / img_array.length;
+                Logger.debug(this, `${Math.floor(progress * 100)}%`);
+                tic_func(progress);
             }
           });
     }
