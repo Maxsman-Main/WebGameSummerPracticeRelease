@@ -2,7 +2,7 @@ The project is being developed as part of a summer practice at the Far Eastern F
 
 ## Team
 
- - Varfolomeev Andrey ([ada0l]([https://](https://github.com/ada0l)))
+ - Varfolomeev Andrey ([ada0l](https://(https://github.com/ada0l)))
  - Konstantinov Maxim ([Maxsman-Main](https://github.com/Maxsman-Main))
  - Sobolev Artem ([queso65](https://github.com/queso65))
 
