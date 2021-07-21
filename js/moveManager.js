@@ -6,8 +6,9 @@ class MoveManager {
     }
 
     isCorrectCoordinates(x, y) {
-        return (Math.abs(x - this.player.coordinates.x) +
-                Math.abs(y - this.player.coordinates.y) == 1);
+        return (0 <= x && x <= this.map.sizeX) &&
+               (0 <= y && y <= this.map.sizeY) &&
+               (Math.abs(x - this.player.coordinates.x) + Math.abs(y - this.player.coordinates.y) == 1);
     }
 
     move(x, y) {
