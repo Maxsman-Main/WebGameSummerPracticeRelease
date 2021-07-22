@@ -16,32 +16,42 @@
     }
 
     table {
-        border-spacing: 0px 0px;
-    }
-
+		border-spacing: 0px 0px;
+	}
+	
     td {
         width: 100px;
         height: 100px;
-        padding: 0px;
+		background: url(images/land.png);
+		background-size: contain;
     }
-        
+	.hero{
+	   width: 70px;
+       height: 100px;
+	   padding: 0px 0px 0px 15px;
+	}
+	.land{
+	   width: 100px;
+       height: 100px;
+	}
+    #gallery img { 
+        position: absolute;
+	}
     </style>
 </head>
 <body>
     <div id="debug_ascii_ui"></div>
-
     <div id="game">
         <div id="game-field" class="">
             <table>
                 <tr>
                     <td>
-                        <img src="images/land.png">
-                        <img src="image/hero.png" alt="">
+					   <img src = "images/hero.png" class="hero" id="gallery">
                     </td>
                     <td>
-                        <img src="images/land.png">
-                    </td>
-                    <td></td>
+					</td>
+                    <td>
+					</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -84,7 +94,6 @@
 <script src="js/creature.js"></script>
 <script src="js/debugRenderer.js"></script>
 <script src="js/player.js"></script>
-<script src="js/monster.js"></script>
 <script src="js/moveManager.js"></script>
 <script src="js/keyboard.js"></script>
 <script src="js/cell.js"></script>
