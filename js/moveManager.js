@@ -26,6 +26,7 @@ class MoveManager {
     /**
      * @param {number} x 
      * @param {number} y 
+     * @returns {boolean}
      */
     move(x, y) {
         if (this.isCorrectCoordinates(x, y)) {
@@ -34,8 +35,10 @@ class MoveManager {
             cell.type = "empty";
             cell.label = "0";
             this.player.move(x, y);
+            return true;
         } else {
             console.log(`${this.player.name} not moved to (${x}, ${y})`);
+            return false;
         }
     }
 
