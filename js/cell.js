@@ -13,3 +13,17 @@ class Cell {
     }
 
 }
+
+class LandCell extends Cell {
+
+    constructor() {
+        super("l", "", [1, 2], [Chudila]);
+    }
+}
+
+class MountCell extends Cell{
+    
+    constructor() {
+        super("m", "", [3, 5], [ Chudila ]);
+    }
+}
