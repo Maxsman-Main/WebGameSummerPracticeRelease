@@ -1,15 +1,32 @@
 class Map {
 
+    /**
+     * @param {number} sizeX
+     * @param {number} sizeY
+     */
     constructor(sizeX, sizeY) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.data = Map.generate(sizeX, sizeY);
     }
 
+    /**
+     * @param {number} x
+     * @param {number} y
+     * @returns {Cell}
+     */
     getCell(x, y) {
+        // The need for the method lies in the fact
+        // that the indices are changed and you can get confused 
         return this.data[y][x];
     }
 
+    /**
+     * 
+     * @param {number} sizeX 
+     * @param {number} sizeY 
+     * @returns {Array}
+     */
     static generate(sizeX, sizeY) {
         let defaultCell = LandCell;
         let possibleCells = [
