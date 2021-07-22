@@ -1,11 +1,14 @@
 class Creature {
     
+    /**
+     * 
+     * @param {number} name
+     * @param {image} sprite
+     * @param {string} label some char, used for debugging
+     */
     constructor(name, sprite, label) {
-        // String
         this.name = name;
-        // Image
         this.sprite = sprite;
-        // Char
         this.label = label;
     }
 }
