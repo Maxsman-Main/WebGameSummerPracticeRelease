@@ -1,5 +1,5 @@
-var player = new Player("Steve", '@', {x: 0, y: 0}, 4, []);
-var map = new Map(10, 10);
+var player = new Player("Steve", null, '@', {x: 0, y: 0}, 4, [ new Chudila()]);
+var map = new Map(5, 5);
 var moveManager = new MoveManager(map, player);
 var renderer = new DebugRenderer(map, player);
 var debug_ascii_ui = document.getElementById("debug_ascii_ui");
@@ -20,11 +20,16 @@ function update(event) {
         case 'KeyD':
             dx = 1, dy = 0;
             break;
+        case 'KeyE':
+            console.log('E');
+            break;
         default:
             break;
     }
-    moveManager.move(player.coordinates.x + dx, player.coordinates.y + dy);
-    renderer.show(debug_ascii_ui);
+    if (dx != 0 || dy != 0) {
+        moveManager.move(player.coordinates.x + dx, player.coordinates.y + dy);
+        renderer.show(debug_ascii_ui);
+    }
 }
 
 renderer.show(debug_ascii_ui);
