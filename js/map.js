@@ -16,7 +16,10 @@ class Map {
         for (let y = 0; y < sizeY; ++y) {
             var row = [];
             for (let x = 0; x < sizeX; ++x) {
-                row.push(new Cell("\"", 'land', [10, 20], [new Creature('Monster', '!')]));
+                row.push(
+                    new Cell("\"", 'land', [10, 20], [
+                        new Chudila()
+                    ]));
             }
             data.push(row);
         }
