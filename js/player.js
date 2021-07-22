@@ -1,9 +1,11 @@
 class Player extends Creature {
 
-    constructor(name, sprite, label, coordinates, availableMoves, availableCreatures) {
+    constructor(name, sprite, label, x, y, availableMoves, availableCreatures) {
         super(name, sprite, label);
-        // { x: number, y: number }
-        this.coordinates = coordinates;
+        // number
+        this.x = x;
+        // number
+        this.y = y;
         // number
         this.availableMoves = availableMoves;
         // [Creature, ...]
@@ -11,8 +13,12 @@ class Player extends Creature {
     }
 
     move(x, y) {
-        this.coordinates.x = x;
-        this.coordinates.y = y;
+        this.x = x;
+        this.y = y;
+    }
+
+    getCoordinates() {
+        return [this.x, this.y];
     }
 
 }

@@ -1,19 +1,21 @@
 class DebugRenderer {
 
-    constructor(map, player) {
+    constructor(map, player, divDom) {
         this.map = map;
         this.player = player;
+        this.divDom = divDom;
     }
 
-    show(div_dom) {
+    showField() {
         console.log("DebugRender: show runned")
         let table = document.createElement('table');
         for (let y = 0; y < this.map.sizeY; ++y) {
             let tr = document.createElement('tr');
             for (let x = 0; x < this.map.sizeX; ++x) {
                 let td = document.createElement('td');
-                if (player.coordinates.x == x && this.player.coordinates.y == y) {
+                if (this.player.x == x && this.player.y == y) {
                     td.innerText = `${player.label}`;
+                    console.log(this.map.getCell(x, y).creature)
                 } else {
                     td.innerText = `${this.map.getCell(x, y).label}`;
                 }
@@ -22,6 +24,10 @@ class DebugRenderer {
             table.appendChild(tr);
         }
         console.log("DebugRender: show ended")
-        div_dom.innerHTML = table.outerHTML;
+        this.divDom.innerHTML = table.outerHTML;
+    }
+
+    showFight() {
+        console.log("Fight is runing");
     }
 }
