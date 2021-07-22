@@ -9,7 +9,7 @@ class Cell {
         // transitionСost is number
         this.transitionСost = Util.random.apply(this, transitionСostMinMax);
         // possibleTypeCreatures is [Creature, ...]
-        this.possibleTypeCreatures = Util.randomItemFromArray(possibleTypeCreatures);
+        this.creature = Util.randomItemFromArray(possibleTypeCreatures);
     }
 
 }
