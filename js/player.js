@@ -1,7 +1,7 @@
 class Player extends Creature {
 
-    constructor(name, label, coordinates, availableMoves, availableCreatures) {
-        super(name, label);
+    constructor(name, sprite, label, coordinates, availableMoves, availableCreatures) {
+        super(name, sprite, label);
         // { x: number, y: number }
         this.coordinates = coordinates;
         // number
