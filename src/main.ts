@@ -34,9 +34,9 @@ function update(event: KeyboardEvent) {
                     break;
                 case 'KeyE':
                     console.log(player.getCoordinates());
-                    player.availableCreatures[0].name = "Huila";
+                    player.availableMonters[0].name = "Huila";
                     fight = new Fight(
-                        player.availableCreatures[0],
+                        player.availableMonters[0],
                         map.getCell(player.getCoordinates().x,
                                     player.getCoordinates().y).monster
                     );

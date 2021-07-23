@@ -12,7 +12,7 @@ export class Player extends Creature {
     }
 
     private _availableMonsters: Monster[];
-    public get availableCreatures(): Monster[] {
+    public get availableMonters(): Monster[] {
         return this._availableMonsters;
     }
 
