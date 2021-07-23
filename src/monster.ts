@@ -43,12 +43,6 @@ export class Monster extends Creature {
         this._attackBooster = attackBooster;
     }
 
-    /*
-    attackEnemy(enemy){
-        enemy.currentHealth -= (this.attack - enemy.defense + this.attackBooster);
-    }
-    */
-
     public beAttacked(enemy: Monster) {
         this._health -= (enemy.attack - 
                          this._defense + enemy.attackBooster);
