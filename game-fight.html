@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+	<link rel="stylesheet" href="css/all.css">
+    <style>
+    #debug_ascii_ui table td {
+        width: 30px;
+        height: 30px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    table {
+		border-spacing: 0px 0px;
+	}
+	
+    td {
+        width: 100px;
+        height: 100px;
+		background: url(images/land.png);
+		background-size:contain;
+    }
+	.hero{
+	
+	   width: 70px;
+       height: 100px;
+	   position: absolute;
+	   padding: 0px 0px 0px 15px;
+	}
+	.land{
+	   width: 100px;
+       height: 100px;
+	   position: absolute;
+	}
+    #gallery {
+        position: relative;
+		height: 100px;
+		width: 100px;
+	}
+	.forest{
+	    height: 550px;
+		width: 550px;
+		position: absolute;
+	}
+	.monster1{
+	    height: 230px;
+		width: 230px;
+		position: absolute;
+		padding: 220px 0px 0px 320px;
+	}
+	
+	.monster2{
+	    height: 280px;
+		width: 220px;
+		position: absolute;
+		padding: 190px 0px 0px 0px;
+	}
+	
+	.helth{
+	    height: 280px;
+		width: 220px;
+		position: absolute;
+	}
+	
+	.stump{
+	    height: 100px;
+		width: 200px;
+		position: absolute;
+	}
+    </style>
+</head>
+<body>       
+             
+    <div id="debug_ascii_ui"></div>
+    <div id="game">
+        <div id="game-fight" class="">
+		     <div id = "gallery">
+             <img src="images/forest.png" class = "forest">
+			 <img src="images/stump.png" class = "stump" style="padding: 385px 0px 0px 0px;">
+			 <img src="images/stump.png" class = "stump" style="padding: 390px 0px 0px 340px;">
+			 <img src="images/monster1.png" class = "monster1">
+			 <img src="images/monster2.png" class = "monster2">
+             <i class="fas fa-heart" style="font-size: 2em; color: red;position: absolute;padding: 410px 0px 0px 30px;"></i>
+			 <div style="font-size: 2em; color: red;position: absolute;padding: 410px 0px 0px 65px;">100</div>
+			 <i class="fas fa-shield-alt" style="font-size: 2em; color: blue;position: absolute;padding: 410px 0px 0px 120px;"></i>
+			 <div style="font-size: 2em; color: blue;position: absolute;padding: 410px 0px 0px 160px;">6</div>
+			 <i class="fas fa-heart" style="font-size: 2em; color: red;position: absolute;padding: 410px 0px 0px 30px;"></i>
+			 <i class="fas fa-heart" style="font-size: 2em; color: red;position: absolute;padding: 410px 0px 0px 350px;"></i>
+			 <div style="font-size: 2em; color: red;position: absolute;padding: 410px 0px 0px 385px;">100</div>
+			 <i class="fas fa-shield-alt" style="font-size: 2em; color: blue;position: absolute;padding: 410px 0px 0px 440px;"></i>
+			 <div style="font-size: 2em; color: blue;position: absolute;padding: 410px 0px 0px 480px;">6</div>
+			 <button style="color: blue;position: absolute;height: 60px; width: 70px;margin-top: 490px;"></button>
+			 <button style="color: blue;position: absolute;height: 60px; width: 70px;margin-top: 490px;margin-left: 70px;"></button>
+			 <button style="color: blue;position: absolute;height: 60px; width: 70px;margin-top: 490px;margin-left: 140px;"></button>
+			 <button style="color: blue;position: absolute;height: 60px; width: 70px;margin-top: 490px;margin-left: 340px;"></button>
+			 <button style="color: blue;position: absolute;height: 60px; width: 70px;margin-top: 490px;margin-left: 410px;"></button>
+			 <button style="color: blue;position: absolute;height: 60px; width: 70px;margin-top: 490px;margin-left: 480px;"></button>
+			 </div>
+        </div>
+    </div>
+</body>
+</html>
