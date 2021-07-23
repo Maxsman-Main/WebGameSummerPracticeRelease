@@ -1,5 +1,4 @@
-import { Creature } from './creature';
-import { Chudila } from './monster';
+import { Monster, Chudila } from './monster';
 import { Utils } from './utils';
 
 export class Cell {
@@ -19,17 +18,18 @@ export class Cell {
         return this._transtionCost;
     }
 
-    private _creature: Creature;
-    public get creature(): Creature {
-        return this._creature;
+    private _monsters: Monster;
+    public get monster(): Monster{
+        return this._monsters;
     }
 
     constructor(label: string, type: string,
-        transitionCostMinMax : [number, number], possibleCreatures: Creature[]) {
+            transitionCostMinMax : [number, number],
+            possibleCreatures: Monster[]) {
         this._label = label;
         this._type = type;
         this._transtionCost = Utils.random.apply(this, transitionCostMinMax);
-        this._creature = Utils.randomItemFromArray(possibleCreatures);
+        this._monsters = Utils.randomItemFromArray(possibleCreatures);
     }
 
 }
