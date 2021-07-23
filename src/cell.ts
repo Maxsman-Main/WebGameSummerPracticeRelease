@@ -1,4 +1,5 @@
 import { Creature } from './creature';
+import { Chudila } from './monster';
 import { Utils } from './utils';
 
 export class Cell {
@@ -31,4 +32,18 @@ export class Cell {
         this._creature = Utils.randomItemFromArray(possibleCreatures);
     }
 
+}
+
+export class LandCell extends Cell {
+
+    constructor() {
+        super('l', '', [1, 2], [new Chudila()]);
+    }
+}
+
+export class MountCell extends Cell {
+
+    constructor() {
+        super('m', '', [3, 5], [new Chudila()]);
+    }
 }
