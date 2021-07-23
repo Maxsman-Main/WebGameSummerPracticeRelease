@@ -9,7 +9,7 @@ class Cell {
     private creature: Creature;
 
     constructor(label: string, type: string,
-        transitionCostMinMax : [number, number], possibleCreatures: [Creature]) {
+        transitionCostMinMax : [number, number], possibleCreatures: Creature[]) {
         this.label = label;
         this.type = type;
         this.transtionCost = Utils.random.apply(this, transitionCostMinMax);
