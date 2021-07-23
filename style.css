@@ -1,0 +1,67 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+#game-field table {
+    border-spacing: 0px;
+    margin: 0px;
+}
+
+#game-field table tr {
+}
+
+#game-field table td {
+    position: relative;
+    min-width: 120px;
+    height: 120px;
+    padding: 0px;
+}
+
+#game-field table td img {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.hide {
+    display: none;
+}
+
+@media only screen and (max-device-width: 600px) {
+    #game-field table td {
+        min-width: 100px;
+        height: 100px;
+    }
+
+    #game-field table td img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media only screen and (max-device-width: 500px) {
+    #game-field table td {
+        min-width: 80px;
+        height: 80px;
+    }
+
+    #game-field table td img {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+@media only screen and (max-device-width: 400px) {
+    #game-field table td {
+        min-width: 60px;
+        height: 60px;
+    }
+
+    #game-field table td img {
+        width: 60px;
+        height: 60px;
+    }
+}

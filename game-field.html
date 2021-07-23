@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="game">
+        <div id="game-field">
+            <table>
+                <tr>
+                    <td>
+                        <img src="./images/hero.png" alt="" srcset="">
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script>
+        var game_field =
+            document.getElementById("game-field").childNodes[1].childNodes[1];
+            console.log(game_field);
+        for (let i = 0; i < game_field.children.length; ++i) {
+            var row = game_field.children[i];
+            console.log(row, row.children.length);
+            for (let j = 0; j < row.children.length; ++j) {
+                var cell = row.children[j];
+                if (!cell) continue;
+                if (cell.nodeName == "#text") continue;
+                var image = new Image();
+                image.src = "./images/land.png";
+                console.log("insert");
+                cell.insertBefore(image, cell.firstChild);
+            }
+        }
+    </script>
+</body>
+
+</html>
