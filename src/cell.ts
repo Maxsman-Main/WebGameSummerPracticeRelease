@@ -1,7 +1,7 @@
 import { Creature } from './creature';
 import { Utils } from './utils';
 
-class Cell {
+export class Cell {
 
     private label: string;
     private type: string;
