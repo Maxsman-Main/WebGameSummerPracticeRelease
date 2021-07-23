@@ -24,7 +24,8 @@ export class DebugRenderer {
                 if (this.player.getCoordinates().x == x &&
                     this.player.getCoordinates().y == y) {
                     td.innerText = `${this.player.label}`;
-                    console.log(this.map.getCell(x, y).creature)
+                    let monster = this.map.getCell(x, y).monster;
+                    console.log(`Here monster: ${monster.getString()}`);
                 } else {
                     td.innerText = `${this.map.getCell(x, y).label}`;
                 }
