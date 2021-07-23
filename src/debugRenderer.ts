@@ -1,5 +1,6 @@
 import { Map } from './map';
 import { Player } from './player';
+import { Fight } from './fight';
 
 export class DebugRenderer {
 
@@ -35,4 +36,15 @@ export class DebugRenderer {
         this.div.innerHTML = table.outerHTML;
     }
 
+    public showFight(fight: Fight) {
+        console.log(fight);
+        let container = document.createElement('div');
+        let first = document.createElement('p');
+        first.innerText = fight.monsterFirst.getString();
+        let second = document.createElement('p');
+        second.innerText = fight.monsterSecond.getString();
+        container.appendChild(first);
+        container.appendChild(second);
+        this.div.innerHTML = container.outerHTML;
+    }
 }
