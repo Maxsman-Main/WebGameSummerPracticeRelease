@@ -1,14 +1,23 @@
 import { Monster } from "./monster"
+
 export class Fight {
 
-    private monsterFirst: Monster;
-    private monsterSecond: Monster;
+    private _monsterFirst: Monster;
+    public get monsterFirst(): Monster {
+        return this._monsterFirst;
+    }
+
+    private _monsterSecond: Monster;
+    public get monsterSecond(): Monster {
+        return this._monsterSecond;
+    }
+
     private currentMonster: Monster;
     private defenseMonster: Monster;
 
     constructor(monsterFirst, monsterSecond) {
-        this.monsterFirst = monsterFirst;
-        this.monsterSecond = monsterSecond;
+        this._monsterFirst = monsterFirst;
+        this._monsterSecond = monsterSecond;
         this.currentMonster = monsterFirst;
         this.defenseMonster = monsterSecond;
     }
