@@ -33,12 +33,13 @@ export class Monster extends Creature {
     }
 
     constructor(name: string, sprite:string, label: string, type: string,
-        health: number, attack: number, attackBooster: number) {
+        health: number, defense: number, attack: number,
+        attackBooster: number) {
         super(name, sprite, label);
         this._type = type;
         this._maxHeath = health;
         this._health = health;
-        this._defense = this.defense;
+        this._defense = defense;
         this._attack = attack;
         this._attackBooster = attackBooster;
     }
@@ -69,6 +70,6 @@ export class Monster extends Creature {
 export class Chudila extends Monster {
 
     constructor() {
-        super('Chudila', '.image/chudila.png', 'c', 'red', 100, 4, 20);
+        super('Chudila', '.image/chudila.png', 'c', 'red', 100, 4, 20, 10);
     }
 }

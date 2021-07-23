@@ -1,4 +1,5 @@
 import { Creature } from "./creature";
+import { Monster } from "./monster";
 
 export class Player extends Creature {
 
@@ -9,20 +10,20 @@ export class Player extends Creature {
         return this._availableMoves;
     }
 
-    private _availableCreatures: Creature[];
+    private _availableMonsters: Monster[];
 
-    public get availableCreatures(): Creature[] {
-        return this._availableCreatures;
+    public get availableCreatures(): Monster[] {
+        return this._availableMonsters;
     }
 
     constructor(name: string, sprite : string, label: string,
         x: number, y: number, availableMoves: number,
-        availableCreatures: Creature[]) {
+        availableMonsters: Monster[]) {
         super(name, sprite, label);
         this.x = x;
         this.y = y;
         this._availableMoves = availableMoves;
-        this._availableCreatures = availableCreatures;
+        this._availableMonsters = availableMonsters;
     }
 
     public move(x: number, y: number) {
