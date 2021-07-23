@@ -1,26 +1,26 @@
 export class Creature {
     
-    private name: string;
-    private sprite: string;
-    // label is some char, used for debugging
-    private label: string;
+    private _name: string;
+    public get name(): string {
+        return this._name;
+    }
+
+    private _sprite: string;
+    public get sprite(): string {
+        return this._sprite;
+    }
+
+    // _label is some char, used for debugging
+    private _label: string;
+
+    public get label(): string {
+        return this._label;
+    }
 
     constructor(name: string, sprite : string, label: string) {
-        this.name = name;
-        this.sprite = sprite;
-        this.label = label;
-    }
-
-    public getName(): string {
-        return this.name;
-    }
-
-    public getSprite(): string {
-        return this.sprite;
-    }
-
-    public getLabel(): string {
-        return this.label;
+        this._name = name;
+        this._sprite = sprite;
+        this._label = label;
     }
 
 }
