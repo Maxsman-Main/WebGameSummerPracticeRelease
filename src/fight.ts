@@ -12,23 +12,29 @@ export class Fight {
         return this._monsterSecond;
     }
 
-    private currentMonster: Monster;
-    private defenseMonster: Monster;
+    private _currentMonster: Monster;
+    public get currentMonster(): Monster {
+        return this._currentMonster;
+    }
+    private _defenseMonster: Monster;
+    public get defenseMonster(): Monster {
+        return this._defenseMonster;
+    }
 
     constructor(monsterFirst: Monster, monsterSecond: Monster) {
         this._monsterFirst = monsterFirst;
         this._monsterSecond = monsterSecond;
-        this.currentMonster = monsterFirst;
-        this.defenseMonster = monsterSecond;
+        this._currentMonster = monsterFirst;
+        this._defenseMonster = monsterSecond;
     }
 
     public swap() {
-        [this.currentMonster, this.defenseMonster] =
+        [this._currentMonster, this._defenseMonster] =
             [this.defenseMonster, this.currentMonster];
     }
 
     public isFinish(): boolean {
-        return this.monsterFirst.isDead() && this.monsterSecond.isDead();
+        return this.monsterFirst.isDead() || this.monsterSecond.isDead();
     }
 
     public getWinner() {
