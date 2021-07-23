@@ -1,4 +1,5 @@
-import { Cell } from './cell';
+import { Cell, LandCell, MountCell } from './cell';
+import { Utils } from './utils';
 
 export class Map {
 
@@ -21,6 +22,38 @@ export class Map {
     }
 
     static generate(sizeX: number, sizeY: number): Cell[][] {
-        return new Cell[sizeX][sizeY];
+        const defaultCell = LandCell;
+        let possibleCells = [
+            {
+                obj: MountCell,
+                rand: {min: 5, max: 10}
+            }
+        ]
+        console.log(`Map: generate, (${sizeX}, ${sizeY})`);
+        var data: Cell[][] = [];
+        for (let y = 0; y < sizeY; ++y) {
+            var row: Cell[] = [];
+            for (let x = 0; x < sizeX; ++x) {
+                let randNum = Utils.random(1, 100);
+                let objectForCreate = null;
+
+                for (let i = 0; i < possibleCells.length; ++i) {
+                    if (Utils.isInRange(randNum, possibleCells[i].rand.min,
+                        possibleCells[i].rand.max)) {
+                        objectForCreate = possibleCells[i].obj;
+                        break;
+                    }
+                }
+
+                if (!objectForCreate) {
+                    objectForCreate = defaultCell;
+                }
+                
+                row.push(new objectForCreate());
+            }
+            data.push(row);
+        }
+        console.log(`Map: generated, (${sizeX}, ${sizeY})`);
+        return data;
     }
 }
