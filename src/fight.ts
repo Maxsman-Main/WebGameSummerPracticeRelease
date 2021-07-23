@@ -15,7 +15,7 @@ export class Fight {
     private currentMonster: Monster;
     private defenseMonster: Monster;
 
-    constructor(monsterFirst, monsterSecond) {
+    constructor(monsterFirst: Monster, monsterSecond: Monster) {
         this._monsterFirst = monsterFirst;
         this._monsterSecond = monsterSecond;
         this.currentMonster = monsterFirst;
