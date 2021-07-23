@@ -65,3 +65,10 @@ export class Monster extends Creature {
     }
 
 }
+
+export class Chudila extends Monster {
+
+    constructor() {
+        super('Chudila', '.image/chudila.png', 'c', 'red', 100, 4, 20);
+    }
+}
