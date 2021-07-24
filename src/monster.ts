@@ -32,10 +32,10 @@ export class Monster extends Creature {
         return this._attackBooster;
     }
 
-    constructor(name: string, sprite:string, label: string, type: string,
+    constructor(name: string, cssClass: string, label: string, type: string,
         health: number, defense: number, attack: number,
         attackBooster: number) {
-        super(name, sprite, label);
+        super(name, cssClass, label);
         this._type = type;
         this._maxHeath = health;
         this._health = health;

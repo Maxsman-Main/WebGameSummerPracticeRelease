@@ -1,7 +1,8 @@
 import { Monster, Chudila } from './monster';
 import { Utils } from './utils';
+import { IHasCssClass } from './interfaces';
 
-export class Cell {
+export class Cell implements IHasCssClass {
 
     private _label: string;
     public get label(): string {

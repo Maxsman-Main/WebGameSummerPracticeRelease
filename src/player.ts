@@ -1,7 +1,8 @@
 import { Creature } from "./creature";
 import { Monster } from "./monster";
+import { IDrawableInField } from "./interfaces";
 
-export class Player extends Creature {
+export class Player extends Creature implements IDrawableInField {
 
     private x: number;
     private y: number;
@@ -16,10 +17,10 @@ export class Player extends Creature {
         return this._availableMonsters;
     }
 
-    constructor(name: string, sprite : string, label: string,
+    constructor(name: string, cssClass: string, label: string,
         x: number, y: number, availableMoves: number,
         availableMonsters: Monster[]) {
-        super(name, sprite, label);
+        super(name, cssClass, label);
         this.x = x;
         this.y = y;
         this._availableMoves = availableMoves;

@@ -1,4 +1,6 @@
-export class Creature {
+import { IHasCssClass } from "./interfaces";
+
+export class Creature implements IHasCssClass {
     
     private _name: string;
     public get name(): string {
@@ -8,9 +10,9 @@ export class Creature {
         this._name = value;
     }
 
-    private _sprite: string;
-    public get sprite(): string {
-        return this._sprite;
+    private _cssClass: string;
+    public get cssClass(): string {
+        return this._cssClass;
     }
 
     // _label is some char, used for debugging
@@ -20,9 +22,9 @@ export class Creature {
         return this._label;
     }
 
-    constructor(name: string, sprite : string, label: string) {
+    constructor(name: string, cssClass : string, label: string) {
         this._name = name;
-        this._sprite = sprite;
+        this._cssClass = cssClass;
         this._label = label;
     }
 
