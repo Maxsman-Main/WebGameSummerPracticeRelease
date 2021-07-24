@@ -10,7 +10,8 @@ var paths = {
     pages: ['src/*.html'],
     images: ['src/images/**'],
     styles: ['src/sass/**/*.sass'],
-    scripts: ['src/scripts/**/*.ts']
+    scripts: ['src/scripts/**/*.ts'],
+    fonts: ['src/fonts/**']
 }
 
 gulp.task('images', () => {
@@ -35,10 +36,15 @@ gulp.task('ts', () => {
     }).plugin(tsify).bundle().pipe(source("bundle.js")).pipe(gulp.dest("dist"));
 });
 
+gulp.task('fonts', () => {
+    return gulp.src(paths.fonts).pipe(gulp.dest('dist/fonts/'));
+});
+
 gulp.task('default', () => {
-    gulp.series('html', 'sass', 'ts', 'images')();
+    gulp.series('html', 'sass', 'ts', 'images', 'fonts')();
     gulp.watch(paths.pages, gulp.series('html'));
     gulp.watch(paths.styles, gulp.series('sass'));
     gulp.watch(paths.scripts, gulp.series('ts'));
     gulp.watch(paths.images, gulp.series('images'));
+    gulp.watch(paths.fonts, gulp.series('fonts'));
 });
