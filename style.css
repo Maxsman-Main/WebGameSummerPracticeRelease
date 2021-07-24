@@ -57,7 +57,15 @@ body {
 }
 
 .land {
-    background: url('images/land.png');
+    background-color: #80a53f;
+}
+
+.lava {
+    background: url('images/lava.png');
+}
+
+.mount {
+    background-color: #a7acba;
 }
 
 .hide {
