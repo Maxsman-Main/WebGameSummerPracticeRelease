@@ -1,15 +1,16 @@
 import { Map } from './map';
 import { Player } from './player'; 
+import { IDrawableInField, IHasCssClass } from './interfaces';
 
 export class FieldRenderer {
 
     private map: Map;
-    private player: Player;
+    private creatures: IDrawableInField[];
     private gameField: HTMLElement;
     
-    constructor(map: Map, player: Player, gameField: HTMLElement) {
+    constructor(map: Map, creatures: IDrawableInField[], gameField: HTMLElement) {
         this.map = map;
-        this.player = player;
+        this.creatures = creatures;
         this.gameField = gameField;
     }
 
@@ -26,19 +27,35 @@ export class FieldRenderer {
         this.gameField.innerHTML = table.outerHTML;
     }
 
+    private getTable(): HTMLTableElement {
+        return <HTMLTableElement> this.gameField.children[0];
+    }
+
+    private getCell(x: number, y:number): Element {
+        return this.getTable().rows[y].cells[x];
+    }
+
+    static getHTMLSprite(obj: IHasCssClass): HTMLElement {
+        let HTMLSprite = document.createElement('div');
+        HTMLSprite.classList.add('sprite');
+        HTMLSprite.classList.add(obj.cssClass);
+        return HTMLSprite;
+    }
+
     public fillTable() {
-        let table: HTMLTableElement = <HTMLTableElement> this.gameField.children[0];
         for (let y = 0; y < this.map.getSize().y; ++y) {
             for (let x = 0; x < this.map.getSize().x; ++x) {
                 let mapCell = this.map.getCell(x, y);
-
-                let HTMLSprite = document.createElement('div');
-                HTMLSprite.classList.add('sprite');
-                HTMLSprite.classList.add(mapCell.cssClass);
-                
-                table.rows[y].cells[x].innerHTML = HTMLSprite.outerHTML;
+                this.getCell(x, y).innerHTML =
+                    FieldRenderer.getHTMLSprite(mapCell).outerHTML;
             }
         }
-        // render player
+        for (let i = 0; i < this.creatures.length; ++i) {
+            let creature = this.creatures[i];
+            this.getCell(
+                creature.getCoordinates().x,
+                creature.getCoordinates().y
+            ).appendChild(FieldRenderer.getHTMLSprite(creature));
+        }
     }
 }
