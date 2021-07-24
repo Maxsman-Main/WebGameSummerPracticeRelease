@@ -5,7 +5,8 @@
   "main": "src/main.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "watch": "npx gulp"
   },
   "repository": {
     "type": "git",
@@ -22,7 +23,9 @@
     "fancy-log": "^1.3.3",
     "gh-pages": "^3.2.3",
     "gulp": "^4.0.0",
+    "gulp-sass": "^5.0.0",
     "gulp-typescript": "^6.0.0-alpha.1",
+    "sass": "^1.36.0",
     "tsify": "^5.0.4",
     "typescript": "^4.3.5",
     "vinyl-source-stream": "^2.0.0",

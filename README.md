@@ -1,8 +1,8 @@
 The project is being developed as part of a summer practice at the Far Eastern Federal University.
 
-## Build
+## Watch
 
-    npx gulp
+    npm run watch
 
 ## Deploy
 
