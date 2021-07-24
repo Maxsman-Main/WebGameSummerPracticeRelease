@@ -1,3 +1,5 @@
+@use "sass:math"
+
 @font-face
     font-family: '04b03'
     src: url('../fonts/04B_03__.ttf')
@@ -23,34 +25,45 @@ body
     white-space: nowrap
     width: 1px
 
+
+$field-width: 600
+$cells-in-row: 5
+
 #game
-    width: 600px
+    #game-field
+        width: $field-width + px
+        aspect-ratio: 1 / 1
+        display: block
 
-    #game-field table
-        border-spacing: 0
-        margin: 0
+        table
+            background-color: #333
+            width: $field-width + px
+            border: 0
+            border-spacing: 0
 
-        td
-            position: relative
-            min-width: 120px
-            height: 120px
-            padding: 0
-            user-select: none
+            td
+                position: relative
+                width: math.div($field-width, $cells-in-row) + px
+                height: math.div($field-width, $cells-in-row) + px
+                aspect-ratio: 1 / 1
+                padding: 0
 
-            .sprite
-                position: absolute
-                top: 0
-                left: 0
-                width: 120px
-                height: 120px
-                animation: opacity 0.2s
-                background-size: 120px 120px
+                .sprite
+                    display: block
+                    position: absolute
+                    bottom: 0
+                    width: math.div($field-width, $cells-in-row) + px
+                    height: math.div($field-width, $cells-in-row) + px
+                    animation: opacity-reverse 0.4s
+                    animation-fill-mode: forwards
 
-            .sprite:hover
-                opacity: 0.8
 
+                .sprite:hover
+                    animation: opacity 0.4s
+                    animation-fill-mode: forwards
+
+#game
     #game-fight
-
         display: flex
         flex-direction: column
 
