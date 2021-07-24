@@ -15,57 +15,29 @@
     .hide {
         display: none;
     }
-
-    table {
-		border-spacing: 0px 0px;
-	}
-	
-    td {
-        width: 100px;
-        height: 100px;
-		background: url(images/land.png);
-		background-size:contain;
-    }
-	.hero{
-	
-	   width: 70px;
-       height: 100px;
-	   position: absolute;
-	   padding: 0px 0px 0px 15px;
-	}
-	.land{
-	   width: 100px;
-       height: 100px;
-	   position: absolute;
-	}
-    #gallery {
-        position: relative;
-		height: 100px;
-		width: 100px;
-	}
 	.forest{
-	    height: 550px;
-		width: 550px;
+	    height: 600px;
+		width: 600px;
 		position: absolute;
 	}
 	.monster1{
-	    height: 230px;
-		width: 230px;
+	    height: 240px;
+		width: 240px;
 		position: absolute;
 		padding: 220px 0px 0px 320px;
 	}
 	
 	.monster2{
-	    height: 280px;
-		width: 220px;
+	    height: 240px;
+		width: 240px;
 		position: absolute;
-		padding: 190px 0px 0px 0px;
+		padding: 220px 0px 0px 0px;
 	}
 	
 	.helth{
-	    height: 280px;
-		width: 220px;
 		position: absolute;
+		font-size: 2em;
+		color: red;
 	}
 	
 	.stump{
@@ -73,34 +45,53 @@
 		width: 200px;
 		position: absolute;
 	}
+	.text_helth{
+	   font-size: 2em; 
+	   color: red;
+	   position: absolute;
+	}
+	button{
+	    position: absolute;
+	    height: 60px; 
+	    width: 90px;
+	    margin-top: 540px;
+	}
+	.shield{
+	   font-size: 2em; 
+	   color: blue;
+	   position: absolute;
+	}
+	
+	.text_shield{
+	   font-size: 2em; 
+	   color: blue;
+	   position: absolute;
+	}
     </style>
 </head>
 <body>       
-             
     <div id="debug_ascii_ui"></div>
-    <div id="game">
         <div id="game-fight" class="">
 		     <div id = "gallery">
              <img src="images/forest.png" class = "forest">
-			 <img src="images/stump.png" class = "stump" style="padding: 385px 0px 0px 0px;">
+			 <img src="images/stump.png" class = "stump" style="padding: 390px 0px 0px 0px;">
 			 <img src="images/stump.png" class = "stump" style="padding: 390px 0px 0px 340px;">
 			 <img src="images/monster1.png" class = "monster1">
 			 <img src="images/monster2.png" class = "monster2">
-             <i class="fas fa-heart" style="font-size: 2em; color: red;position: absolute;padding: 410px 0px 0px 30px;"></i>
-			 <div style="font-size: 2em; color: red;position: absolute;padding: 410px 0px 0px 65px;">100</div>
-			 <i class="fas fa-shield-alt" style="font-size: 2em; color: blue;position: absolute;padding: 410px 0px 0px 120px;"></i>
-			 <div style="font-size: 2em; color: blue;position: absolute;padding: 410px 0px 0px 160px;">6</div>
-			 <i class="fas fa-heart" style="font-size: 2em; color: red;position: absolute;padding: 410px 0px 0px 30px;"></i>
-			 <i class="fas fa-heart" style="font-size: 2em; color: red;position: absolute;padding: 410px 0px 0px 350px;"></i>
-			 <div style="font-size: 2em; color: red;position: absolute;padding: 410px 0px 0px 385px;">100</div>
-			 <i class="fas fa-shield-alt" style="font-size: 2em; color: blue;position: absolute;padding: 410px 0px 0px 440px;"></i>
-			 <div style="font-size: 2em; color: blue;position: absolute;padding: 410px 0px 0px 480px;">6</div>
-			 <button style="color: blue;position: absolute;height: 60px; width: 70px;margin-top: 490px;"></button>
-			 <button style="color: blue;position: absolute;height: 60px; width: 70px;margin-top: 490px;margin-left: 70px;"></button>
-			 <button style="color: blue;position: absolute;height: 60px; width: 70px;margin-top: 490px;margin-left: 140px;"></button>
-			 <button style="color: blue;position: absolute;height: 60px; width: 70px;margin-top: 490px;margin-left: 340px;"></button>
-			 <button style="color: blue;position: absolute;height: 60px; width: 70px;margin-top: 490px;margin-left: 410px;"></button>
-			 <button style="color: blue;position: absolute;height: 60px; width: 70px;margin-top: 490px;margin-left: 480px;"></button>
+			 <button></button>
+			 <button style="margin-left: 90px;"></button>
+			 <button style="margin-left: 180px;"></button>
+			 <button style="margin-left: 330px;"></button>
+			 <button style="margin-left: 420px;"></button>
+			 <button style="margin-left: 510px;"></button>
+			 <div class="helth" style = "padding: 420px 0px 0px 30px;"><i class="fas fa-heart"></i></div>
+			 <div style="padding: 420px 0px 0px 70px" class = "text_helth">100</div>
+			 <div class="shield" style="padding: 420px 0px 0px 130px;"><i class="fas fa-shield-alt"></i></div>
+			 <div style="padding: 420px 0px 0px 170px;" class = "text_shield">6</div>
+			 <div class="helth" style="padding: 420px 0px 0px 390px;"><i class="fas fa-heart"></i></div>
+			 <div class="text_helth" style="padding:420px 0px 0px 430px;">100</div>
+			 <div class="shield" style = "padding: 420px 0px 0px 490px;"><i class="fas fa-shield-alt"></i></div>
+			 <div class = "text_shield" style = "padding: 420px 0px 0px 530px;">6</div>
 			 </div>
         </div>
     </div>
