@@ -1,7 +1,105 @@
+@font-face
+    font-family: '04b03'
+    src: url('../fonts/04B_03__.ttf')
+
 body
+    margin: 0
+    padding: 0
+    display: flex
+    align-items: center
+    align-items: center
+    justify-content: center
+    height: 100vh
+    font-family: '04b03'
+
+.hide
+    display: none
+
+#game
+    width: 600px
+
+    #game-field table
+        border-spacing: 0
+        margin: 0
+
+        td
+            position: relative
+            min-width: 120px
+            height: 120px
+            padding: 0
+            user-select: none
+
+    #game-fight
+
+        display: flex
+        flex-direction: column
+
+        .sprites
+            display: flex
+            flex-direction: row
+            justify-content: space-between
+            width: 100%
+            height: 200px
+
+            div
+                width: 50%
+                width: 50%
+
+        .stats
+            display: flex
+            flex-direction: row
+            justify-content: space-between
+
+            .stat
+                width: 100%
+                text-align: center
+
+            .fa-heart
+                color: red
+
+            .fa-shield-alt
+                color: #4b90e9
+        
+        .action-btn
+            display: flex
+            justify-content: center
+
+            button
+                background: #e53030
+                border: 3px solid #fff
+                border-radius: 100%
+                box-shadow: 0 -2px 0 3px #c91919 inset, 0 5px 5px rgba(65, 8, 8, 0.17), 0 15px rgba(255, 255, 255, 0.25) inset
+                cursor: pointer
+                display: inline-block
+                height: 75px
+                width: 75px
+                font-family: '04b03'
+                font-size: 30px
+
+            button:hover
+                background: #333333
+                box-shadow: 0 -2px 0 3px #1a1a1a inset, 0 5px 5px rgba(0, 0, 0, 0.17), 0 15px rgba(255, 255, 255, 0.32) inset
+    .sprite
+        position: absolute
+        top: 0
+        left: 0
+        width: 120px
+        height: 120px
+        animation: opacity 0.2s
+        background-size: 120px 120px
+
+    .sprite:hover
+        opacity: 0.8
+
+.hero
+    border-radius: 900px
     background-color: red
 
-    ul
-        margin: 0
-        padding: 0
-        list-style: none
+.land
+    background-color: #80a53f
+
+.lava
+    background: url("images/lava.png")
+
+.mount
+    background-color: #a7acba
