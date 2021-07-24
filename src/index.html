@@ -1,19 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    #debug_ascii_ui table td {
-      width: 30px;
-      height: 30px;
-    }
-  </style>
-</head>
-<body>
-  <div id="debug_ascii_ui"></div>
-  <script src="bundle.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      /**
+ * Game
+ */
+
+      #game {
+        display: flex;
+        width: 600px;
+      }
+
+      /**
+ * Game Field
+ */
+
+      #game-field table {
+        border-spacing: 0;
+        margin: 0;
+      }
+
+      #game-field table td {
+        position: relative;
+        min-width: 120px;
+        height: 120px;
+        padding: 0;
+        user-select: none;
+      }
+
+      /**
+ * Sprites
+ */
+
+      #game-field table .sprite {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        animation: opacity 0.2s;
+        background-size: 120px 120px;
+      }
+
+      #game-field table td .sprite:hover {
+        opacity: 0.8;
+      }
+
+      .hero {
+        background: url("images/hero.png");
+      }
+
+      .land {
+        background-color: #80a53f;
+      }
+
+      .lava {
+        background: url("images/lava.png");
+      }
+
+      .mount {
+        background-color: #a7acba;
+      }
+
+      .hide {
+        display: none;
+      }
+
+      /**
+ * Mobile
+ */
+
+      @media only screen and(max-device-width: 600px) {
+        #game {
+          display: flex;
+          width: 500px;
+        }
+
+        #game-field table td {
+          min-width: 100px;
+          height: 100px;
+        }
+
+        #game-field table .sprite {
+          background-size: 100px 100px;
+        }
+      }
+
+      @media only screen and(max-device-width: 500px) {
+        #game {
+          display: flex;
+          width: 400px;
+        }
+
+        #game-field table td {
+          min-width: 80px;
+          height: 80px;
+        }
+
+        #game-field table .sprite {
+          background-size: 80px 80px;
+        }
+      }
+
+      @media only screen and(max-device-width: 400px) {
+        #game {
+          display: flex;
+          width: 300px;
+        }
+
+        #game-field table td {
+          min-width: 60px;
+          height: 60px;
+        }
+
+        #game-field table .sprite {
+          background-size: 60px 60px;
+        }
+      }
+      #debug_ascii_ui table td {
+        width: 30px;
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="debug_ascii_ui"></div>
+    <div id="game">
+      <div id="game-field"></div>
+    </div>
+    <script src="bundle.js"></script>
+  </body>
 </html>
