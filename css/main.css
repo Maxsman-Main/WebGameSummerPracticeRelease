@@ -1,8 +1,112 @@
-body {
-  background-color: red;
+@font-face {
+  font-family: "04b03";
+  src: url("../fonts/04B_03__.ttf");
 }
-body ul {
+body {
   margin: 0;
   padding: 0;
-  list-style: none;
+  display: flex;
+  align-items: center;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: "04b03";
+}
+
+.hide {
+  display: none;
+}
+
+#game {
+  width: 600px;
+}
+#game #game-field table {
+  border-spacing: 0;
+  margin: 0;
+}
+#game #game-field table td {
+  position: relative;
+  min-width: 120px;
+  height: 120px;
+  padding: 0;
+  user-select: none;
+}
+#game #game-fight {
+  display: flex;
+  flex-direction: column;
+}
+#game #game-fight .sprites {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 200px;
+}
+#game #game-fight .sprites div {
+  width: 50%;
+  width: 50%;
+}
+#game #game-fight .stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#game #game-fight .stats .stat {
+  width: 100%;
+  text-align: center;
+}
+#game #game-fight .stats .fa-heart {
+  color: red;
+}
+#game #game-fight .stats .fa-shield-alt {
+  color: #4b90e9;
+}
+#game #game-fight .action-btn {
+  display: flex;
+  justify-content: center;
+}
+#game #game-fight .action-btn button {
+  background: #e53030;
+  border: 3px solid #fff;
+  border-radius: 100%;
+  box-shadow: 0 -2px 0 3px #c91919 inset, 0 5px 5px rgba(65, 8, 8, 0.17), 0 15px rgba(255, 255, 255, 0.25) inset;
+  cursor: pointer;
+  display: inline-block;
+  height: 75px;
+  width: 75px;
+  font-family: "04b03";
+  font-size: 30px;
+}
+#game #game-fight .action-btn button:hover {
+  background: #333333;
+  box-shadow: 0 -2px 0 3px #1a1a1a inset, 0 5px 5px rgba(0, 0, 0, 0.17), 0 15px rgba(255, 255, 255, 0.32) inset;
+}
+#game .sprite {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  animation: opacity 0.2s;
+  background-size: 120px 120px;
+}
+#game .sprite:hover {
+  opacity: 0.8;
+}
+
+.hero {
+  border-radius: 900px;
+  background-color: red;
+}
+
+.land {
+  background-color: #80a53f;
+}
+
+.lava {
+  background: url("images/lava.png");
+}
+
+.mount {
+  background-color: #a7acba;
 }
