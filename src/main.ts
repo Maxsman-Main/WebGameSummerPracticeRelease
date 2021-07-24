@@ -7,8 +7,8 @@ import { Fight } from './fight';
 import { FieldRenderer } from './fieldRenderer';
 
 var map = new Map(5, 5);
-var player = new Player("Steve", null, '@', 0, 0, 4, [ new Chudila()]);
+var player = new Player("Steve", "hero", '@', 0, 0, 4, [ new Chudila()]);
 var gameField = document.getElementById('game-field');
-var renderer = new FieldRenderer(map, player, gameField);
+var renderer = new FieldRenderer(map, [player], gameField);
 renderer.appendTable();
 renderer.fillTable();
