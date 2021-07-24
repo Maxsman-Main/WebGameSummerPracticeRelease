@@ -15,7 +15,7 @@
             <table>
                 <tr>
                     <td>
-                        <img src="./images/hero.png" alt="" srcset="">
+                        <div class="sprite hero"></div>
                     </td>
                     <td></td>
                     <td></td>
@@ -64,8 +64,9 @@
                 var cell = row.children[j];
                 if (!cell) continue;
                 if (cell.nodeName == "#text") continue;
-                var image = new Image();
-                image.src = "./images/land.png";
+                var image = document.createElement('div');
+                image.classList.add('sprite');
+                image.classList.add('land');
                 console.log("insert");
                 cell.insertBefore(image, cell.firstChild);
             }
