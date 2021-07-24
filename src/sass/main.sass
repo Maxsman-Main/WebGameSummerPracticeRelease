@@ -29,6 +29,18 @@ body
             padding: 0
             user-select: none
 
+            .sprite
+                position: absolute
+                top: 0
+                left: 0
+                width: 120px
+                height: 120px
+                animation: opacity 0.2s
+                background-size: 120px 120px
+
+            .sprite:hover
+                opacity: 0.8
+
     #game-fight
 
         display: flex
@@ -39,16 +51,22 @@ body
             flex-direction: row
             justify-content: space-between
             width: 100%
-            height: 200px
 
             div
                 width: 50%
                 width: 50%
 
+            .sprite
+                width: 50%
+                height: 50%
+                aspect-ratio: 1
+
         .stats
             display: flex
             flex-direction: row
             justify-content: space-between
+            margin-top: 30px
+            margin-bottom: 30px
 
             .stat
                 width: 100%
@@ -64,17 +82,6 @@ body
             display: flex
             justify-content: center
 
-    .sprite
-        position: absolute
-        top: 0
-        left: 0
-        width: 120px
-        height: 120px
-        animation: opacity 0.2s
-        background-size: 120px 120px
-
-    .sprite:hover
-        opacity: 0.8
 
 
 /* NES Button */
