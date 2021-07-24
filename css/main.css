@@ -14,23 +14,49 @@ body {
 }
 
 .hide {
-  display: none;
+  border: 0px;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
-#game {
+#game #game-field {
   width: 600px;
+  aspect-ratio: 1/1;
+  display: block;
 }
 #game #game-field table {
+  background-color: #333;
+  width: 600px;
+  border: 0;
   border-spacing: 0;
-  margin: 0;
 }
 #game #game-field table td {
   position: relative;
-  min-width: 120px;
+  width: 120px;
   height: 120px;
+  aspect-ratio: 1/1;
   padding: 0;
-  user-select: none;
 }
+#game #game-field table td .sprite {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  width: 120px;
+  height: 120px;
+  animation: opacity-reverse 0.4s;
+  animation-fill-mode: forwards;
+}
+#game #game-field table td .sprite:hover {
+  animation: opacity 0.4s;
+  animation-fill-mode: forwards;
+}
+
 #game #game-fight {
   display: flex;
   flex-direction: column;
@@ -40,16 +66,22 @@ body {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  height: 200px;
 }
 #game #game-fight .sprites div {
   width: 50%;
   width: 50%;
 }
+#game #game-fight .sprites .sprite {
+  width: 50%;
+  height: 50%;
+  aspect-ratio: 1;
+}
 #game #game-fight .stats {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 #game #game-fight .stats .stat {
   width: 100%;
@@ -65,7 +97,9 @@ body {
   display: flex;
   justify-content: center;
 }
-#game #game-fight .action-btn button {
+
+/* NES Button */
+.red-btn {
   background: #e53030;
   border: 3px solid #fff;
   border-radius: 100%;
@@ -77,23 +111,13 @@ body {
   font-family: "04b03";
   font-size: 30px;
 }
-#game #game-fight .action-btn button:hover {
+
+.red-btn:hover {
   background: #333333;
   box-shadow: 0 -2px 0 3px #1a1a1a inset, 0 5px 5px rgba(0, 0, 0, 0.17), 0 15px rgba(255, 255, 255, 0.32) inset;
 }
-#game .sprite {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 120px;
-  height: 120px;
-  animation: opacity 0.2s;
-  background-size: 120px 120px;
-}
-#game .sprite:hover {
-  opacity: 0.8;
-}
 
+/* Sprites */
 .hero {
   border-radius: 900px;
   background-color: red;
@@ -109,4 +133,22 @@ body {
 
 .mount {
   background-color: #a7acba;
+}
+
+/* Animations */
+@keyframes opacity {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.8;
+  }
+}
+@keyframes opacity-reverse {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 1;
+  }
 }
