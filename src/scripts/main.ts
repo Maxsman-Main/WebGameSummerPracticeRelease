@@ -52,11 +52,42 @@ function cellClickListener(event: MouseEvent) {
             [
                 gameState.player.availableMonters[0],
                 gameState.map.getCell(coordinates).monster
-            ]
+            ],
+            NESZButtonClickListener,
+            NESXButtonClickListener
         );
         fightRenderer.update();
     }
 }
+
+/* Click Listener for Z button in fight */
+function NESZButtonClickListener(event: MouseEvent) {
+    console.log('clicked', event.target);
+    gameState.fight.defenseMonster.beAttacked(gameState.fight.currentMonster);
+    if (gameState.fight.isFinish()) {
+        gameState.fight.currentMonster.Heal();
+        gameState.fight.defenseMonster.Heal();
+        if (gameState.fight.getWinner().looted) {
+            gameState.player.addMonster(gameState.fight.currentMonster);
+            gameState.map.getCell(
+                gameState.player.getCoordinates()
+            ).loot();
+        } else {
+            gameState.player.deleteMonster(gameState.fight.defenseMonster);
+        }
+        sceneManager.showScene('field');
+    }
+    gameState.fight.swap();
+    fightRenderer.update();
+}
+
+/* Click Listener for X button in fight */
+function NESXButtonClickListener(event: MouseEvent) {
+    gameState.fight.currentMonster.defenseHimself();
+    gameState.fight.swap();
+    fightRenderer.update();
+}
+
 
 document.addEventListener('keypress', (event) => {
     const keyName = event.key;

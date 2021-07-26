@@ -5,10 +5,14 @@ export class FightRenderer implements IRenderer {
 
     private gameFight: HTMLElement;
     private monsters: [Monster, Monster];
+    private readonly NESZButtonClickListener: any;
+    private readonly NESXButtonClickListener: any;
 
-    constructor(gameFight: HTMLElement, monsters: [Monster, Monster]) {
+    constructor(gameFight: HTMLElement, monsters: [Monster, Monster], listener_1: any, listener_2: any) {
         this.gameFight = gameFight;
         this.monsters = monsters;
+        this.NESZButtonClickListener = listener_1;
+        this.NESXButtonClickListener = listener_2;
     }
 
     public render(): void {
@@ -29,6 +33,10 @@ export class FightRenderer implements IRenderer {
             health.innerHTML = `${this.monsters[i].health}`;
             defense.innerHTML = `${this.monsters[i].defense}`;
         }
+        let buttons = this.gameFight.getElementsByClassName('action-btn')[0].children;
+        console.assert(buttons.length == 2);
+        buttons[0].addEventListener('click', this.NESZButtonClickListener);
+        buttons[1].addEventListener('click', this.NESXButtonClickListener);
     }
 
 }
