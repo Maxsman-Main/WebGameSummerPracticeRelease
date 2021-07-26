@@ -9,3 +9,8 @@ export interface IHasCoordinates {
 export interface IDrawableInField extends IHasCoordinates, IHasCssClass {
 
 }
+
+export interface ISceneInfo {
+    name: string;
+    element: HTMLElement;
+}
