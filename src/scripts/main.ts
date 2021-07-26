@@ -5,6 +5,7 @@ import {SceneManager} from './sceneManager';
 import {GameState} from './gameState';
 import {I2DCoordinates} from './interfaces';
 import {Utils} from "./utils";
+import {FightRenderer} from "./fightRenderer";
 
 /* Global variables */
 const gameState = new GameState(
@@ -17,6 +18,13 @@ const fieldRenderer = new FieldRenderer(
     sceneManager.getSceneInfo('field').element,
     cellClickListener
 );
+const fightRenderer = new FightRenderer(
+    sceneManager.getSceneInfo('fight').element,
+    [
+        new Chudila(), new Chudila()
+    ]
+)
+fightRenderer.update();
 
 /* Prepare field */
 fieldRenderer.render();
