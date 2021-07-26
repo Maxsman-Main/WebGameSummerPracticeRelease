@@ -36,7 +36,7 @@ export class Player extends Creature implements IDrawableInField {
         return { x: this.x, y: this.y };
     }
 
-    public addMoster(monster: Monster) {
+    public addMonster(monster: Monster) {
         this._availableMonsters.push(monster);
     }
 
