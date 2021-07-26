@@ -1,3 +1,4 @@
+import { I2Dcoordinates } from './interfaces';
 import { Map } from './map';
 import { Player } from './player';
 
@@ -18,20 +19,20 @@ export class MoveManager {
      * @param y
      * @returns
      */
-    public isCorrentCoordinates(x: number, y: number): boolean {
-        return (0 <= x && x < this.map.getSize().x) &&
-               (0 <= y && y < this.map.getSize().y) &&
-               (Math.abs(x - this.player.getCoordinates().x) +
-                Math.abs(y - this.player.getCoordinates().y) == 1);
+    public isCorrentCoordinates(coordinates: I2Dcoordinates): boolean {
+        return (0 <= coordinates.x && coordinates.x < this.map.getSize().x) &&
+               (0 <= coordinates.y && coordinates.y < this.map.getSize().y) &&
+               (Math.abs(coordinates.x - this.player.getCoordinates().x) +
+                Math.abs(coordinates.y - this.player.getCoordinates().y) == 1);
     }
 
-    public move(x: number, y: number) {
-        if (this.isCorrentCoordinates(x, y)) {
-            console.log(`${this.player.name} moved to (${x}, ${y})`);
-            this.player.move(x, y);
+    public move(coordinates: I2Dcoordinates): boolean {
+        if (this.isCorrentCoordinates(coordinates)) {
+            console.log(`${this.player.name} moved to (${coordinates})`);
+            this.player.move(coordinates);
             return true;
         } else {
-            console.log(`${this.player.name} not moved to (${x}, ${y})`);
+            console.log(`${this.player.name} not moved to (${coordinates})`);
             return false;
         }
     }

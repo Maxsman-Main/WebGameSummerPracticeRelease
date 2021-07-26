@@ -50,7 +50,7 @@ export class FieldRenderer {
     public fillTable() {
         for (let y = 0; y < this.map.getSize().y; ++y) {
             for (let x = 0; x < this.map.getSize().x; ++x) {
-                let mapCell = this.map.getCell(x, y);
+                let mapCell = this.map.getCell({ x: x, y: y });
                 this.getCell(x, y).innerHTML =
                     FieldRenderer.getHTMLSprite(mapCell).outerHTML;
             }

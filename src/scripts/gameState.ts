@@ -6,7 +6,6 @@ import { IDrawableInField, ISceneInfo } from './interfaces';
 
 export class GameState {
 
-
     public player: Player;
     public creatures: IDrawableInField[];
     public map: Map;
