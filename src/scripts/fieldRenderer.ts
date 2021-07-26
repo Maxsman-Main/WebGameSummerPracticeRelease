@@ -1,9 +1,9 @@
 import {Map} from './map';
-import {I2DCoordinates, IHasCssClass} from './interfaces';
+import {I2DCoordinates, IHasCssClass, IRenderer} from './interfaces';
 import {GameState} from './gameState';
 import {Utils} from "./utils";
 
-export class FieldRenderer {
+export class FieldRenderer implements IRenderer {
 
     private map: Map;
     private gameState: GameState;
@@ -17,7 +17,7 @@ export class FieldRenderer {
         this.mouseListener = mouseListener; 
     }
 
-    public appendTable() {
+    public render() {
         let table = document.createElement('table');
         for (let y = 0; y < this.map.getSize().y; ++y) {
             let row = document.createElement('tr');
@@ -54,7 +54,7 @@ export class FieldRenderer {
         ]
     }
 
-    public fillTable() {
+    public update() {
         for (let y = 0; y < this.map.getSize().y; ++y) {
             for (let x = 0; x < this.map.getSize().x; ++x) {
                 let mapCell = this.map.getCell({ x: x, y: y });

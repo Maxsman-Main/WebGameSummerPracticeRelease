@@ -4,6 +4,7 @@ import {FieldRenderer} from './fieldRenderer';
 import {SceneManager} from './sceneManager';
 import {GameState} from './gameState';
 import {I2DCoordinates} from './interfaces';
+import {Utils} from "./utils";
 
 /* Global variables */
 const gameState = new GameState(
@@ -18,8 +19,8 @@ const fieldRenderer = new FieldRenderer(
 );
 
 /* Prepare field */
-fieldRenderer.appendTable();
-fieldRenderer.fillTable();
+fieldRenderer.render();
+fieldRenderer.update();
 sceneManager.showScene('field');
 
 /* Click Listener for all cells in field */
@@ -42,9 +43,8 @@ function cellClickListener(event: MouseEvent) {
             old_coordinate,
             gameState.player.getCoordinates()
         ]);
-    } else {
-        if (coordinates == gameState.player.getCoordinates())
-            sceneManager.showScene('fight');
+    } else if (Utils.shallowEqual(coordinates, gameState.player.getCoordinates())) {
+        sceneManager.showScene('fight');
     }
 }
 

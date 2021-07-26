@@ -19,3 +19,8 @@ export interface I2DCoordinates {
     x: number;
     y: number;
 }
+
+export interface IRenderer {
+   render(): void;
+   update(): void;
+}
