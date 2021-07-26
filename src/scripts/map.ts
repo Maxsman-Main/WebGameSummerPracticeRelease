@@ -1,5 +1,5 @@
 import {Cell, LandCell, MountCell} from './cell';
-import {I2Dcoordinates} from './interfaces';
+import {I2DCoordinates} from './interfaces';
 import {Utils} from './utils';
 
 export class Map {
@@ -14,7 +14,7 @@ export class Map {
         this.data = Map.generate(sizeX, sizeY);
     }
 
-    public getCell(coordinates: I2Dcoordinates): Cell {
+    public getCell(coordinates: I2DCoordinates): Cell {
         return this.data[coordinates.y][coordinates.x];
     }
 

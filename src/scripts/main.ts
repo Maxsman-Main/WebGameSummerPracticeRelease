@@ -3,7 +3,7 @@ import {Chudila} from './monster';
 import {FieldRenderer} from './fieldRenderer';
 import {SceneManager} from './sceneManager';
 import {GameState} from './gameState';
-import {I2Dcoordinates} from './interfaces';
+import {I2DCoordinates} from './interfaces';
 
 /* Global variables */
 const gameState = new GameState(
@@ -25,7 +25,7 @@ sceneManager.showScene('field');
 /* Click Listener for all cells in field */
 function cellClickListener(event: MouseEvent) {
 
-    function getCoordinatesOfCell(target: EventTarget): I2Dcoordinates {
+    function getCoordinatesOfCell(target: EventTarget): I2DCoordinates {
         let element = <HTMLElement>target;
         const td = <HTMLTableCellElement>element.parentElement;
         const row = <HTMLTableRowElement>td.parentElement;
@@ -36,7 +36,7 @@ function cellClickListener(event: MouseEvent) {
     }
 
     const coordinates = getCoordinatesOfCell(event.target);
-    let old_coordinate: I2Dcoordinates = gameState.player.getCoordinates();
+    let old_coordinate: I2DCoordinates = gameState.player.getCoordinates();
     if (gameState.moveManager.move(coordinates)) {
         fieldRenderer.updateCells([
             old_coordinate,

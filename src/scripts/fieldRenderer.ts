@@ -1,5 +1,5 @@
 import {Map} from './map';
-import {I2Dcoordinates, IHasCssClass} from './interfaces';
+import {I2DCoordinates, IHasCssClass} from './interfaces';
 import {GameState} from './gameState';
 import {Utils} from "./utils";
 
@@ -36,7 +36,7 @@ export class FieldRenderer {
         return <HTMLTableElement> this.gameField.children[0];
     }
 
-    private getCell(coordinates: I2Dcoordinates): Element {
+    private getCell(coordinates: I2DCoordinates): Element {
         return this.getTable().rows[coordinates.y].cells[coordinates.x];
     }
 
@@ -70,7 +70,7 @@ export class FieldRenderer {
         }
     }
 
-    public updateCells(coordinates: I2Dcoordinates[]): void {
+    public updateCells(coordinates: I2DCoordinates[]): void {
         for (let i = 0; i < coordinates.length; ++i) {
             let mapCell = this.map.getCell(coordinates[i]);
             let HTMLCell = this.getCell(coordinates[i]);

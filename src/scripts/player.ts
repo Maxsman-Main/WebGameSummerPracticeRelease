@@ -1,6 +1,6 @@
 import {Creature} from "./creature";
 import {Monster} from "./monster";
-import {I2Dcoordinates, IDrawableInField} from "./interfaces";
+import {I2DCoordinates, IDrawableInField} from "./interfaces";
 
 export class Player extends Creature implements IDrawableInField {
 
@@ -27,12 +27,12 @@ export class Player extends Creature implements IDrawableInField {
         this._availableMonsters = availableMonsters;
     }
 
-    public move(coordinates: I2Dcoordinates) {
+    public move(coordinates: I2DCoordinates) {
         this.x = coordinates.x;
         this.y = coordinates.y;
     }
 
-    public getCoordinates(): I2Dcoordinates  {
+    public getCoordinates(): I2DCoordinates  {
         return { x: this.x, y: this.y };
     }
 

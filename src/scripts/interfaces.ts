@@ -3,7 +3,7 @@ export interface IHasCssClass {
 }
 
 export interface IHasCoordinates {
-    getCoordinates(): I2Dcoordinates;
+    getCoordinates(): I2DCoordinates;
 }
 
 export interface IDrawableInField extends IHasCoordinates, IHasCssClass {
@@ -15,7 +15,7 @@ export interface ISceneInfo {
     element: HTMLElement;
 }
 
-export interface I2Dcoordinates {
+export interface I2DCoordinates {
     x: number;
     y: number;
 }
