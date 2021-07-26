@@ -1,6 +1,7 @@
 import {Map} from './map';
-import {IHasCssClass} from './interfaces';
+import {I2Dcoordinates, IHasCssClass} from './interfaces';
 import {GameState} from './gameState';
+import {Utils} from "./utils";
 
 export class FieldRenderer {
 
@@ -35,8 +36,8 @@ export class FieldRenderer {
         return <HTMLTableElement> this.gameField.children[0];
     }
 
-    private getCell(x: number, y:number): Element {
-        return this.getTable().rows[y].cells[x];
+    private getCell(coordinates: I2Dcoordinates): Element {
+        return this.getTable().rows[coordinates.y].cells[coordinates.x];
     }
 
     static getHTMLSprite(obj: IHasCssClass): HTMLElement {
@@ -46,24 +47,43 @@ export class FieldRenderer {
         return HTMLSprite;
     }
 
+    private getCreaturesList() {
+        return [
+            this.gameState.player,
+            ...this.gameState.creatures
+        ]
+    }
+
     public fillTable() {
         for (let y = 0; y < this.map.getSize().y; ++y) {
             for (let x = 0; x < this.map.getSize().x; ++x) {
                 let mapCell = this.map.getCell({ x: x, y: y });
-                this.getCell(x, y).innerHTML =
-                    FieldRenderer.getHTMLSprite(mapCell).outerHTML;
+                let HTMLCell = this.getCell({ x: x, y: y });
+                HTMLCell.innerHTML = "";
+                HTMLCell.appendChild(FieldRenderer.getHTMLSprite(mapCell));
             }
         }
-        const listOfCreatures = [
-            this.gameState.player,
-            ...this.gameState.creatures
-        ];
-        for (let i = 0; i < listOfCreatures.length; ++i) {
-            let creature = listOfCreatures[i];
-            this.getCell(
-                creature.getCoordinates().x,
-                creature.getCoordinates().y
-            ).appendChild(FieldRenderer.getHTMLSprite(creature));
+        const creaturesList = this.getCreaturesList();
+        for (let i = 0; i < creaturesList.length; ++i) {
+            let creature = creaturesList[i];
+            this.getCell(creature.getCoordinates()).appendChild(FieldRenderer.getHTMLSprite(creature));
+        }
+    }
+
+    public updateCells(coordinates: I2Dcoordinates[]): void {
+        for (let i = 0; i < coordinates.length; ++i) {
+            let mapCell = this.map.getCell(coordinates[i]);
+            let HTMLCell = this.getCell(coordinates[i]);
+            HTMLCell.innerHTML = "";
+            HTMLCell.appendChild(FieldRenderer.getHTMLSprite(mapCell));
+
+            const creaturesList = this.getCreaturesList();
+            for (let j = 0; j < creaturesList.length; ++j) {
+                if(Utils.shallowEqual(creaturesList[j].getCoordinates(), coordinates[i])) {
+                    console.log("YES");
+                    HTMLCell.appendChild(FieldRenderer.getHTMLSprite(creaturesList[j]));
+                }
+            }
         }
     }
 }

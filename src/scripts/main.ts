@@ -38,17 +38,18 @@ function cellClickListener(event: MouseEvent) {
     const coordinates = getCoordinatesOfCell(event.target);
     if (gameState.moveManager.isCorrectCoordinates(coordinates)) {
         // move
+        let old_coordinate: I2Dcoordinates = gameState.player.getCoordinates();
         gameState.moveManager.move(coordinates);
-        // if monster is alive
-        if (gameState.map.getCell(coordinates).monster != null) {
-            console.log("yes");
-        }
+
+        fieldRenderer.updateCells([
+            old_coordinate,
+            gameState.player.getCoordinates()
+        ]);
     } else {
         if (coordinates == gameState.player.getCoordinates())
             sceneManager.showScene('fight');
     }
     console.log(gameState.player.getCoordinates());
-    fieldRenderer.fillTable();
 }
 
 document.addEventListener('keypress', (event) => {
