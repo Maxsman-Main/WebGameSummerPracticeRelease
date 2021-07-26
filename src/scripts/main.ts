@@ -36,11 +36,8 @@ function cellClickListener(event: MouseEvent) {
     }
 
     const coordinates = getCoordinatesOfCell(event.target);
-    if (gameState.moveManager.isCorrectCoordinates(coordinates)) {
-        // move
-        let old_coordinate: I2Dcoordinates = gameState.player.getCoordinates();
-        gameState.moveManager.move(coordinates);
-
+    let old_coordinate: I2Dcoordinates = gameState.player.getCoordinates();
+    if (gameState.moveManager.move(coordinates)) {
         fieldRenderer.updateCells([
             old_coordinate,
             gameState.player.getCoordinates()
