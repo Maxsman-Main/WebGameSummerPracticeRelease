@@ -24,7 +24,7 @@ export class FightRenderer implements IRenderer {
 
             sprite.className = `sprite ${this.monsters[i].cssClass}`;
             if (i == 1) {
-                sprite.classList.add('sprite');
+                sprite.classList.add('mirrorY');
             }
             health.innerHTML = `${this.monsters[i].health}`;
             defense.innerHTML = `${this.monsters[i].defense}`;
