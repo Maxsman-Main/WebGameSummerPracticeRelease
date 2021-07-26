@@ -1,3 +1,4 @@
+/* Pixel Font */
 @font-face {
   font-family: "04b03";
   src: url("../fonts/04B_03__.ttf");
@@ -13,18 +14,7 @@ body {
   font-family: "04b03";
 }
 
-.hide {
-  border: 0px;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
-}
-
+/* Game Field */
 #game #game-field {
   width: 600px;
   aspect-ratio: 1/1;
@@ -51,51 +41,51 @@ body {
   height: 120px;
   animation: opacity-reverse 0.4s;
   animation-fill-mode: forwards;
+  background-size: 120px;
 }
 #game #game-field table td .sprite:hover {
   animation: opacity 0.4s;
   animation-fill-mode: forwards;
 }
 
+/* Game Fight */
 #game #game-fight {
   display: flex;
   flex-direction: column;
+  width: 600px;
 }
-#game #game-fight .sprites {
+#game #game-fight .monsters {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
+  justify-content: center;
 }
-#game #game-fight .sprites div {
-  width: 50%;
-  width: 50%;
-}
-#game #game-fight .sprites .sprite {
-  width: 50%;
-  height: 50%;
+#game #game-fight .monsters .monster {
+  margin-right: 20px;
+  margin-left: 20px;
   aspect-ratio: 1;
 }
-#game #game-fight .stats {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 30px;
-  margin-bottom: 30px;
+#game #game-fight .monsters .monster .sprite {
+  width: 200px;
+  aspect-ratio: 1/1;
+  background-size: 200px;
 }
-#game #game-fight .stats .stat {
-  width: 100%;
+#game #game-fight .monsters .monster .stats {
   text-align: center;
-}
-#game #game-fight .stats .fa-heart {
-  color: red;
-}
-#game #game-fight .stats .fa-shield-alt {
-  color: #4b90e9;
+  margin-top: 10px;
+  margin-bottom: 50px;
 }
 #game #game-fight .action-btn {
   display: flex;
   justify-content: center;
+}
+
+/* Font Awesome */
+.fa-heart {
+  color: red;
+}
+
+.fa-shield-alt {
+  color: #4b90e9;
 }
 
 /* NES Button */
@@ -119,8 +109,7 @@ body {
 
 /* Sprites */
 .hero {
-  border-radius: 900px;
-  background-color: red;
+  background: url("../images/hero.png");
 }
 
 .land {
@@ -151,4 +140,20 @@ body {
   to {
     opacity: 1;
   }
+}
+/* Hide */
+.hide {
+  border: 0px;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.mirrorY {
+  transform: scale(-1, 1);
 }
