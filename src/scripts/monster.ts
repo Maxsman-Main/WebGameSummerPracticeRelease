@@ -45,8 +45,13 @@ export class Monster extends Creature {
     }
 
     public beAttacked(enemy: Monster) {
-        this._health -= (enemy.attack - 
-                         this._defense + enemy.attackBooster);
+        var damage = this.defense - (enemy.attack + enemy.attackBooster);
+        if (damage >= 0){
+            this._health -= 1;
+        }
+        else{
+            this._health += damage;
+        }
     }
 
     public defenseHimself() {
