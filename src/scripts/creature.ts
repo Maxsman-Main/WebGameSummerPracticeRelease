@@ -1,4 +1,4 @@
-import { IHasCssClass } from "./interfaces";
+import {IHasCssClass} from "./interfaces";
 
 export class Creature implements IHasCssClass {
     
@@ -10,13 +10,13 @@ export class Creature implements IHasCssClass {
         this._name = value;
     }
 
-    private _cssClass: string;
+    private readonly _cssClass: string;
     public get cssClass(): string {
         return this._cssClass;
     }
 
     // _label is some char, used for debugging
-    private _label: string;
+    private readonly _label: string;
 
     public get label(): string {
         return this._label;

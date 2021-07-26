@@ -1,17 +1,17 @@
-import { Player } from './player';
-import { Chudila } from './monster';
-import { FieldRenderer } from './fieldRenderer';
-import { SceneManager } from './sceneManager';
-import { GameState } from './gameState';
-import { I2Dcoordinates } from './interfaces';
+import {Player} from './player';
+import {Chudila} from './monster';
+import {FieldRenderer} from './fieldRenderer';
+import {SceneManager} from './sceneManager';
+import {GameState} from './gameState';
+import {I2Dcoordinates} from './interfaces';
 
 /* Global variables */
-var gameState = new GameState(
-    new Player("Steve", "hero", '@', 0, 0, 4, [ new Chudila() ]),
+const gameState = new GameState(
+    new Player("Steve", "hero", '@', 0, 0, 4, [new Chudila()]),
     []
 );
-var sceneManager = new SceneManager(gameState);
-var fieldRenderer = new FieldRenderer(
+const sceneManager = new SceneManager(gameState);
+const fieldRenderer = new FieldRenderer(
     gameState,
     sceneManager.getSceneInfo('field').element,
     cellClickListener
@@ -26,17 +26,17 @@ sceneManager.showScene('field');
 function cellClickListener(event: MouseEvent) {
 
     function getCoordinatesOfCell(target: EventTarget): I2Dcoordinates {
-        var element = <HTMLElement> target;
-        var td = <HTMLTableCellElement> element.parentElement;
-        var row = <HTMLTableRowElement> td.parentElement;
+        let element = <HTMLElement>target;
+        const td = <HTMLTableCellElement>element.parentElement;
+        const row = <HTMLTableRowElement>td.parentElement;
         return {
             x: td.cellIndex,
             y: row.rowIndex
         }
     }
 
-    var coordinates = getCoordinatesOfCell(event.target);
-    if (gameState.moveManager.isCorrentCoordinates(coordinates)) {
+    const coordinates = getCoordinatesOfCell(event.target);
+    if (gameState.moveManager.isCorrectCoordinates(coordinates)) {
         // move
         gameState.moveManager.move(coordinates);
         // if monster is alive
@@ -44,7 +44,6 @@ function cellClickListener(event: MouseEvent) {
             console.log("yes");
         }
     } else {
-        var coordinatesOfPlayer = gameState.player.getCoordinates();
         if (coordinates == gameState.player.getCoordinates())
             sceneManager.showScene('fight');
     }

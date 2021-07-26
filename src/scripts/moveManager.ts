@@ -1,6 +1,6 @@
-import { I2Dcoordinates } from './interfaces';
-import { Map } from './map';
-import { Player } from './player';
+import {I2Dcoordinates} from './interfaces';
+import {Map} from './map';
+import {Player} from './player';
 
 export class MoveManager {
 
@@ -14,12 +14,11 @@ export class MoveManager {
 
     /**
      * Coordinates are correct if the map range is included
-     * and point to an adjacent cell horizontally or vertically 
-     * @param x
-     * @param y
+     * and point to an adjacent cell horizontally or vertically
      * @returns
+     * @param coordinates
      */
-    public isCorrentCoordinates(coordinates: I2Dcoordinates): boolean {
+    public isCorrectCoordinates(coordinates: I2Dcoordinates): boolean {
         return (0 <= coordinates.x && coordinates.x < this.map.getSize().x) &&
                (0 <= coordinates.y && coordinates.y < this.map.getSize().y) &&
                (Math.abs(coordinates.x - this.player.getCoordinates().x) +
@@ -27,7 +26,7 @@ export class MoveManager {
     }
 
     public move(coordinates: I2Dcoordinates): boolean {
-        if (this.isCorrentCoordinates(coordinates)) {
+        if (this.isCorrectCoordinates(coordinates)) {
             console.log(`${this.player.name} moved to (${coordinates})`);
             this.player.move(coordinates);
             return true;

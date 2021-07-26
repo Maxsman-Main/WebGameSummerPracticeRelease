@@ -1,13 +1,13 @@
-import { Creature } from "./creature";
-import { Monster } from "./monster";
-import { I2Dcoordinates, IDrawableInField } from "./interfaces";
+import {Creature} from "./creature";
+import {Monster} from "./monster";
+import {I2Dcoordinates, IDrawableInField} from "./interfaces";
 
 export class Player extends Creature implements IDrawableInField {
 
     private x: number;
     private y: number;
 
-    private _availableMoves: number;
+    private readonly _availableMoves: number;
     public get availableMoves(): number {
         return this._availableMoves;
     }
@@ -43,12 +43,10 @@ export class Player extends Creature implements IDrawableInField {
     public deleteMonster(monster: Monster) {
         const index = this._availableMonsters.indexOf(monster);
 
-        const newArray = (index > -1) ? [
+        this._availableMonsters = (index > -1) ? [
             ...this._availableMonsters.slice(0, index),
             ...this._availableMonsters.slice(index + 1)
         ] : this._availableMonsters;
-
-        this._availableMonsters = newArray;
     }
 
 }

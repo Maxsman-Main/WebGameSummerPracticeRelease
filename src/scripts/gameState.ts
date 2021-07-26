@@ -1,8 +1,7 @@
-import { Player } from './player';
-import { Map } from './map';
-import { Creature } from './creature';
-import { MoveManager } from './moveManager';
-import { IDrawableInField, ISceneInfo } from './interfaces';
+import {Player} from './player';
+import {Map} from './map';
+import {MoveManager} from './moveManager';
+import {IDrawableInField, ISceneInfo} from './interfaces';
 
 export class GameState {
 
@@ -14,9 +13,9 @@ export class GameState {
 
     constructor(player: Player, creatures: IDrawableInField[]) {
         this.player = player;
-        this.creatures = creatures,
-        this.map = new Map(5, 5),
-        this.moveManager = new MoveManager(this.map, this.player),
+        this.creatures = creatures;
+        this.map = new Map(5, 5);
+        this.moveManager = new MoveManager(this.map, this.player);
         this.scenes = [
             {
                 name: 'field',

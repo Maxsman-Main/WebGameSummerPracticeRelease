@@ -1,5 +1,5 @@
-import { ISceneInfo } from './interfaces';
-import { GameState } from './gameState';
+import {ISceneInfo} from './interfaces';
+import {GameState} from './gameState';
 
 export class SceneManager {
 

@@ -1,14 +1,13 @@
-import { Map } from './map';
-import { Player } from './player'; 
-import { IDrawableInField, IHasCssClass } from './interfaces';
-import { GameState } from './gameState';
+import {Map} from './map';
+import {IHasCssClass} from './interfaces';
+import {GameState} from './gameState';
 
 export class FieldRenderer {
 
     private map: Map;
     private gameState: GameState;
     private gameField: HTMLElement;
-    private mouseListener: any;
+    private readonly mouseListener: any;
     
     constructor(gameState: GameState, gameField: HTMLElement, mouseListener: any) {
         this.map = gameState.map;
@@ -55,10 +54,10 @@ export class FieldRenderer {
                     FieldRenderer.getHTMLSprite(mapCell).outerHTML;
             }
         }
-        var listOfCreatures = [
+        const listOfCreatures = [
             this.gameState.player,
             ...this.gameState.creatures
-        ]
+        ];
         for (let i = 0; i < listOfCreatures.length; ++i) {
             let creature = listOfCreatures[i];
             this.getCell(

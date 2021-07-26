@@ -1,12 +1,12 @@
-import { Cell, LandCell, MountCell } from './cell';
-import { I2Dcoordinates } from './interfaces';
-import { Utils } from './utils';
+import {Cell, LandCell, MountCell} from './cell';
+import {I2Dcoordinates} from './interfaces';
+import {Utils} from './utils';
 
 export class Map {
 
-    private sizeX: number;
-    private sizeY: number;
-    private data: Cell[][];
+    private readonly sizeX: number;
+    private readonly sizeY: number;
+    private readonly data: Cell[][];
 
     constructor(sizeX: number, sizeY: number) {
         this.sizeX = sizeX;
@@ -31,9 +31,9 @@ export class Map {
             }
         ]
         console.log(`Map: generate, (${sizeX}, ${sizeY})`);
-        var data: Cell[][] = [];
+        const data: Cell[][] = [];
         for (let y = 0; y < sizeY; ++y) {
-            var row: Cell[] = [];
+            const row: Cell[] = [];
             for (let x = 0; x < sizeX; ++x) {
                 let randNum = Utils.random(1, 100);
                 let objectForCreate = null;

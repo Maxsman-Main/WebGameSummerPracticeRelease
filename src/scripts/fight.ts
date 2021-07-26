@@ -1,13 +1,13 @@
-import { Monster } from "./monster"
+import {Monster} from "./monster"
 
 export class Fight {
 
-    private _monsterFirst: Monster;
+    private readonly _monsterFirst: Monster;
     public get monsterFirst(): Monster {
         return this._monsterFirst;
     }
 
-    private _monsterSecond: Monster;
+    private readonly _monsterSecond: Monster;
     public get monsterSecond(): Monster {
         return this._monsterSecond;
     }

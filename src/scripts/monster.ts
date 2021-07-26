@@ -1,13 +1,13 @@
-import { Creature } from "./creature";
+import {Creature} from "./creature";
 
 export class Monster extends Creature {
 
-    private _type: string;
+    private readonly _type: string;
     public get type(): string {
         return this._type;
     }
 
-    private _maxHeath: number;
+    private readonly _maxHeath: number;
     public get maxHeath(): number {
         return this._maxHeath;
     }
@@ -22,12 +22,12 @@ export class Monster extends Creature {
         return this._defense;
     }
 
-    private _attack: number;
+    private readonly _attack: number;
     public get attack(): number {
         return this._attack;
     }
 
-    private _attackBooster: number;
+    private readonly _attackBooster: number;
     public get attackBooster(): number {
         return this._attackBooster;
     }
@@ -45,7 +45,7 @@ export class Monster extends Creature {
     }
 
     public beAttacked(enemy: Monster) {
-        var damage = this.defense - (enemy.attack + enemy.attackBooster);
+        const damage = this.defense - (enemy.attack + enemy.attackBooster);
         if (damage >= 0){
             this._health -= 1;
         }

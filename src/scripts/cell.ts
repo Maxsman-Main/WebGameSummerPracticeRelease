@@ -1,27 +1,27 @@
-import { Monster, Chudila } from './monster';
-import { Utils } from './utils';
-import { IHasCssClass } from './interfaces';
+import {Chudila, Monster} from './monster';
+import {Utils} from './utils';
+import {IHasCssClass} from './interfaces';
 
 export class Cell implements IHasCssClass {
 
-    private _label: string;
+    private readonly _label: string;
     public get label(): string {
         return this._label;
     }
 
-    private _cssClass: string;
+    private readonly _cssClass: string;
     public get cssClass(): string {
         return this._cssClass;
     }
 
-    private _type: string;
+    private readonly _type: string;
     public get type(): string {
         return this._type;
     }
 
-    private _transtionCost: number;
-    public get transtionCost(): number {
-        return this._transtionCost;
+    private readonly _transitionCost: number;
+    public get transitionCost(): number {
+        return this._transitionCost;
     }
 
     private _monsters: Monster;
@@ -35,7 +35,7 @@ export class Cell implements IHasCssClass {
         this._label = label;
         this._cssClass = cssClass;
         this._type = type;
-        this._transtionCost = Utils.random.apply(this, transitionCostMinMax);
+        this._transitionCost = Utils.random.apply(this, transitionCostMinMax);
         this._monsters = Utils.randomItemFromArray(possibleCreatures);
     }
 
