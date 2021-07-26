@@ -45,6 +45,7 @@ $cells-in-row: 5
                     height: math.div($field-width, $cells-in-row) + px
                     animation: opacity-reverse 0.4s
                     animation-fill-mode: forwards
+                    background-size: 120px
 
 
                 .sprite:hover
@@ -71,6 +72,7 @@ $cells-in-row: 5
                 .sprite
                     width: 200px 
                     aspect-ratio: 1 / 1
+                    background-size: 200px
                 
                 .stats
                     text-align: center
@@ -108,8 +110,7 @@ $cells-in-row: 5
 
 /* Sprites */
 .hero
-    border-radius: 900px
-    background-color: red
+    background: url("../images/hero.png")
 
 .land
     background-color: #80a53f
@@ -144,3 +145,6 @@ $cells-in-row: 5
     position: absolute
     white-space: nowrap
     width: 1px
+
+.mirrorY 
+    transform: scale(-1, 1)
