@@ -2,6 +2,7 @@ import {Player} from './player';
 import {Map} from './map';
 import {MoveManager} from './moveManager';
 import {IDrawableInField, ISceneInfo} from './interfaces';
+import {Fight} from "./fight";
 
 export class GameState {
 
@@ -10,6 +11,7 @@ export class GameState {
     public map: Map;
     public moveManager: MoveManager;
     public scenes: ISceneInfo[];
+    public fight: Fight;
 
     constructor(player: Player, creatures: IDrawableInField[]) {
         this.player = player;
@@ -26,6 +28,7 @@ export class GameState {
                 element: document.getElementById('game-fight')
             }
         ]
+        this.fight = null;
     }
 
 }
