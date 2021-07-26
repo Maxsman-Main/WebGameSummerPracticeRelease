@@ -18,13 +18,7 @@ const fieldRenderer = new FieldRenderer(
     sceneManager.getSceneInfo('field').element,
     cellClickListener
 );
-const fightRenderer = new FightRenderer(
-    sceneManager.getSceneInfo('fight').element,
-    [
-        new Chudila(), new Chudila()
-    ]
-)
-fightRenderer.update();
+let fightRenderer: FightRenderer = null;
 
 /* Prepare field */
 fieldRenderer.render();
@@ -53,6 +47,14 @@ function cellClickListener(event: MouseEvent) {
         ]);
     } else if (Utils.shallowEqual(coordinates, gameState.player.getCoordinates())) {
         sceneManager.showScene('fight');
+        fightRenderer = new FightRenderer(
+            sceneManager.getSceneInfo('fight').element,
+            [
+                gameState.player.availableMonters[0],
+                gameState.map.getCell(coordinates).monster
+            ]
+        );
+        fightRenderer.update();
     }
 }
 
