@@ -1,17 +1,20 @@
 import { Map } from './map';
 import { Player } from './player'; 
 import { IDrawableInField, IHasCssClass } from './interfaces';
+import { GameState } from './gameState';
 
 export class FieldRenderer {
 
     private map: Map;
-    private creatures: IDrawableInField[];
+    private gameState: GameState;
     private gameField: HTMLElement;
+    private mouseListener: any;
     
-    constructor(map: Map, creatures: IDrawableInField[], gameField: HTMLElement) {
-        this.map = map;
-        this.creatures = creatures;
+    constructor(gameState: GameState, gameField: HTMLElement, mouseListener: any) {
+        this.map = gameState.map;
+        this.gameState = gameState;
         this.gameField = gameField;
+        this.mouseListener = mouseListener; 
     }
 
     public appendTable() {
@@ -20,11 +23,13 @@ export class FieldRenderer {
             let row = document.createElement('tr');
             for (let x = 0; x  < this.map.getSize().x; ++x) {
                 let cell = document.createElement('td');
+                cell.addEventListener('click', this.mouseListener);
                 row.appendChild(cell);
             }
             table.appendChild(row);
         }
-        this.gameField.innerHTML = table.outerHTML;
+        this.gameField.innerHTML = "";
+        this.gameField.appendChild(table);
     }
 
     private getTable(): HTMLTableElement {
@@ -50,8 +55,12 @@ export class FieldRenderer {
                     FieldRenderer.getHTMLSprite(mapCell).outerHTML;
             }
         }
-        for (let i = 0; i < this.creatures.length; ++i) {
-            let creature = this.creatures[i];
+        var listOfCreatures = [
+            this.gameState.player,
+            ...this.gameState.creatures
+        ]
+        for (let i = 0; i < listOfCreatures.length; ++i) {
+            let creature = listOfCreatures[i];
             this.getCell(
                 creature.getCoordinates().x,
                 creature.getCoordinates().y
