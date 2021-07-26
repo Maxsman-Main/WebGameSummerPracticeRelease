@@ -49,12 +49,10 @@ function cellClickListener(event: MouseEvent) {
         if (coordinates == gameState.player.getCoordinates())
             sceneManager.showScene('fight');
     }
-    console.log(gameState.player.getCoordinates());
 }
 
 document.addEventListener('keypress', (event) => {
     const keyName = event.key;
-    console.log(keyName);
     if (keyName.toLowerCase() == '1') {
         sceneManager.showScene('field');
     }

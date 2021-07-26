@@ -27,11 +27,9 @@ export class SceneManager {
 
     public showScene(name: string) {
         this._currentScene = name;
-        console.log(`ShowScene ${name}, ${this.gameState.scenes.length}`)
         let scene = this.getSceneInfo(name);
         for (let i = 0; i < this.gameState.scenes.length; ++i) {
             this.gameState.scenes[i].element.classList.add('hide');
-            console.log(this.gameState.scenes[i].name, i);
         }
         scene.element.classList.remove('hide');
     }

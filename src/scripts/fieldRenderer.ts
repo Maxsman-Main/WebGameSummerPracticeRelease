@@ -80,7 +80,6 @@ export class FieldRenderer {
             const creaturesList = this.getCreaturesList();
             for (let j = 0; j < creaturesList.length; ++j) {
                 if(Utils.shallowEqual(creaturesList[j].getCoordinates(), coordinates[i])) {
-                    console.log("YES");
                     HTMLCell.appendChild(FieldRenderer.getHTMLSprite(creaturesList[j]));
                 }
             }
