@@ -29,6 +29,10 @@ export class Cell implements IHasCssClass {
         return this._monsters;
     }
 
+    public loot() {
+        this._monsters = null;
+    }
+
     constructor(label: string, cssClass: string, type: string,
             transitionCostMinMax : [number, number],
             possibleCreatures: Monster[]) {

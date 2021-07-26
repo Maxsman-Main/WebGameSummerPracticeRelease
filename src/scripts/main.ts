@@ -1,15 +1,16 @@
 import {Player} from './player';
-import {Chudila} from './monster';
+import {Chudila, Pridurok} from './monster';
 import {FieldRenderer} from './fieldRenderer';
 import {SceneManager} from './sceneManager';
 import {GameState} from './gameState';
 import {I2DCoordinates} from './interfaces';
 import {Utils} from "./utils";
 import {FightRenderer} from "./fightRenderer";
+import {Fight} from './fight';
 
 /* Global variables */
 const gameState = new GameState(
-    new Player("Steve", "hero", '@', 0, 0, 4, [new Chudila()]),
+    new Player("Steve", "hero", '@', 0, 0, 4, [new Pridurok()]),
     []
 );
 const sceneManager = new SceneManager(gameState);
@@ -46,6 +47,8 @@ function cellClickListener(event: MouseEvent) {
             gameState.player.getCoordinates()
         ]);
     } else if (Utils.shallowEqual(coordinates, gameState.player.getCoordinates())) {
+        if (gameState.map.getCell(coordinates).monster == null)
+            return;
         sceneManager.showScene('fight');
         fightRenderer = new FightRenderer(
             sceneManager.getSceneInfo('fight').element,
@@ -57,6 +60,10 @@ function cellClickListener(event: MouseEvent) {
             NESXButtonClickListener
         );
         fightRenderer.update();
+        gameState.fight = new Fight(
+            gameState.player.availableMonters[0],
+            gameState.map.getCell(coordinates).monster
+        );
     }
 }
 
