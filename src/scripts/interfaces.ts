@@ -21,6 +21,6 @@ export interface I2DCoordinates {
 }
 
 export interface IRenderer {
-   render(): void;
-   update(): void;
+    render(): void;
+    update(): void;
 }

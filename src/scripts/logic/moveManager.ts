@@ -1,6 +1,6 @@
-import {I2DCoordinates} from './interfaces';
-import {Map} from './map';
-import {Player} from './player';
+import {I2DCoordinates} from '../interfaces';
+import {Map} from '../map/map';
+import {Player} from '../creatures/player';
 
 export class MoveManager {
 

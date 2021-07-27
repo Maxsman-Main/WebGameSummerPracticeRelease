@@ -1,8 +1,8 @@
-import {Player} from './player';
-import {Map} from './map';
-import {MoveManager} from './moveManager';
+import {Player} from './creatures/player';
+import {Map} from './map/map';
+import {MoveManager} from './logic/moveManager';
 import {IDrawableInField, ISceneInfo} from './interfaces';
-import {Fight} from "./fight";
+import {Fight} from "./logic/fight";
 
 export class GameState {
 

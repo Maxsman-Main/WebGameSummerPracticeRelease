@@ -1,9 +1,8 @@
 import {Creature} from "./creature";
 import {Monster} from "./monster";
-import {I2DCoordinates, IDrawableInField} from "./interfaces";
+import {I2DCoordinates, IDrawableInField} from "../interfaces";
 
 export class Player extends Creature implements IDrawableInField {
-
     private x: number;
     private y: number;
 
@@ -13,21 +12,24 @@ export class Player extends Creature implements IDrawableInField {
     }
 
     private _availableMonsters: Monster[];
-    public get availableMonters(): Monster[] {
+    public get availableMonsters(): Monster[] {
         return this._availableMonsters;
     }
 
-    constructor(name: string, cssClass: string, label: string,
-        x: number, y: number, availableMoves: number,
-        availableMonsters: Monster[]) {
-        super(name, cssClass, label);
+    constructor(name: string, cssClass: string, x: number, y: number, availableMoves: number,
+                availableMonsters: Monster[]) {
+        super(name, cssClass);
         this.x = x;
         this.y = y;
         this._availableMoves = availableMoves;
         this._availableMonsters = availableMonsters;
     }
 
-    public move(coordinates: I2DCoordinates) {
+    /**
+     * set new coordinates
+     * @param coordinates
+     */
+    public move(coordinates: I2DCoordinates): void {
         this.x = coordinates.x;
         this.y = coordinates.y;
     }
@@ -36,11 +38,11 @@ export class Player extends Creature implements IDrawableInField {
         return { x: this.x, y: this.y };
     }
 
-    public addMonster(monster: Monster) {
+    public addMonster(monster: Monster): void {
         this._availableMonsters.push(monster);
     }
 
-    public deleteMonster(monster: Monster) {
+    public deleteMonster(monster: Monster): void {
         const index = this._availableMonsters.indexOf(monster);
 
         this._availableMonsters = (index > -1) ? [
@@ -48,5 +50,4 @@ export class Player extends Creature implements IDrawableInField {
             ...this._availableMonsters.slice(index + 1)
         ] : this._availableMonsters;
     }
-
 }

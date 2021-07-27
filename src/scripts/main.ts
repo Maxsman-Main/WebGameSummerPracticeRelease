@@ -1,25 +1,23 @@
-import {Player} from './player';
-import {Chudila, Monster, Pridurok} from './monster';
-import {FieldRenderer} from './fieldRenderer';
-import {SceneManager} from './sceneManager';
+import {Player} from './creatures/player';
+import {Monster, Pridurok} from './creatures/monster';
+import {FieldRenderer} from './scenes/fieldRenderer';
+import {SceneManager} from './scenes/sceneManager';
 import {GameState} from './gameState';
 import {I2DCoordinates} from './interfaces';
-import {Utils} from "./utils";
-import {FightRenderer} from "./fightRenderer";
-import {SelectMonsterRenderer} from './selectMonsterRenderer'
-import {Fight} from './fight';
+import {FightRenderer} from "./scenes/fightRenderer";
+import {SelectMonsterRenderer} from './scenes/selectMonsterRenderer'
+import {Fight} from './logic/fight';
+import {Compare} from "./utils/compare";
 
 /* Global variables */
 const gameState = new GameState(
-    new Player("Steve", "hero", '@', 0, 0, 4, [new Pridurok()]),
+    new Player("Steve", "hero", 0, 0, 4, [new Pridurok()]),
     []
 );
 const sceneManager = new SceneManager(gameState);
-const fieldRenderer = new FieldRenderer(
-    gameState,
-    sceneManager.getSceneInfo('field').element,
-    cellClickListener
-);
+
+/* Renderers */
+const fieldRenderer = new FieldRenderer(gameState,  sceneManager.getSceneInfo('field').element, cellClickListener);
 let fightRenderer: FightRenderer = null;
 let selectMonsterRenderer: SelectMonsterRenderer = null;
 
@@ -48,7 +46,7 @@ function cellClickListener(event: MouseEvent) {
             old_coordinate,
             gameState.player.getCoordinates()
         ]);
-    } else if (Utils.shallowEqual(coordinates, gameState.player.getCoordinates())) {
+    } else if (Compare.shallowEqual(coordinates, gameState.player.getCoordinates())) {
         if (gameState.map.getCell(coordinates).monster == null)
             return;
         selectMonsterRenderer = new SelectMonsterRenderer(
@@ -86,17 +84,17 @@ function NESZButtonClickListener(event: MouseEvent) {
 }
 
 /* Click Listener for X button in fight */
-function NESXButtonClickListener(event: MouseEvent) {
+function NESXButtonClickListener() {
     gameState.fight.currentMonster.defenseHimself();
     gameState.fight.swap();
     fightRenderer.update();
 }
 
 /* Click Listener for OK button in select-monster */
-function OKButtonInSelectClickListener(event: MouseEvent) {
+function OKButtonInSelectClickListener() {
     sceneManager.showScene('fight');
     let monsters: [Monster, Monster] = [
-        selectMonsterRenderer.getChoosenMonster(),
+        selectMonsterRenderer.getChosenMonster(),
         gameState.map.getCell(gameState.player.getCoordinates()).monster
     ]
     fightRenderer = new FightRenderer(
@@ -108,13 +106,3 @@ function OKButtonInSelectClickListener(event: MouseEvent) {
     fightRenderer.update();
     gameState.fight = new Fight(...monsters);
 }
-
-document.addEventListener('keypress', (event) => {
-    const keyName = event.key;
-    if (keyName.toLowerCase() == '1') {
-        sceneManager.showScene('field');
-    }
-    else if (keyName.toLowerCase() == '2') {
-        sceneManager.showScene('fight');
-    }
-});

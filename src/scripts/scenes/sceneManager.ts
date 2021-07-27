@@ -1,11 +1,9 @@
-import {ISceneInfo} from './interfaces';
-import {GameState} from './gameState';
+import {ISceneInfo} from '../interfaces';
+import {GameState} from '../gameState';
 
 export class SceneManager {
-
     gameState: GameState;
     _currentScene: string;
-
     public get currentScene(): ISceneInfo {
         return this.getSceneInfo(this._currentScene);
     }
@@ -15,7 +13,7 @@ export class SceneManager {
         this._currentScene = "";
     }
 
-    public getSceneInfo(name: string) {
+    public getSceneInfo(name: string): ISceneInfo {
         let scenes = this.gameState.scenes;
         for (let i = 0; i < scenes.length; ++i) {
             if (scenes[i].name == name) {
@@ -25,7 +23,7 @@ export class SceneManager {
         throw new Error("The scene does not exist");
     }
 
-    public showScene(name: string) {
+    public showScene(name: string): void {
         this._currentScene = name;
         let scene = this.getSceneInfo(name);
         for (let i = 0; i < this.gameState.scenes.length; ++i) {
@@ -33,5 +31,4 @@ export class SceneManager {
         }
         scene.element.classList.remove('hide');
     }
-
 }

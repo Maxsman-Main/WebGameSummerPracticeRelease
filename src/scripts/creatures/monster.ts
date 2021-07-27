@@ -1,12 +1,6 @@
 import {Creature} from "./creature";
 
 export class Monster extends Creature {
-
-    private readonly _type: string;
-    public get type(): string {
-        return this._type;
-    }
-
     private readonly _maxHeath: number;
     public get maxHeath(): number {
         return this._maxHeath;
@@ -36,12 +30,13 @@ export class Monster extends Creature {
     public get looted(): boolean {
         return this._looted;
     }
+    public loot(): void {
+        this._looted = true;
+    }
 
-    constructor(name: string, cssClass: string, label: string, type: string,
-        health: number, defense: number, attack: number,
-        attackBooster: number, looted: boolean) {
-        super(name, cssClass, label);
-        this._type = type;
+    constructor(name: string, cssClass: string, label: string, type: string,  health: number, defense: number,
+                attack: number, attackBooster: number, looted: boolean) {
+        super(name, cssClass);
         this._maxHeath = health;
         this._health = health;
         this._defense = defense;
@@ -50,47 +45,39 @@ export class Monster extends Creature {
         this._looted = looted;
     }
 
-    public beAttacked(enemy: Monster) {
+    public beAttacked(enemy: Monster): void {
         const damage = this.defense - (enemy.attack + enemy.attackBooster);
-        if (damage >= 0){
+        if (damage >= 0) {
             this._health -= 1;
-        }
-        else{
+        } else {
             this._health += damage;
         }
     }
 
-    public defenseHimself() {
+    public defenseHimself(): void {
         this._defense += 5;
     }
 
-    public isDead() {
+    public isDead(): boolean {
         return this._health <= 0;
     }
 
-    public Heal() {
+    public Heal(): void {
        this._health = this.maxHeath;
     }
 
-    public getString() {
-        return `${this.name}, hp: ${this.health}, defence: ${this.defense}, attack: ${this.attack}`;
+    public getString(): string {
+        return `${this.name}, hp: ${this.health}, defense: ${this.defense}, attack: ${this.attack}`;
     }
-
-    public loot() {
-        this._looted = true;
-    }
-
 }
 
 export class Pridurok extends Monster {
-
     constructor() {
         super('Pridurok', 'pridurok', 'p', 'red', 120, 5, 30, 30, true);
     }
 }
 
 export class Chudila extends Monster {
-
     constructor() {
         super('Chudila', 'chudila', 'c', 'red', 100, 4, 20, 10, false);
     }

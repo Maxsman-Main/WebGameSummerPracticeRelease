@@ -1,9 +1,9 @@
 import {Cell, LandCell, MountCell} from './cell';
-import {I2DCoordinates} from './interfaces';
-import {Utils} from './utils';
+import {I2DCoordinates} from '../interfaces';
+import {Random} from '../utils/random';
+import {Compare} from "../utils/compare";
 
 export class Map {
-
     private readonly sizeX: number;
     private readonly sizeY: number;
     private readonly data: Cell[][];
@@ -35,11 +35,11 @@ export class Map {
         for (let y = 0; y < sizeY; ++y) {
             const row: Cell[] = [];
             for (let x = 0; x < sizeX; ++x) {
-                let randNum = Utils.random(1, 100);
+                let randNum = Random.inRange(1, 100);
                 let objectForCreate = null;
 
                 for (let i = 0; i < possibleCells.length; ++i) {
-                    if (Utils.isInRange(randNum, possibleCells[i].rand.min,
+                    if (Compare.isInRange(randNum, possibleCells[i].rand.min,
                         possibleCells[i].rand.max)) {
                         objectForCreate = possibleCells[i].obj;
                         break;

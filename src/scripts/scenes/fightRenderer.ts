@@ -1,15 +1,14 @@
-import {Monster} from "./monster";
-import {IRenderer} from "./interfaces";
+import {Monster} from "../creatures/monster";
+import {IRenderer} from "../interfaces";
 
 export class FightRenderer implements IRenderer {
-
-    private gameFight: HTMLElement;
+    private element: HTMLElement;
     private monsters: [Monster, Monster];
     private readonly NESZButtonClickListener: any;
     private readonly NESXButtonClickListener: any;
 
     constructor(gameFight: HTMLElement, monsters: [Monster, Monster], listener_1: any, listener_2: any) {
-        this.gameFight = gameFight;
+        this.element = gameFight;
         this.monsters = monsters;
         this.NESZButtonClickListener = listener_1;
         this.NESXButtonClickListener = listener_2;
@@ -19,7 +18,7 @@ export class FightRenderer implements IRenderer {
     }
 
     public update(): void {
-        let monstersDiv = this.gameFight.getElementsByClassName('monsters')[0].children;
+        let monstersDiv = this.element.getElementsByClassName('monsters')[0].children;
         console.assert(monstersDiv.length == this.monsters.length);
         for (let i = 0; i < monstersDiv.length; ++i) {
             let sprite = monstersDiv[i].getElementsByClassName('sprite')[0];
@@ -33,10 +32,9 @@ export class FightRenderer implements IRenderer {
             health.innerHTML = `${this.monsters[i].health}`;
             defense.innerHTML = `${this.monsters[i].defense}`;
         }
-        let buttons = this.gameFight.getElementsByClassName('action-btn')[0].children;
+        let buttons = this.element.getElementsByClassName('action-btn')[0].children;
         console.assert(buttons.length == 2);
         buttons[0].addEventListener('click', this.NESZButtonClickListener);
         buttons[1].addEventListener('click', this.NESXButtonClickListener);
     }
-
 }

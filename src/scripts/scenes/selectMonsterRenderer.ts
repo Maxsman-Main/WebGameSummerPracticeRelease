@@ -1,6 +1,6 @@
-import {IRenderer} from "./interfaces";
-import {Player} from "./player";
-import {Monster} from "./monster";
+import {IRenderer} from "../interfaces";
+import {Player} from "../creatures/player";
+import {Monster} from "../creatures/monster";
 
 export class SelectMonsterRenderer implements IRenderer {
     private domElement: HTMLElement;
@@ -18,25 +18,20 @@ export class SelectMonsterRenderer implements IRenderer {
 
     public update(): void {
         let select = this.domElement.getElementsByClassName('select')[0];
-
         select.innerHTML = "";
-        for (let i = 0; i < this.player.availableMonters.length; ++i) {
+        for (let i = 0; i < this.player.availableMonsters.length; ++i) {
             let option = document.createElement('option');
             option.value = `${i}`;
-            option.innerText = this.player.availableMonters[i].getString();
+            option.innerText = this.player.availableMonsters[i].getString();
             select.appendChild(option);
         }
-
         let OkButton = this.domElement.getElementsByClassName('ok')[0];
         OkButton.addEventListener('click', this.OkButtonListener);
     }
 
-    public getChoosenMonster(): Monster {
+    public getChosenMonster(): Monster {
         let select = <HTMLSelectElement>this.domElement.getElementsByClassName('select')[0];
         let index = select.value;
-        console.log(index);
-        return this.player.availableMonters[
-            parseInt(index)
-            ];
+        return this.player.availableMonsters[parseInt(index)];
     }
 }

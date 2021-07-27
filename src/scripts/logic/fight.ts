@@ -1,4 +1,4 @@
-import {Monster} from "./monster"
+import {Monster} from "../creatures/monster"
 
 export class Fight {
 
