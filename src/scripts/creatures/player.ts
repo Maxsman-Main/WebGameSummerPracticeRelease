@@ -11,7 +11,7 @@ export class Player extends Creature implements IDrawableInField {
         return this._availableMoves;
     }
 
-    private _availableMonsters: Monster[];
+    private readonly _availableMonsters: Monster[];
     public get availableMonsters(): Monster[] {
         return this._availableMonsters;
     }
@@ -43,11 +43,10 @@ export class Player extends Creature implements IDrawableInField {
     }
 
     public deleteMonster(monster: Monster): void {
-        const index = this._availableMonsters.indexOf(monster);
-
-        this._availableMonsters = (index > -1) ? [
-            ...this._availableMonsters.slice(0, index),
-            ...this._availableMonsters.slice(index + 1)
-        ] : this._availableMonsters;
+        const index = this.availableMonsters.indexOf(monster);
+        console.assert(index != -1);
+        if (index > -1) {
+            this.availableMonsters.splice(index, 1);
+        }
     }
 }
