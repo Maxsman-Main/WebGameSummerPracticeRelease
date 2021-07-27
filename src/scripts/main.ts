@@ -60,21 +60,10 @@ function cellClickListener(event: MouseEvent) {
 }
 
 /* Click Listener for Z button in fight */
-function NESZButtonClickListener(event: MouseEvent) {
-    console.log('clicked', event.target);
-    gameState.fight.defenseMonster.beAttacked(gameState.fight.currentMonster);
+function NESZButtonClickListener() {
+    gameState.fight.attackCurrent();
     if (gameState.fight.isFinish()) {
-        gameState.fight.currentMonster.Heal();
-        gameState.fight.defenseMonster.Heal();
-        if (gameState.fight.getWinner().looted) {
-            gameState.player.addMonster(gameState.fight.defenseMonster);
-            gameState.fight.defenseMonster.loot();
-            console.log(`added monster: ${gameState.fight.defenseMonster.getString()}`)
-            gameState.map.getCell(gameState.player.getCoordinates()).loot();
-        } else {
-            gameState.player.deleteMonster(gameState.fight.currentMonster);
-            console.log(`deleted: ${gameState.fight.currentMonster.getString()}`)
-        }
+        gameState.fight.finish();
         sceneManager.showScene('field');
     }
     gameState.fight.swap();
@@ -83,7 +72,7 @@ function NESZButtonClickListener(event: MouseEvent) {
 
 /* Click Listener for X button in fight */
 function NESXButtonClickListener() {
-    gameState.fight.currentMonster.defenseHimself();
+    gameState.fight.defendCurrent();
     gameState.fight.swap();
     fightRenderer.update();
 }
@@ -102,5 +91,5 @@ function OKButtonInSelectClickListener() {
         NESXButtonClickListener
     );
     fightRenderer.update();
-    gameState.fight = new Fight(...monsters);
+    gameState.fight = new Fight(gameState.player, ...monsters);
 }
