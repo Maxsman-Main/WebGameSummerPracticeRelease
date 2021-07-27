@@ -73,7 +73,7 @@ export class Monster extends Creature {
     }
 
     public getString() {
-        return `${this.name} ${this.health}`;
+        return `${this.name}, hp: ${this.health}, defence: ${this.defense}, attack: ${this.attack}`;
     }
 
     public loot() {
