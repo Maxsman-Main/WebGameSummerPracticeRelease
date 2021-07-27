@@ -31,7 +31,7 @@ export class Cell implements IHasCssClass {
         return this._looted;
     }
     public loot(): void {
-        this._looted = false;
+        this._looted = true;
     }
 
     /**

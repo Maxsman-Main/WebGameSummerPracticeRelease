@@ -47,7 +47,7 @@ function cellClickListener(event: MouseEvent) {
             gameState.player.getCoordinates()
         ]);
     } else if (Compare.shallowEqual(coordinates, gameState.player.getCoordinates())) {
-        if (gameState.map.getCell(coordinates).monster == null)
+        if (gameState.map.getCell(coordinates).looted)
             return;
         selectMonsterRenderer = new SelectMonsterRenderer(
             sceneManager.getSceneInfo('select-monster').element,
@@ -70,9 +70,7 @@ function NESZButtonClickListener(event: MouseEvent) {
             gameState.player.addMonster(gameState.fight.defenseMonster);
             gameState.fight.defenseMonster.loot();
             console.log(`added monster: ${gameState.fight.defenseMonster.getString()}`)
-            gameState.map.getCell(
-                gameState.player.getCoordinates()
-            ).loot();
+            gameState.map.getCell(gameState.player.getCoordinates()).loot();
         } else {
             gameState.player.deleteMonster(gameState.fight.currentMonster);
             console.log(`deleted: ${gameState.fight.currentMonster.getString()}`)
