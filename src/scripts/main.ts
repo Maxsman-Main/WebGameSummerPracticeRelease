@@ -70,6 +70,7 @@ function NESZButtonClickListener(event: MouseEvent) {
         gameState.fight.defenseMonster.Heal();
         if (gameState.fight.getWinner().looted) {
             gameState.player.addMonster(gameState.fight.defenseMonster);
+            gameState.fight.defenseMonster.loot();
             console.log(`added monster: ${gameState.fight.defenseMonster.getString()}`)
             gameState.map.getCell(
                 gameState.player.getCoordinates()
