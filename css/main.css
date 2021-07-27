@@ -82,6 +82,12 @@ body {
   justify-content: center;
 }
 
+#game #game-select-monster {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 /* Font Awesome */
 .fa-heart {
   color: red;
