@@ -26,6 +26,10 @@ export class GameState {
             {
                 name: 'fight',
                 element: document.getElementById('game-fight')
+            },
+            {
+                name: 'select-monster',
+                element: document.getElementById('game-select-monster')
             }
         ]
         this.fight = null;

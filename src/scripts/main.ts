@@ -1,11 +1,12 @@
 import {Player} from './player';
-import {Chudila, Pridurok} from './monster';
+import {Chudila, Monster, Pridurok} from './monster';
 import {FieldRenderer} from './fieldRenderer';
 import {SceneManager} from './sceneManager';
 import {GameState} from './gameState';
 import {I2DCoordinates} from './interfaces';
 import {Utils} from "./utils";
 import {FightRenderer} from "./fightRenderer";
+import {SelectMonsterRenderer} from './selectMonsterRenderer'
 import {Fight} from './fight';
 
 /* Global variables */
@@ -20,6 +21,7 @@ const fieldRenderer = new FieldRenderer(
     cellClickListener
 );
 let fightRenderer: FightRenderer = null;
+let selectMonsterRenderer: SelectMonsterRenderer = null;
 
 /* Prepare field */
 fieldRenderer.render();
@@ -49,21 +51,13 @@ function cellClickListener(event: MouseEvent) {
     } else if (Utils.shallowEqual(coordinates, gameState.player.getCoordinates())) {
         if (gameState.map.getCell(coordinates).monster == null)
             return;
-        sceneManager.showScene('fight');
-        fightRenderer = new FightRenderer(
-            sceneManager.getSceneInfo('fight').element,
-            [
-                gameState.player.availableMonters[0],
-                gameState.map.getCell(coordinates).monster
-            ],
-            NESZButtonClickListener,
-            NESXButtonClickListener
-        );
-        fightRenderer.update();
-        gameState.fight = new Fight(
-            gameState.player.availableMonters[0],
-            gameState.map.getCell(coordinates).monster
-        );
+        selectMonsterRenderer = new SelectMonsterRenderer(
+            sceneManager.getSceneInfo('select-monster').element,
+            gameState.player,
+            OKButtonInSelectClickListener
+        )
+        selectMonsterRenderer.update();
+        sceneManager.showScene('select-monster');
     }
 }
 
@@ -75,12 +69,14 @@ function NESZButtonClickListener(event: MouseEvent) {
         gameState.fight.currentMonster.Heal();
         gameState.fight.defenseMonster.Heal();
         if (gameState.fight.getWinner().looted) {
-            gameState.player.addMonster(gameState.fight.currentMonster);
+            gameState.player.addMonster(gameState.fight.defenseMonster);
+            console.log(`added monster: ${gameState.fight.defenseMonster.getString()}`)
             gameState.map.getCell(
                 gameState.player.getCoordinates()
             ).loot();
         } else {
-            gameState.player.deleteMonster(gameState.fight.defenseMonster);
+            gameState.player.deleteMonster(gameState.fight.currentMonster);
+            console.log(`deleted: ${gameState.fight.currentMonster.getString()}`)
         }
         sceneManager.showScene('field');
     }
@@ -95,6 +91,22 @@ function NESXButtonClickListener(event: MouseEvent) {
     fightRenderer.update();
 }
 
+/* Click Listener for OK button in select-monster */
+function OKButtonInSelectClickListener(event: MouseEvent) {
+    sceneManager.showScene('fight');
+    let monsters: [Monster, Monster] = [
+        selectMonsterRenderer.getChoosenMonster(),
+        gameState.map.getCell(gameState.player.getCoordinates()).monster
+    ]
+    fightRenderer = new FightRenderer(
+        sceneManager.getSceneInfo('fight').element,
+        monsters,
+        NESZButtonClickListener,
+        NESXButtonClickListener
+    );
+    fightRenderer.update();
+    gameState.fight = new Fight(...monsters);
+}
 
 document.addEventListener('keypress', (event) => {
     const keyName = event.key;
