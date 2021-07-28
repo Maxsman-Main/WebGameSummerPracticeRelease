@@ -6,7 +6,7 @@ export class Player extends Creature implements IDrawableInField {
     private x: number;
     private y: number;
 
-    private readonly _availableMoves: number;
+    private _availableMoves: number;
     public get availableMoves(): number {
         return this._availableMoves;
     }
@@ -32,6 +32,7 @@ export class Player extends Creature implements IDrawableInField {
     public move(coordinates: I2DCoordinates): void {
         this.x = coordinates.x;
         this.y = coordinates.y;
+        this._availableMoves -= 1;
     }
 
     public getCoordinates(): I2DCoordinates  {
