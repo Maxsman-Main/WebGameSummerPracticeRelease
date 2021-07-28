@@ -42,7 +42,7 @@ export class MoveManager {
     public move(coordinates: I2DCoordinates): boolean {
         if (this.isCorrectCoordinates(coordinates)) {
             console.log(`${this.player.name} moved to (${coordinates.x}, ${coordinates.y})`);
-            this.player.move(coordinates);
+            this.player.move(coordinates, this.map.getCell(coordinates).transitionCost);
             return true;
         } else {
             console.log(`${this.player.name} not moved to (${coordinates.x}, ${coordinates.y})`);
