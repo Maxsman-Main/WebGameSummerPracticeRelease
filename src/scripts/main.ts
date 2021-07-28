@@ -1,5 +1,3 @@
-import firebase from "@firebase/app";
-
 import {Player} from './creatures/player';
 import {Monster, Pridurok} from './creatures/monster';
 import {FieldRenderer} from './scenes/fieldRenderer';
@@ -10,13 +8,10 @@ import {FightRenderer} from "./scenes/fightRenderer";
 import {SelectMonsterRenderer} from './scenes/selectMonsterRenderer'
 import {Fight} from './logic/fight';
 import {Compare} from "./utils/compare";
+import {firebase, db} from "./firebase"
 
-firebase.initializeApp({
-    apiKey: '### FIREBASE API KEY ###',
-    authDomain: '### FIREBASE AUTH DOMAIN ###',
-    projectId: '### CLOUD FIRESTORE PROJECT ID ###'
-});
 
+console.log(db);
 /* Global variables */
 const gameState = new GameState(
     new Player("Steve", "hero", 0, 0, 4, [new Pridurok()]),
