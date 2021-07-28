@@ -41,8 +41,31 @@ export class LandCell extends Cell {
     }
 }
 
-export class MountCell extends Cell {
+export class VolcanoCell extends Cell {
     constructor() {
-        super('mount', [3, 5], [new Chudila()]);
+        super('volcano', [3, 5], [new Chudila()]);
+    }
+}
+
+export class ForestCell extends Cell {
+    constructor() {
+        super('forest', [3, 5], [new Chudila()]);
+    }
+}
+
+export class LakeCell extends Cell {
+    constructor() {
+        super('lake', [3, 5], [new Chudila()]);
+    }
+}
+export class DarkCastleCell extends Cell {
+    constructor() {
+        super('dark_castle', [3, 5], [new Chudila()]);
+    }
+}
+
+export class WhiteCastleCell extends Cell {
+    constructor() {
+        super('white_castle', [3, 5], [new Chudila()]);
     }
 }
