@@ -35,7 +35,10 @@ gulp.task('ts', () => {
         packageCache: {}
     })
         .transform('babelify', {
-            presets: ['es2015']
+            global: true,
+            presets: ['es2015'],
+            extensions: ['.ts', '.js'],
+            sourceType: 'module',
         })
         .plugin(tsify)
         .bundle()

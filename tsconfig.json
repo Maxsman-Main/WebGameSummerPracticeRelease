@@ -1,7 +1,14 @@
 {
   "files": ["src/scripts/main.ts"],
+  "moduleResolution": "node",
   "compilerOptions": {
     "noImplicitAny": true,
-    "target": "es2015"
+    "target": "es2015",
+    "sourceType": "module",
+    "moduleResolution": "node",
+    "baseUrl": "src",
+    "paths": {
+      "@modules/*": ["node_modules/*"]
+    }
   }
 }
