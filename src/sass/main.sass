@@ -44,8 +44,7 @@ $cells-in-row: 5
                     height: math.div($field-width, $cells-in-row) + px
                     animation: opacity-reverse 0.4s
                     animation-fill-mode: forwards
-                    background-size: 120px
-
+                    background-size: math.div($field-width, $cells-in-row) + px
 
                 .sprite:hover
                     animation: opacity 0.4s
@@ -69,7 +68,7 @@ $cells-in-row: 5
                 aspect-ratio: 1
                 
                 .sprite
-                    width: 200px 
+                    width: 200px
                     aspect-ratio: 1 / 1
                     background-size: 200px
                 
@@ -171,3 +170,21 @@ $cells-in-row: 5
 
 .mirrorY 
     transform: scale(-1, 1)
+
+/* Mobile */
+@for $i from 2 to 7
+    $new-field-width: ($i - 1) * 100
+    @media screen and (min-width: ($i - 1) * 100 + px)
+
+        #game
+            #game-field
+                width: $new-field-width + px
+                table
+                    width: $new-field-width + px
+                    td
+                        width: math.div($new-field-width, $cells-in-row) + px
+                        height: math.div($new-field-width, $cells-in-row) + px
+                        .sprite
+                            width: math.div($new-field-width, $cells-in-row) + px
+                            height: math.div($new-field-width, $cells-in-row) + px
+                            background-size: math.div($new-field-width, $cells-in-row) + px
