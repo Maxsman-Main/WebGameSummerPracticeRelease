@@ -14,8 +14,8 @@ export class MoveManager {
     }
 
     public outOfBoundsOfArray(coordinates: I2DCoordinates): boolean {
-        return Compare.isInRange(coordinates.x, 0, this.map.getSize().x) &&
-                Compare.isInRange(coordinates.y, 0, this.map.getSize().y);
+        return Compare.isInRange(coordinates.x, 0, this.map.getSize().x - 1) &&
+                Compare.isInRange(coordinates.y, 0, this.map.getSize().y - 1);
     }
 
     public adjacentCellHorizOrVer(coordinates: I2DCoordinates): boolean {
