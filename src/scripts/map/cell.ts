@@ -23,18 +23,6 @@ export class Cell implements IHasCssClass {
     }
 
     /**
-     * is it possible to fight this monster in the cell
-     * @private
-     */
-    private _looted: boolean;
-    public get looted(): boolean {
-        return this._looted;
-    }
-    public loot(): void {
-        this._looted = true;
-    }
-
-    /**
      *
      * @param cssClass
      * @param transitionCostMinMax is minimum and maximum value
