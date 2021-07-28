@@ -1,6 +1,7 @@
 import {I2DCoordinates} from '../interfaces';
 import {Map} from '../map/map';
 import {Player} from '../creatures/player';
+import {Compare} from "../utils/compare";
 
 export class MoveManager {
 
@@ -12,6 +13,20 @@ export class MoveManager {
         this.player = player;
     }
 
+    public outOfBoundsOfArray(coordinates: I2DCoordinates): boolean {
+        return Compare.isInRange(coordinates.x, 0, this.map.getSize().x) &&
+                Compare.isInRange(coordinates.y, 0, this.map.getSize().y);
+    }
+
+    public adjacentCellHorizOrVer(coordinates: I2DCoordinates): boolean {
+        return (Math.abs(coordinates.x - this.player.getCoordinates().x) +
+                Math.abs(coordinates.y - this.player.getCoordinates().y) == 1);
+    }
+
+    public haveEnoughMovement(coordinates: I2DCoordinates): boolean {
+        return this.player.availableMoves >= this.map.getCell(coordinates).transitionCost;
+    }
+
     /**
      * Coordinates are correct if the map range is included
      * and point to an adjacent cell horizontally or vertically
@@ -19,10 +34,9 @@ export class MoveManager {
      * @param coordinates
      */
     public isCorrectCoordinates(coordinates: I2DCoordinates): boolean {
-        return (0 <= coordinates.x && coordinates.x < this.map.getSize().x) &&
-               (0 <= coordinates.y && coordinates.y < this.map.getSize().y) &&
-               (Math.abs(coordinates.x - this.player.getCoordinates().x) +
-                Math.abs(coordinates.y - this.player.getCoordinates().y) == 1);
+        return this.outOfBoundsOfArray(coordinates) &&
+        this.adjacentCellHorizOrVer(coordinates) &&
+        this.haveEnoughMovement(coordinates);
     }
 
     public move(coordinates: I2DCoordinates): boolean {
