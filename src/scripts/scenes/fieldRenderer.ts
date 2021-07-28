@@ -6,13 +6,13 @@ import {Compare} from "../utils/compare";
 export class FieldRenderer implements IRenderer {
     private map: Map;
     private gameState: GameState;
-    private element: HTMLElement;
+    private element: Element;
     private readonly mouseListener: any;
     
     constructor(gameState: GameState, gameField: HTMLElement, mouseListener: any) {
         this.map = gameState.map;
         this.gameState = gameState;
-        this.element = gameField;
+        this.element = gameField.getElementsByClassName('table')[0];
         this.mouseListener = mouseListener; 
     }
 
