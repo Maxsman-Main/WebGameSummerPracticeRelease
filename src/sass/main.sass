@@ -21,7 +21,8 @@ $cells-in-row: 5
     #game-field
         width: $field-width + px
         aspect-ratio: 1 / 1
-        display: block
+        display: flex
+        flex-direction: column
 
         table
             background-color: #333
@@ -50,6 +51,18 @@ $cells-in-row: 5
                 .sprite:hover
                     animation: opacity 0.4s
                     animation-fill-mode: forwards
+
+        .panel
+            display: flex
+            flex-direction: row
+            align-items: center
+            justify-content: space-between
+            margin-top: 20px
+
+            .info
+                display: flex
+                justify-self: center
+                font-size: 1.4em
 
 /* Game Fight */
 #game
