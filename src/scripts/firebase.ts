@@ -1,9 +1,6 @@
+import firebase from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/database';
-import '@firebase/storage';
 import 'firebase/firestore'
-
-import firebase from 'firebase';
 
 const firebaseConfig = {
     apiKey: "AIzaSyD3q-5oL3uBVysZM_rb486eG_FtespBNg4",
@@ -12,13 +9,11 @@ const firebaseConfig = {
     storageBucket: "projectx-web-game.appspot.com",
     messagingSenderId: "955125960594",
     appId: "1:955125960594:web:3e1f30bccb0d4ff5bdbb4b",
+    measurementId: "G-PSSP5QF2DC"
 };
 
-firebase.initializeApp(firebaseConfig);
-
-let db = firebase.firestore();
-
-export {
-    firebase,
-    db
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
 }
+
+export const db = firebase.firestore;
