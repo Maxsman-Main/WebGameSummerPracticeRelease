@@ -33,7 +33,17 @@ gulp.task('ts', () => {
         entries: ["src/scripts/main.ts"],
         cache: {},
         packageCache: {}
-    }).plugin(tsify).bundle().pipe(source("bundle.js")).pipe(gulp.dest("dist"));
+    })
+        .transform('babelify', {
+            global: true,
+            presets: ['es2015'],
+            extensions: ['.ts', '.js'],
+            sourceType: 'module',
+        })
+        .plugin(tsify)
+        .bundle()
+        .pipe(source("bundle.js"))
+        .pipe(gulp.dest("dist"));
 });
 
 gulp.task('fonts', () => {

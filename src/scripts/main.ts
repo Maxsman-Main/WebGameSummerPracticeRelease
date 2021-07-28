@@ -7,7 +7,6 @@ import {I2DCoordinates} from './interfaces';
 import {FightRenderer} from "./scenes/fightRenderer";
 import {SelectMonsterRenderer} from './scenes/selectMonsterRenderer'
 import {Fight} from './logic/fight';
-import {Compare} from "./utils/compare";
 
 /* Global variables */
 const gameState = new GameState(
@@ -46,23 +45,10 @@ function cellClickListener(event: MouseEvent) {
             old_coordinate,
             gameState.player.getCoordinates()
         ]);
-    } else if (Compare.shallowEqual(coordinates, gameState.player.getCoordinates())) {
-        if (gameState.map.getCell(coordinates).monster.looted)
-            return;
-        if (gameState.player.availableMoves <= 0)
-            return;
-        selectMonsterRenderer = new SelectMonsterRenderer(
-            sceneManager.getSceneInfo('select-monster').element,
-            gameState.player,
-            OKButtonInSelectClickListener
-        )
-        selectMonsterRenderer.update();
-        sceneManager.showScene('select-monster');
     }
 }
 
-/* Click Listener for Z button in fight */
-function NESZButtonClickListener() {
+function NESZButtonInFightClickListener() {
     gameState.fight.attackCurrent();
     if (gameState.fight.isFinish()) {
         gameState.fight.finish();
@@ -72,11 +58,25 @@ function NESZButtonClickListener() {
     fightRenderer.update();
 }
 
-/* Click Listener for X button in fight */
-function NESXButtonClickListener() {
+function NESXButtonInFightClickListener() {
     gameState.fight.defendCurrent();
     gameState.fight.swap();
     fightRenderer.update();
+}
+
+function NESZButtonInFieldClickListener() {
+    let coordinates = gameState.player.getCoordinates();
+    if (gameState.map.getCell(coordinates).monster.looted)
+        return;
+    if (gameState.player.availableMoves <= 0)
+        return;
+    selectMonsterRenderer = new SelectMonsterRenderer(
+        sceneManager.getSceneInfo('select-monster').element,
+        gameState.player,
+        OKButtonInSelectClickListener
+    )
+    selectMonsterRenderer.update();
+    sceneManager.showScene('select-monster');
 }
 
 /* Click Listener for OK button in select-monster */
@@ -89,8 +89,8 @@ function OKButtonInSelectClickListener() {
     fightRenderer = new FightRenderer(
         sceneManager.getSceneInfo('fight').element,
         monsters,
-        NESZButtonClickListener,
-        NESXButtonClickListener
+        NESZButtonInFightClickListener,
+        NESXButtonInFightClickListener
     );
     fightRenderer.update();
     gameState.fight = new Fight(gameState.player, ...monsters);
