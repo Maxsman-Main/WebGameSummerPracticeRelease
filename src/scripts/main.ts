@@ -95,3 +95,9 @@ function OKButtonInSelectClickListener() {
     fightRenderer.update();
     gameState.fight = new Fight(gameState.player, ...monsters);
 }
+
+window.addEventListener("keydown", function (event) {
+    if (event.key == "r") {
+        console.log(gameState.player.availableMoves);
+    }
+}, true);
