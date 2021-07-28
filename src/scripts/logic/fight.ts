@@ -54,5 +54,6 @@ export class Fight {
             this._player.deleteMonster(this.defenseMonster);
             console.log(`${this._player.name} lose`);
         }
+        this._player.resetAvailableMoves();
     }
 }
