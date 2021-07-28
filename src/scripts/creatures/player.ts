@@ -34,11 +34,12 @@ export class Player extends Creature implements IDrawableInField {
     /**
      * set new coordinates
      * @param coordinates
+     * @param moves
      */
-    public move(coordinates: I2DCoordinates): void {
+    public move(coordinates: I2DCoordinates, moves: number): void {
         this.x = coordinates.x;
         this.y = coordinates.y;
-        this._availableMoves -= 1;
+        this._availableMoves -= moves;
     }
 
     public getCoordinates(): I2DCoordinates  {
