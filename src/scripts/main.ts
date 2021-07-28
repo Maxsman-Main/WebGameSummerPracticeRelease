@@ -49,6 +49,8 @@ function cellClickListener(event: MouseEvent) {
     } else if (Compare.shallowEqual(coordinates, gameState.player.getCoordinates())) {
         if (gameState.map.getCell(coordinates).monster.looted)
             return;
+        if (gameState.player.availableMoves <= 0)
+            return;
         selectMonsterRenderer = new SelectMonsterRenderer(
             sceneManager.getSceneInfo('select-monster').element,
             gameState.player,
