@@ -10,6 +10,12 @@ export class Player extends Creature implements IDrawableInField {
     public get availableMoves(): number {
         return this._availableMoves;
     }
+    public setAvailableMoves(value: number): void {
+        this._availableMoves = value;
+    }
+    public resetAvailableMoves(): void {
+        this._availableMoves = 0;
+    }
 
     private readonly _availableMonsters: Monster[];
     public get availableMonsters(): Monster[] {
