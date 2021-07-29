@@ -7,6 +7,7 @@ import {I2DCoordinates} from './interfaces';
 import {FightRenderer} from "./scenes/fightRenderer";
 import {SelectMonsterRenderer} from './scenes/selectMonsterRenderer'
 import {Fight} from './logic/fight';
+import {StartRenderer} from './scenes/startRenderer';
 
 /* Global variables */
 const gameState = new GameState(
@@ -16,15 +17,30 @@ const gameState = new GameState(
 const sceneManager = new SceneManager(gameState);
 
 /* Renderers */
-const fieldRenderer = new FieldRenderer(gameState,  sceneManager.getSceneInfo('field').element,
-    cellClickListener, NESZButtonInFieldClickListener, NESXButtonInFieldClickListener);
+const fieldRenderer = new FieldRenderer(
+    gameState,
+    sceneManager.getSceneInfo('field').element,
+    cellClickListener,
+    NESZButtonInFieldClickListener,
+    NESXButtonInFieldClickListener
+);
 let fightRenderer: FightRenderer = null;
 let selectMonsterRenderer: SelectMonsterRenderer = null;
+let startRenderer = new StartRenderer(
+    sceneManager.getSceneInfo('start').element,
+    startButtonClickListener
+);
+startRenderer.render();
 
 /* Prepare field */
 fieldRenderer.render();
 fieldRenderer.update();
-sceneManager.showScene('field');
+sceneManager.showScene('start');
+
+/* Start button */
+function startButtonClickListener() {
+    sceneManager.showScene('field');
+}
 
 /* Click Listener for all cells in field */
 function cellClickListener(event: MouseEvent) {

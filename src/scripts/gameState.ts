@@ -20,6 +20,10 @@ export class GameState {
         this.moveManager = new MoveManager(this.map, this.player);
         this.scenes = [
             {
+                name: 'start',
+                element: document.getElementById('game-start')
+            },
+            {
                 name: 'field',
                 element: document.getElementById('game-field')
             },
