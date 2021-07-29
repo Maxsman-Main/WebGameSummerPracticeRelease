@@ -112,3 +112,18 @@ window.addEventListener("keydown", function (event) {
         console.log(gameState.player.availableMoves);
     }
 }, true);
+
+
+import {firebase} from "./firebase";
+
+window.addEventListener("keydown", function (event) {
+    if (event.key == "w") {
+        let provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function (result) {
+            console.log(result);
+        }).catch(function (error) {
+            console.log(error);
+            console.log("Bad!");
+        });
+    }
+})
