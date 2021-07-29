@@ -102,7 +102,26 @@ $cells-in-row: 5
     #game-select-monster
         display: flex
         flex-direction: column
-        justify-content: center
+        justify-content: start
+        select 
+            outline: 0
+            border: 0 
+            background: #e0e0e0
+            background-image: none
+            color: #4d4d4d
+            padding: 0 .4em
+            cursor: pointer
+            font-size: 22px
+            font-family: '04b03', monospace
+        .select 
+            height: 30px
+            width: 400px
+            background: #e0e0e0
+            overflow: hidden
+            border-radius: 8px
+        .ok
+            margin: auto
+
 
 /* Font Awesome */
 .fa-heart
