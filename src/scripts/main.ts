@@ -1,13 +1,17 @@
 import {Player} from './creatures/player';
 import {Monster, Shark} from './creatures/monster';
-import {FieldRenderer} from './scenes/fieldRenderer';
+
 import {SceneManager} from './scenes/sceneManager';
-import {GameState} from './gameState';
-import {I2DCoordinates} from './interfaces';
 import {FightRenderer} from "./scenes/fightRenderer";
+import {FieldRenderer} from './scenes/fieldRenderer';
 import {SelectMonsterRenderer} from './scenes/selectMonsterRenderer'
-import {Fight} from './logic/fight';
 import {StartRenderer} from './scenes/startRenderer';
+
+import {GameState} from './gameState';
+
+import {I2DCoordinates} from './interfaces';
+
+import {Fight} from './logic/fight';
 
 /* Global variables */
 const gameState = new GameState(
@@ -26,21 +30,11 @@ const fieldRenderer = new FieldRenderer(
 );
 let fightRenderer: FightRenderer = null;
 let selectMonsterRenderer: SelectMonsterRenderer = null;
-let startRenderer = new StartRenderer(
-    sceneManager.getSceneInfo('start').element,
-    startButtonClickListener
-);
-startRenderer.render();
 
 /* Prepare field */
 fieldRenderer.render();
 fieldRenderer.update();
-sceneManager.showScene('start');
-
-/* Start button */
-function startButtonClickListener() {
-    sceneManager.showScene('field');
-}
+sceneManager.showScene('field');
 
 /* Click Listener for all cells in field */
 function cellClickListener(event: MouseEvent) {
@@ -128,18 +122,3 @@ window.addEventListener("keydown", function (event) {
         console.log(gameState.player.availableMoves);
     }
 }, true);
-
-
-import {firebase} from "./firebase";
-
-window.addEventListener("keydown", function (event) {
-    if (event.key == "w") {
-        let provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(provider).then(function (result) {
-            console.log(result);
-        }).catch(function (error) {
-            console.log(error);
-            console.log("Bad!");
-        });
-    }
-})
