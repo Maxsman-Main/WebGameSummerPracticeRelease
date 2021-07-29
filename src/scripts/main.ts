@@ -16,7 +16,8 @@ const gameState = new GameState(
 const sceneManager = new SceneManager(gameState);
 
 /* Renderers */
-const fieldRenderer = new FieldRenderer(gameState,  sceneManager.getSceneInfo('field').element, cellClickListener);
+const fieldRenderer = new FieldRenderer(gameState,  sceneManager.getSceneInfo('field').element,
+    cellClickListener, NESZButtonInFieldClickListener, NESXButtonInFieldClickListener);
 let fightRenderer: FightRenderer = null;
 let selectMonsterRenderer: SelectMonsterRenderer = null;
 
@@ -77,6 +78,12 @@ function NESZButtonInFieldClickListener() {
     )
     selectMonsterRenderer.update();
     sceneManager.showScene('select-monster');
+}
+
+function NESXButtonInFieldClickListener() {
+    gameState.player.resetAvailableMoves();
+    console.log("Reset");
+    gameState.player.setAvailableMoves(10);
 }
 
 /* Click Listener for OK button in select-monster */

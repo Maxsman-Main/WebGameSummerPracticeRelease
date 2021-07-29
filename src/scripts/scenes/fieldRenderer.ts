@@ -7,35 +7,44 @@ export class FieldRenderer implements IRenderer {
     private map: Map;
     private gameState: GameState;
     private element: Element;
-    private readonly mouseListener: any;
+    private readonly cellClickListener: any;
+    private readonly buttonZClickListener: any;
+    private readonly buttonXClickListener: any;
     
-    constructor(gameState: GameState, gameField: HTMLElement, mouseListener: any) {
+    constructor(gameState: GameState, gameField: HTMLElement, mouseListener: any, buttonZClickListener: any,
+                buttonXClickListener: any) {
         this.map = gameState.map;
         this.gameState = gameState;
-        this.element = gameField.getElementsByClassName('table')[0];
-        this.mouseListener = mouseListener; 
+        this.element = gameField;
+        this.cellClickListener = mouseListener;
+        this.buttonZClickListener = buttonZClickListener;
+        this.buttonXClickListener = buttonXClickListener;
     }
 
     /**
      * Generates a table and append it to this.element
      */
     public render(): void {
-        let table = document.createElement('table');
+        let table = this.getTable();
+        table.innerHTML = "";
         for (let y = 0; y < this.map.getSize().y; ++y) {
             let row = document.createElement('tr');
             for (let x = 0; x  < this.map.getSize().x; ++x) {
                 let cell = document.createElement('td');
-                cell.addEventListener('click', this.mouseListener);
+                cell.addEventListener('click', this.cellClickListener);
                 row.appendChild(cell);
             }
             table.appendChild(row);
         }
-        this.element.innerHTML = "";
-        this.element.appendChild(table);
+        let buttons = this.element.getElementsByClassName("buttons")[0].children;
+        console.log(this.element);
+        console.log(buttons);
+        buttons[0].addEventListener('click', this.buttonZClickListener);
+        buttons[1].addEventListener('click', this.buttonXClickListener);
     }
 
     private getTable(): HTMLTableElement {
-        return <HTMLTableElement> this.element.children[0];
+        return <HTMLTableElement> this.element.getElementsByClassName('table')[0];
     }
 
     /**
@@ -97,4 +106,5 @@ export class FieldRenderer implements IRenderer {
             }
         }
     }
+
 }
