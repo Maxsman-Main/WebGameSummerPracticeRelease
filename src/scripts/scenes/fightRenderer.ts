@@ -15,15 +15,44 @@ export class FightRenderer implements IRenderer {
     }
 
     public render(): void {
+        this.getZButton().addEventListener('click', this.NESZButtonClickListener);
+        this.getXButton().addEventListener('click', this.NESXButtonClickListener);
+    }
+
+    private getMonsterDivs(): HTMLCollection {
+        return this.element.getElementsByClassName("monsters")[0].children;
+    }
+
+    private static getSprite(elem: Element) {
+        return elem.getElementsByClassName('sprite')[0];
+    }
+
+    private static getHealth(elem: Element) {
+        return elem.getElementsByClassName('health')[0];
+    }
+
+    private static getDefense(elem: Element) {
+        return elem.getElementsByClassName('defense')[0];
+    }
+
+    private getButtons() {
+        return this.element.getElementsByClassName('action-btn')[0].children;
+    }
+
+    private getZButton() {
+        return this.getButtons()[0];
+    }
+
+    private getXButton() {
+        return this.getButtons()[1];
     }
 
     public update(): void {
-        let monstersDiv = this.element.getElementsByClassName('monsters')[0].children;
-        console.assert(monstersDiv.length == this.monsters.length);
-        for (let i = 0; i < monstersDiv.length; ++i) {
-            let sprite = monstersDiv[i].getElementsByClassName('sprite')[0];
-            let health = monstersDiv[i].getElementsByClassName('health')[0];
-            let defense = monstersDiv[i].getElementsByClassName('defense')[0];
+        let monsterDivs = this.getMonsterDivs();
+        for (let i = 0; i < monsterDivs.length; ++i) {
+            let sprite = FightRenderer.getSprite(monsterDivs[i]);
+            let health = FightRenderer.getHealth(monsterDivs[i]);
+            let defense = FightRenderer.getDefense(monsterDivs[i]);
 
             sprite.className = `sprite ${this.monsters[i].cssClass}`;
             if (i == 1) {
@@ -32,9 +61,5 @@ export class FightRenderer implements IRenderer {
             health.innerHTML = `${this.monsters[i].health}`;
             defense.innerHTML = `${this.monsters[i].defense}`;
         }
-        let buttons = this.element.getElementsByClassName('action-btn')[0].children;
-        console.assert(buttons.length == 2);
-        buttons[0].addEventListener('click', this.NESZButtonClickListener);
-        buttons[1].addEventListener('click', this.NESXButtonClickListener);
     }
 }

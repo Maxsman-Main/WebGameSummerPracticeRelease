@@ -99,6 +99,7 @@ function OKButtonInSelectClickListener() {
         NESZButtonInFightClickListener,
         NESXButtonInFightClickListener
     );
+    fightRenderer.render();
     fightRenderer.update();
     gameState.fight = new Fight(gameState.player, ...monsters);
 }
