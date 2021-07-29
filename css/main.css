@@ -17,7 +17,8 @@ body {
 #game #game-field {
   width: 600px;
   aspect-ratio: 1/1;
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 #game #game-field table {
   background-color: #333;
@@ -45,6 +46,18 @@ body {
 #game #game-field table td .sprite:hover {
   animation: opacity 0.4s;
   animation-fill-mode: forwards;
+}
+#game #game-field .panel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+#game #game-field .panel .info {
+  display: flex;
+  justify-self: center;
+  font-size: 1.4em;
 }
 
 /* Game Fight */
@@ -145,10 +158,6 @@ body {
   background: url("../images/white_castle.png");
 }
 
-.lava {
-  background: url("images/lava.png");
-}
-
 .mount {
   background-color: #a7acba;
 }
@@ -185,4 +194,91 @@ body {
 
 .mirrorY {
   transform: scale(-1, 1);
+}
+
+/* Mobile */
+@media screen and (min-width: 100px) {
+  #game #game-field {
+    width: 100px;
+  }
+  #game #game-field table {
+    width: 100px;
+  }
+  #game #game-field table td {
+    width: 20px;
+    height: 20px;
+  }
+  #game #game-field table td .sprite {
+    width: 20px;
+    height: 20px;
+    background-size: 20px;
+  }
+}
+@media screen and (min-width: 200px) {
+  #game #game-field {
+    width: 200px;
+  }
+  #game #game-field table {
+    width: 200px;
+  }
+  #game #game-field table td {
+    width: 40px;
+    height: 40px;
+  }
+  #game #game-field table td .sprite {
+    width: 40px;
+    height: 40px;
+    background-size: 40px;
+  }
+}
+@media screen and (min-width: 300px) {
+  #game #game-field {
+    width: 300px;
+  }
+  #game #game-field table {
+    width: 300px;
+  }
+  #game #game-field table td {
+    width: 60px;
+    height: 60px;
+  }
+  #game #game-field table td .sprite {
+    width: 60px;
+    height: 60px;
+    background-size: 60px;
+  }
+}
+@media screen and (min-width: 400px) {
+  #game #game-field {
+    width: 400px;
+  }
+  #game #game-field table {
+    width: 400px;
+  }
+  #game #game-field table td {
+    width: 80px;
+    height: 80px;
+  }
+  #game #game-field table td .sprite {
+    width: 80px;
+    height: 80px;
+    background-size: 80px;
+  }
+}
+@media screen and (min-width: 500px) {
+  #game #game-field {
+    width: 500px;
+  }
+  #game #game-field table {
+    width: 500px;
+  }
+  #game #game-field table td {
+    width: 100px;
+    height: 100px;
+  }
+  #game #game-field table td .sprite {
+    width: 100px;
+    height: 100px;
+    background-size: 100px;
+  }
 }
