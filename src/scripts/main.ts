@@ -10,7 +10,7 @@ import {Fight} from './logic/fight';
 
 /* Global variables */
 const gameState = new GameState(
-    new Player("Steve", "hero", 0, 0, 4, [new Pridurok()]),
+    new Player("Steve", "hero_1", 0, 0, 4, [new Pridurok()]),
     []
 );
 const sceneManager = new SceneManager(gameState);
