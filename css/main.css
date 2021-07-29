@@ -130,36 +130,76 @@ body {
 }
 
 /* Sprites */
-.hero {
-  background: url("../images/hero.png");
+.hero_1 {
+  background: url("../images/players/hero_1.png");
+}
+
+.hero_2 {
+  background: url("../images/players/hero_2.png");
 }
 
 .land {
-  background: url("../images/land.png");
+  background: url("../images/cells/land.png");
 }
 
 .forest {
-  background: url("../images/forest.png");
+  background: url("../images/cells/forest.png");
 }
 
 .lake {
-  background: url("../images/lake.png");
+  background: url("../images/cells/lake.png");
 }
 
 .volcano {
-  background: url("../images/volcano.png");
+  background: url("../images/cells/volcano.png");
 }
 
 .dark_castle {
-  background: url("../images/dark_castle.png");
+  background: url("../images/cells/dark_castle.png");
 }
 
 .white_castle {
-  background: url("../images/white_castle.png");
+  background: url("../images/cells/white_castle.png");
 }
 
-.mount {
-  background-color: #a7acba;
+.black_dragon {
+  background: url("../images/monsters/black_dragon.png");
+}
+
+.cat {
+  background: url("../images/monsters/cat.png");
+}
+
+.dog {
+  background: url("../images/monsters/dog.png");
+}
+
+.dragon {
+  background: url("../images/monsters/dragon.png");
+}
+
+.horse {
+  background: url("../images/monsters/horse.png");
+}
+
+.lion {
+  background: url("../images/monsters/lion.png");
+}
+
+.medusa {
+  background: url("../images/monsters/medusa.png");
+}
+
+.plant {
+  background: url("../images/monsters/plant.png");
+}
+
+.shark {
+  background: url("../images/monsters/shark.png");
+}
+
+.snake {
+  background: url("../images/monsters/snake.png");
 }
 
 /* Animations */
