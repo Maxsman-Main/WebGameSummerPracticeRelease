@@ -1,7 +1,8 @@
 import {Cell, LandCell, VolcanoCell, ForestCell, LakeCell, WhiteCastleCell, DarkCastleCell} from './cell';
 import {I2DCoordinates} from '../interfaces';
 import {Random} from '../utils/random';
-import {Compare} from "../utils/compare";
+import {Compare} from '../utils/compare';
+import {ComplexityChanger} from '../complexityChanger'
 
 export class Map {
     private readonly sizeX: number;
@@ -54,7 +55,6 @@ export class Map {
             for (let x = 0; x < sizeX; ++x) {
                 let randNum = Random.inRange(1, 100);
                 let objectForCreate = null;
-
                 for (let i = 0; i < possibleCells.length; ++i) {
                     if (Compare.isInRange(randNum, possibleCells[i].rand.min, possibleCells[i].rand.max)) {
                         objectForCreate = possibleCells[i].obj;
@@ -65,7 +65,6 @@ export class Map {
                 if (!objectForCreate) {
                     objectForCreate = defaultCell;
                 }
-
                 row.push(new objectForCreate());
             }
             data.push(row);
@@ -84,6 +83,8 @@ export class Map {
             data[defaultPositions[i].y][defaultPositions[i].x] = new objectForCreate();
         }
         console.log(`Map: generated, (${sizeX}, ${sizeY})`);
+        let compChanger = new ComplexityChanger(data);
+        compChanger.balanceMap();
         return data;
     }
 }

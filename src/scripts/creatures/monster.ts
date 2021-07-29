@@ -66,6 +66,10 @@ export class Monster extends Creature {
        this._health = this.maxHeath;
     }
 
+    public BalanceHeal(newHeal: number): void{
+        this._health = newHeal;
+    }
+
     public getString(): string {
         return `${this.name}, hp: ${this.health}, defense: ${this.defense}, attack: ${this.attack}`;
     }
@@ -79,7 +83,7 @@ export class Shark extends Monster {
 
 export class Dragon extends Monster {
     constructor() {
-        super('Dragon', 'dragon', 'red', 0, 0, 0, 10, false);
+        super('Dragon', 'dragon', 'red', 5, 5, 5, 10, false);
     }
 }
 
