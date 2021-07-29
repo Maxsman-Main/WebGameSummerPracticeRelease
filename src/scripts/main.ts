@@ -42,6 +42,7 @@ function cellClickListener(event: MouseEvent) {
     const coordinates = getCoordinatesOfCell(event.target);
     let old_coordinate: I2DCoordinates = gameState.player.getCoordinates();
     if (gameState.moveManager.move(coordinates)) {
+        fieldRenderer.updateInfo();
         fieldRenderer.updateCells([
             old_coordinate,
             gameState.player.getCoordinates()
@@ -53,6 +54,7 @@ function NESZButtonInFightClickListener() {
     gameState.fight.attackCurrent();
     if (gameState.fight.isFinish()) {
         gameState.fight.finish();
+        fieldRenderer.updateInfo();
         sceneManager.showScene('field');
     }
     gameState.fight.swap();
@@ -84,6 +86,7 @@ function NESXButtonInFieldClickListener() {
     gameState.player.resetAvailableMoves();
     console.log("Reset");
     gameState.player.setAvailableMoves(10);
+    fieldRenderer.updateInfo();
 }
 
 /* Click Listener for OK button in select-monster */

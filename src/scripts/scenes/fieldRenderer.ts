@@ -36,15 +36,28 @@ export class FieldRenderer implements IRenderer {
             }
             table.appendChild(row);
         }
-        let buttons = this.element.getElementsByClassName("buttons")[0].children;
-        console.log(this.element);
-        console.log(buttons);
-        buttons[0].addEventListener('click', this.buttonZClickListener);
-        buttons[1].addEventListener('click', this.buttonXClickListener);
+        this.getZButton().addEventListener('click', this.buttonZClickListener);
+        this.getXButton().addEventListener('click', this.buttonXClickListener);
     }
 
     private getTable(): HTMLTableElement {
         return <HTMLTableElement> this.element.getElementsByClassName('table')[0];
+    }
+
+    private getButtons(): HTMLCollection {
+        return this.element.getElementsByClassName("buttons")[0].children;
+    }
+
+    private getZButton(): Element {
+        return this.getButtons()[0];
+    }
+
+    private getXButton(): Element {
+        return this.getButtons()[1];
+    }
+
+    private getInfoElement(): Element {
+        return this.element.getElementsByClassName('info')[0];
     }
 
     /**
@@ -85,6 +98,7 @@ export class FieldRenderer implements IRenderer {
             let creature = creaturesList[i];
             this.getCell(creature.getCoordinates()).appendChild(FieldRenderer.getHTMLSprite(creature));
         }
+        this.updateInfo();
     }
 
     /**
@@ -107,4 +121,7 @@ export class FieldRenderer implements IRenderer {
         }
     }
 
+    public updateInfo(): void {
+        this.getInfoElement().innerHTML = `Available moves: ${this.gameState.player.availableMoves}`;
+    }
 }
