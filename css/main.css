@@ -13,6 +13,11 @@ body {
   font-family: "04b03", monospace;
 }
 
+#game #game-start .red-btn {
+  width: 100px;
+  height: 100px;
+}
+
 /* Game Field */
 #game #game-field {
   width: 600px;
@@ -120,6 +125,16 @@ body {
 }
 #game #game-select-monster .ok {
   margin: auto;
+}
+
+.loader {
+  width: 320px;
+  height: 320px;
+  border: 5px solid #ffffff;
+  border-bottom-color: #e53030;
+  border-radius: 50%;
+  display: inline-block;
+  animation: rotation 1s linear infinite;
 }
 
 /* Font Awesome */
@@ -238,6 +253,14 @@ body {
   }
   to {
     opacity: 1;
+  }
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 /* Hide */

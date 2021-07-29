@@ -13,8 +13,11 @@
 </head>
 
 <body>
-  <div id="debug_ascii_ui"></div>
   <div id="game">
+    <div id="game-start" class="hide">
+      <span id="loader" class="loader hide"></span>
+      <button id="start-btn" class="red-btn">Start</button>
+    </div>
     <div id="game-field" class="hide">
       <table class="table">
 
@@ -61,7 +64,7 @@
         <button class='red-btn'>X</button>
       </div>
     </div>
-    <div id="game-select-monster">
+    <div id="game-select-monster" class="hide">
       <label>
         <select class="select">
           <option selected disabled >Choose an option</option>
