@@ -1,4 +1,4 @@
-import {Chudila, Monster} from '../creatures/monster';
+import {Dragon, Monster} from '../creatures/monster';
 import {Random} from '../utils/random';
 import {IHasCssClass} from '../interfaces';
 
@@ -37,35 +37,35 @@ export class Cell implements IHasCssClass {
 
 export class LandCell extends Cell {
     constructor() {
-        super('land', [1, 2], [new Chudila()]);
+        super('land', [1, 2], [new Dragon()]);
     }
 }
 
 export class VolcanoCell extends Cell {
     constructor() {
-        super('volcano', [3, 5], [new Chudila()]);
+        super('volcano', [3, 5], [new Dragon()]);
     }
 }
 
 export class ForestCell extends Cell {
     constructor() {
-        super('forest', [3, 5], [new Chudila()]);
+        super('forest', [3, 5], [new Dragon()]);
     }
 }
 
 export class LakeCell extends Cell {
     constructor() {
-        super('lake', [3, 5], [new Chudila()]);
+        super('lake', [3, 5], [new Dragon()]);
     }
 }
 export class DarkCastleCell extends Cell {
     constructor() {
-        super('dark_castle', [3, 5], [new Chudila()]);
+        super('dark_castle', [3, 5], [new Dragon()]);
     }
 }
 
 export class WhiteCastleCell extends Cell {
     constructor() {
-        super('white_castle', [3, 5], [new Chudila()]);
+        super('white_castle', [3, 5], [new Dragon()]);
     }
 }

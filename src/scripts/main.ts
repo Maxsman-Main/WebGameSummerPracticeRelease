@@ -1,5 +1,5 @@
 import {Player} from './creatures/player';
-import {Monster, Pridurok} from './creatures/monster';
+import {Monster, Shark} from './creatures/monster';
 import {FieldRenderer} from './scenes/fieldRenderer';
 import {SceneManager} from './scenes/sceneManager';
 import {GameState} from './gameState';
@@ -10,7 +10,7 @@ import {Fight} from './logic/fight';
 
 /* Global variables */
 const gameState = new GameState(
-    new Player("Steve", "hero_1", 0, 0, 4, [new Pridurok()]),
+    new Player("Steve", "hero_1", 0, 0, 4, [new Shark()]),
     []
 );
 const sceneManager = new SceneManager(gameState);

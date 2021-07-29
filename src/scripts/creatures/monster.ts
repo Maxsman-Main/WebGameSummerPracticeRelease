@@ -34,8 +34,8 @@ export class Monster extends Creature {
         this._looted = true;
     }
 
-    constructor(name: string, cssClass: string, label: string, type: string,  health: number, defense: number,
-                attack: number, attackBooster: number, looted: boolean) {
+    constructor(name: string, cssClass: string, type: string, health: number, attack: number, defense: number,
+                attackBooster: number, looted: boolean) {
         super(name, cssClass);
         this._maxHeath = health;
         this._health = health;
@@ -71,14 +71,62 @@ export class Monster extends Creature {
     }
 }
 
-export class Pridurok extends Monster {
+export class Shark extends Monster {
     constructor() {
-        super('Pridurok', 'pridurok', 'p', 'red', 120, 5, 30, 30, true);
+        super('Shark', 'shark', 'red', 10, 10, 10, 30, true);
     }
 }
 
-export class Chudila extends Monster {
+export class Dragon extends Monster {
     constructor() {
-        super('Chudila', 'chudila', 'c', 'red', 100, 4, 20, 10, false);
+        super('Dragon', 'dragon', 'red', 0, 0, 0, 10, false);
+    }
+}
+
+export class BlackDragon extends Monster{
+    constructor(){
+        super('Black Dragon', 'black_dragon', 'a', 0, 0, 0, 0, false);
+    }
+}
+
+export class Cat extends Monster{
+    constructor(){
+        super('Cat', 'cat', 'red', 100, 4, 20, 10, false);
+    }
+}
+
+export class Dog extends Monster{
+    constructor(){
+        super('Dog', 'dog', 'red', 100, 4, 20, 10, false);
+    }
+}
+
+export class Horse extends Monster{
+    constructor(){
+        super('Horse', 'horse', 'red', 100, 4, 20, 10, false);
+    }
+}
+
+export class Lion extends Monster{
+    constructor(){
+        super('Dragon', 'dragon', 'red', 100, 4, 20, 10, false);
+    }
+}
+
+export class Medusa extends Monster{
+    constructor(){
+        super('Dragon', 'dragon', 'red', 100, 4, 20, 10, false);
+    }
+}
+
+export class Plant extends Monster{
+    constructor(){
+        super('Dragon', 'dragon', 'red', 100, 4, 20, 10, false);
+    }
+}
+
+export class Snake extends Monster{
+    constructor(){
+        super('Dragon', 'dragon', 'red', 100, 4, 20, 10, false);
     }
 }
