@@ -96,9 +96,7 @@ export class FieldScene implements IScene {
 
     /**
      * Updates cells only at specific coordinates. Needed to draw CSS animation only for specific cells.
-     * @param map
      * @param coordinates
-     * @param creatures
      */
     public updateCells(map: Map, coordinates: I2DCoordinates[], creatures: IDrawableInField[]): void {
         for (let i = 0; i < coordinates.length; ++i) {

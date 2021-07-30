@@ -9,6 +9,7 @@ import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 import {Map} from './map/map';
 import {Cell} from './map/cell';
+import {I2DCoordinates} from "./interfaces";
 
 const firebaseConfig = {
     apiKey: "AIzaSyD3q-5oL3uBVysZM_rb486eG_FtespBNg4",
@@ -113,18 +114,41 @@ class FirebaseConnection {
     }
 
     public subscribeToUpdateCoordinates(room: DocumentReference<DocumentData>,
-            user_uid: string,
-            callback: () => void) {
-        room.collection('user_pos').doc(user_uid)
-            .get()
-            .then((value: DocumentSnapshot<DocumentData>) => {
-                value.ref.onSnapshot((doc: DocumentSnapshot<DocumentData>) => {
-                    console.log(doc);
-                });
-            })
-            .catch((error: any) => {
-                console.log(`error: subscribe to coordinates (${error})`);
-            });
+            isHost: boolean,
+            callback: (coordinates: I2DCoordinates) => void) {
+        room.onSnapshot((doc: DocumentSnapshot<DocumentData>) => {
+            let coordinates = { x: 0, y: 0 };
+            if (isHost) {
+                coordinates.x = doc.data().host_x;
+                coordinates.y = doc.data().host_y;
+            } else {
+                coordinates.x = doc.data().guest_x;
+                coordinates.y = doc.data().guest_y;
+            }
+            callback(coordinates);
+        });
+    }
+
+    public updateCoordinate(room: DocumentReference<DocumentData>, isHost: boolean,
+                            coordinates: I2DCoordinates) {
+
+        let data: any;
+        if (isHost) {
+            data = {
+                host_x: coordinates.x,
+                host_y: coordinates.y
+            }
+        } else {
+            data = {
+                guest_x: coordinates.x,
+                guest_y: coordinates.y
+            }
+        }
+        room.update(data).then(() => {
+            console.log('ok: updated');
+        }).catch(() => {
+            console.log('error');
+        })
     }
 
     public tryConnect(callbackStartAsHost: (roomRef: DocumentReference<DocumentData>, roomDoc: DocumentData) => void,
@@ -157,8 +181,13 @@ class FirebaseConnection {
     public tryConnectToRoom(room: DocumentReference<DocumentData>,
                             callback: (room: DocumentReference<DocumentData>) => void) {
         let newData = {
-            'guest_uid': this.getCurrentUser().uid
+            'guest_uid': this.getCurrentUser().uid,
+            'host_x': 0,
+            'host_y': 0,
+            'guest_x': 0,
+            'guest_y': 4
         }
+
         room.update(newData)
             .then(() => {
                 callback(room);

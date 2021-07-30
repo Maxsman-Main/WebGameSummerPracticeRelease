@@ -12,6 +12,8 @@ import {firebase, firebaseConnection} from './firebase';
 import DocumentData = firebase.firestore.DocumentData;
 import DocumentReference = firebase.firestore.DocumentReference;
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
+import {Cell} from "./map/cell";
+import {I2DCoordinates} from "./interfaces";
 
 /* Global variables */
 const DEFAULT_START_AVAILABLE_MOVES = 5;
@@ -86,6 +88,19 @@ function createGameState(amIHost: boolean, map: Map, roomRef: DocumentReference<
     }
 }
 
+function subscribe(isHost: boolean, roomRef: DocumentReference<DocumentData>) {
+    firebaseConnection.subscribeToUpdateCoordinates(
+        roomRef,
+        isHost,
+        (coordinates:I2DCoordinates) => {
+            if (gs != null) {
+                gs.player2.move(coordinates, 0);
+                if (fieldScene != null)
+                    fieldScene.update(gs.map, [gs.player, gs.player2]);
+            }
+        });
+}
+
 function startButtonClickListener() {
 
     function tryConnect() {
@@ -98,11 +113,19 @@ function startButtonClickListener() {
                 fieldScene.render(gs.map);
                 fieldScene.update(gs.map, [gs.player, gs.player2]);
                 sceneManager.showScene('field');
+                // send map
+                subscribe(false, roomRef);
             },
             (roomRef: DocumentReference<DocumentData>, roomDoc:DocumentData) => {
                 // as guest!
                 console.log(`I am guest. My room is ${roomRef.id}`);
                 console.log(`${roomDoc.host_uid}`);
+                // get map
+                createGameState(false, new Map(...DEFAULT_MAP_SIZE), roomRef, roomDoc);
+                fieldScene.render(gs.map);
+                fieldScene.update(gs.map, [gs.player, gs.player2]);
+                sceneManager.showScene('field');
+                subscribe(true, roomRef);
             }
         )
     }
@@ -141,6 +164,20 @@ function NESXButtonInFightClickListener() {
  * Field Scene
  */
 function cellClickListener(event: MouseEvent) {
+    function getCoordinatesOfCell(target: EventTarget): I2DCoordinates {
+        let element = <HTMLElement>target;
+        const td = <HTMLTableCellElement>element.parentElement;
+        const row = <HTMLTableRowElement>td.parentElement;
+        return { x: td.cellIndex, y: row.rowIndex };
+    }
+
+    const coordinates = getCoordinatesOfCell(event.target);
+    if (gs.moveManager.move(coordinates)) {
+        fieldScene.updateInfo(gs.player);
+        fieldScene.update(gs.map, [gs.player, gs.player2]);
+        firebaseConnection.updateCoordinate(gs.roomRef, gs.player.name == "Host", coordinates);
+        //fieldRenderer.updateCells([old_coordinate, gs.player.getCoordinates()]);
+    }
 }
 function NESZButtonInFieldClickListener() {
 }
