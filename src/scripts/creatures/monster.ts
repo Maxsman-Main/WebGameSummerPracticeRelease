@@ -77,60 +77,66 @@ export class Monster extends Creature {
 
 export class Shark extends Monster {
     constructor() {
-        super('Shark', 'shark', 'red', 10, 10, 10, 30, true);
+        super('Shark', 'shark', 'red', 10, 10, 5, 0, false);
     }
 }
 
 export class Dragon extends Monster {
     constructor() {
-        super('Dragon', 'dragon', 'red', 5, 5, 5, 10, false);
+        super('Dragon', 'dragon', 'red', 20, 5, 0, 0, false);
     }
 }
 
 export class BlackDragon extends Monster{
     constructor(){
-        super('Black Dragon', 'black_dragon', 'a', 0, 0, 0, 0, false);
+        super('BlackDragon', 'black_dragon', 'a', 100, 10, 0, 3, false);
     }
 }
 
 export class Cat extends Monster{
     constructor(){
-        super('Cat', 'cat', 'red', 100, 4, 20, 10, false);
+        super('Cat', 'cat', 'red', 20, 30, 0, 20, false);
     }
 }
 
 export class Dog extends Monster{
     constructor(){
-        super('Dog', 'dog', 'red', 100, 4, 20, 10, false);
+        super('Dog', 'dog', 'red', 10, 10, 200, 0, false);
     }
 }
 
 export class Horse extends Monster{
     constructor(){
-        super('Horse', 'horse', 'red', 100, 4, 20, 10, false);
+        super('Horse', 'horse', 'red', 200, 5, 0, 10, false);
     }
 }
 
 export class Lion extends Monster{
     constructor(){
-        super('Dragon', 'dragon', 'red', 100, 4, 20, 10, false);
+        super('Lion', 'lion', 'red', 30, 6, 5, 2, false);
     }
 }
 
 export class Medusa extends Monster{
     constructor(){
-        super('Dragon', 'dragon', 'red', 100, 4, 20, 10, false);
+        super('Medusa', 'medusa', 'red', 3, 5, 100, 0, false);
     }
 }
 
 export class Plant extends Monster{
     constructor(){
-        super('Dragon', 'dragon', 'red', 100, 4, 20, 10, false);
+        super('Plant', 'plant', 'red', 5, 5, 20, 0, false);
     }
 }
 
 export class Snake extends Monster{
     constructor(){
-        super('Dragon', 'dragon', 'red', 100, 4, 20, 10, false);
+        super('Snake', 'snake', 'red', 30, 2, 0, 0, false);
+    }
+}
+
+export class Boss extends Monster{
+    constructor(){
+        super('Boss', 'boss', 'red', 1000, 25, 20, 10, false);
     }
 }

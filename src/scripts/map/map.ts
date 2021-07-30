@@ -1,4 +1,4 @@
-import {Cell, LandCell, VolcanoCell, ForestCell, LakeCell, WhiteCastleCell, DarkCastleCell} from './cell';
+import {Cell, LandCell, VolcanoCell, ForestCell, LakeCell, WhiteCastleCell, DarkCastleCell, BossCell} from './cell';
 import {I2DCoordinates} from '../interfaces';
 import {Random} from '../utils/random';
 import {Compare} from '../utils/compare';
@@ -73,7 +73,8 @@ export class Map {
             { x: 0, y: 0, obj: LandCell},
             { x: 0, y: sizeY - 1, obj: LandCell},
             { x: sizeX - 1, y: sizeY - 1, obj: WhiteCastleCell},
-            { x: sizeX - 1, y: 0, obj: DarkCastleCell}
+            { x: sizeX - 1, y: 0, obj: DarkCastleCell},
+            { x: sizeX - 1, y: 2, obj: BossCell}
         ]
         for (let i = 0; i < defaultPositions.length; ++i) {
             console.log(defaultPositions[i]);
