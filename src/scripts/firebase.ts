@@ -23,6 +23,15 @@ class FirebaseConnection {
     private readonly db: firebase.firestore.Firestore;
     private collections: any;
 
+    private static DEFAULT_POSITION = {
+        host: {
+            x: 0, y: 0
+        },
+        guest: {
+            x: 0, y: 4
+        }
+    };
+
     constructor(db: firebase.firestore.Firestore) {
         this.db = db;
         this.collections = {
@@ -98,7 +107,8 @@ class FirebaseConnection {
                     } else {
                         let uid = querySnapshot.docs[0].id;
                         this.collections.room(uid).set({
-                            'guest_uid': this.getCurrentUser().uid
+                            'guest_uid': this.getCurrentUser().uid,
+                            'guest_pos': FirebaseConnection.DEFAULT_POSITION.guest
                         }, { merge: true });
                         callback_found();
                     }
@@ -115,6 +125,7 @@ class FirebaseConnection {
     public tryCreateRoom(callback_created: () => void, callback_error: () => void) {
         this.collections.rooms.add({
             'host_uid': this.getCurrentUser().uid,
+            'host_post': FirebaseConnection.DEFAULT_POSITION.host,
             'guest_uid': ''
         })
             .then(() => {

@@ -16,6 +16,7 @@ import {Fight} from './logic/fight';
 import {firebase, firebaseConnection} from './firebase';
 
 /* Global variables */
+const DEFAULT_START_AVAILABLE_MOVES = 5;
 const gameState = new GameState(
     new Player("Steve", "hero_1", 0, 0, 4, [new Shark()]),
     []
