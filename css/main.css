@@ -75,6 +75,8 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  background: linear-gradient(0deg, white, #cbe5ee);
+  border-radius: 10px;
 }
 #game #game-fight .monsters .monster {
   margin-right: 20px;
@@ -125,6 +127,48 @@ body {
 }
 #game #game-select-monster .ok {
   margin: auto;
+}
+
+@-webkit-keyframes shake {
+  0% {
+    -webkit-transform: translate(2px, 1px) rotate(0deg);
+  }
+  10% {
+    -webkit-transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  20% {
+    -webkit-transform: translate(-3px, 0px) rotate(1deg);
+  }
+  30% {
+    -webkit-transform: translate(0px, 2px) rotate(0deg);
+  }
+  40% {
+    -webkit-transform: translate(1px, -1px) rotate(1deg);
+  }
+  50% {
+    -webkit-transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  60% {
+    -webkit-transform: translate(-3px, 1px) rotate(0deg);
+  }
+  70% {
+    -webkit-transform: translate(2px, 1px) rotate(-1deg);
+  }
+  80% {
+    -webkit-transform: translate(-1px, -1px) rotate(1deg);
+  }
+  90% {
+    -webkit-transform: translate(2px, 2px) rotate(0deg);
+  }
+  100% {
+    -webkit-transform: translate(1px, -2px) rotate(-1deg);
+  }
+}
+.shake {
+  -webkit-animation-name: shake;
+  -webkit-animation-duration: 0.6s;
+  -webkit-transform-origin: 50% 50%;
+  -webkit-animation-timing-function: linear;
 }
 
 .loader {
@@ -198,6 +242,10 @@ body {
   background: url("../images/cells/white_castle.png");
 }
 
+.boss_cell {
+  background: url("../images/cells/boss_cell.png");
+}
+
 .black_dragon {
   background: url("../images/monsters/black_dragon.png");
 }
@@ -236,6 +284,10 @@ body {
 
 .snake {
   background: url("../images/monsters/snake.png");
+}
+
+.boss {
+  background: url("../images/monsters/boss.png");
 }
 
 /* Animations */
