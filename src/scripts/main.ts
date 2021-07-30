@@ -5,6 +5,7 @@ import {SceneManager} from './scenes/sceneManager';
 import {FightRenderer} from "./scenes/fightRenderer";
 import {FieldRenderer} from './scenes/fieldRenderer';
 import {SelectMonsterRenderer} from './scenes/selectMonsterRenderer'
+import {StartRenderer} from "./scenes/startRenderer";
 
 import {GameState} from './gameState';
 
