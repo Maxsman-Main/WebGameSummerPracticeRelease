@@ -7,6 +7,9 @@ import QuerySnapshot = firebase.firestore.QuerySnapshot;
 import DocumentReference = firebase.firestore.DocumentReference;
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
+import {Map} from './map/map';
+import {Cell} from './map/cell';
+
 const firebaseConfig = {
     apiKey: "AIzaSyD3q-5oL3uBVysZM_rb486eG_FtespBNg4",
     authDomain: "projectx-web-game.firebaseapp.com",
@@ -47,9 +50,71 @@ class FirebaseConnection {
         return this.collections;
     }
 
+    public sendMap(roomRef: DocumentReference<DocumentData>, map: Map) {
+        let cellRef = roomRef.collection('cells');
+        // send the field to another player
+        let sends = [];
+        for (let y = 0; y < map.getSize().y; ++y) {
+            for (let x = 0; x < map.getSize().x; ++x) {
+                const cell = map.getCell({x: x, y: y});
+                const data = {
+                    x: x,
+                    y: y,
+                    looted: cell.monster.looted,
+                    cssClass: cell.cssClass,
+                    monsterCssClass: cell.monster.cssClass,
+                    monsterHealth: cell.monster.health,
+                    monsterDefense: cell.monster.defense,
+                    monsterAttack: cell.monster.attack,
+                    monsterBooster: cell.monster.attackBooster
+                }
+
+                let a = cellRef.add(data)
+                    .then((docRef: DocumentReference<DocumentData>) => {
+                        console.log(`ok: cell written (${docRef.id})`);
+                    })
+                    .catch((error: any) => {
+                        console.log(`error: send map (${error})`);
+                    });
+
+                sends.push(a);
+            }
+        }
+
+        Promise.all(sends)
+            .then(() => {
+                roomRef.update({ 'map_loaded': true })
+                    .then(() => {
+                        console.log('ok: map is loaded');
+                    })
+                    .catch(() => {
+                        console.log('error: map is no loaded');
+                    });
+            })
+            .catch(() => {
+                console.log('failed');
+            });
+    }
+
+    public getMap(callback: (cells: DocumentData[]) => void, roomRef: DocumentReference<DocumentData>) {
+        roomRef.onSnapshot((doc: DocumentSnapshot<DocumentData>) => {
+            if (doc.data().map_loaded == true) {
+                let data: DocumentData[] = [];
+                roomRef.collection('cells')
+                    .get()
+                    .then((query: QuerySnapshot<DocumentData>) => {
+                        query.forEach((doc) => {
+                            data.push(doc.data());
+                        })
+                        callback(data);
+                    });
+            }
+        });
+    }
+
     public subscribeToUpdateCoordinates(room: DocumentReference<DocumentData>,
-                                        user_uid: string,
-                                        callback: () => void) {
+            user_uid: string,
+            callback: () => void) {
         room.collection('user_pos').doc(user_uid)
             .get()
             .then((value: DocumentSnapshot<DocumentData>) => {
@@ -108,6 +173,7 @@ class FirebaseConnection {
         const room = {
             'host_uid': this.getCurrentUser().uid,
             'guest_uid': '',
+            'map_loaded': false
         }
 
         this.collections.rooms.add(room)
