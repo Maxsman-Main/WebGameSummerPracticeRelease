@@ -41,20 +41,25 @@ class FirebaseConnection {
     }
 
     public createUser(callback_func: () => void) {
-        this.ifUserIsNotExist(() => {
-            this.collections.users.add({
-                'uid': this.getCurrentUser().uid,
-                'name': this.getCurrentUser().displayName
-            }).then(() => {
-                callback_func();
-                console.log('123');
-            }).catch((error: any) => {
-                console.log("error");
-            })
+        this.ifUserIsNotExist(
+            (created: boolean) => {
+                if (!created) {
+                    this.collections.users.add({
+                            'uid': this.getCurrentUser().uid,
+                            'name': this.getCurrentUser().displayName
+                        }
+                    ).then(() => {
+                        callback_func();
+                    }).catch((error: any) => {
+                        console.log(error);
+                    })
+                } else {
+                    callback_func();
+                }
         });
     }
 
-    public ifUserIsNotExist(callback_func: () => void) {
+    public ifUserIsNotExist(callback_func: (created: boolean) => void) {
         this.collections.users.where("uid", "==", this.getCurrentUser().uid)
             .get()
             .then((querySnapshot: QuerySnapshot<DocumentData>) => {
@@ -62,12 +67,7 @@ class FirebaseConnection {
                     console.log(doc.id, " => ", doc.data());
                 });
                 console.assert(querySnapshot.size == 1 || querySnapshot.size == 0);
-                if (querySnapshot.size == 0) {
-                    callback_func();
-                }
-                if (querySnapshot.size == 1) {
-                    console.log('user exist');
-                }
+                callback_func(querySnapshot.size != 0);
             })
             .catch((error: any) => {
                 console.log(error);

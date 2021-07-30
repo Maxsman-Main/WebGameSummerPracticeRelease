@@ -53,12 +53,12 @@ function startButtonClickListener() {
         if (user) {
             let uid = user.uid;
             console.log(uid);
-            firebaseConnection.createUser(createlobby);
+            firebaseConnection.createUser(createLobby);
         } else {
             let provider = new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(provider).then(function (result) {
                 console.log(result);
-                firebaseConnection.createUser(createlobby);
+                firebaseConnection.createUser(createLobby);
             }).catch(function (error) {
                 console.log(error);
                 console.log("Bad!");
@@ -67,7 +67,7 @@ function startButtonClickListener() {
     });
 }
 
-function createlobby() {
+function createLobby() {
     console.log('creating lobby');
 }
 
