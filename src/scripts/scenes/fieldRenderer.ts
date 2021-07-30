@@ -1,20 +1,15 @@
 import {Map} from '../map/map';
 import {I2DCoordinates, IDrawableInField, IHasCssClass, IRenderer} from '../interfaces';
-import {GameState} from '../gameState';
 import {Compare} from "../utils/compare";
+import {Player} from "../creatures/player";
 
 export class FieldRenderer implements IRenderer {
-    private map: Map;
-    private gameState: GameState;
     private element: Element;
     private readonly cellClickListener: any;
     private readonly buttonZClickListener: any;
     private readonly buttonXClickListener: any;
     
-    constructor(gameState: GameState, gameField: HTMLElement, mouseListener: any, buttonZClickListener: any,
-                buttonXClickListener: any) {
-        this.map = gameState.map;
-        this.gameState = gameState;
+    constructor(gameField: HTMLElement, mouseListener: any, buttonZClickListener: any, buttonXClickListener: any) {
         this.element = gameField;
         this.cellClickListener = mouseListener;
         this.buttonZClickListener = buttonZClickListener;
@@ -24,12 +19,12 @@ export class FieldRenderer implements IRenderer {
     /**
      * Generates a table and append it to this.element
      */
-    public render(): void {
+    public render(map: Map): void {
         let table = this.getTable();
         table.innerHTML = "";
-        for (let y = 0; y < this.map.getSize().y; ++y) {
+        for (let y = 0; y < map.getSize().y; ++y) {
             let row = document.createElement('tr');
-            for (let x = 0; x  < this.map.getSize().x; ++x) {
+            for (let x = 0; x  < map.getSize().x; ++x) {
                 let cell = document.createElement('td');
                 cell.addEventListener('click', this.cellClickListener);
                 row.appendChild(cell);
@@ -80,48 +75,43 @@ export class FieldRenderer implements IRenderer {
         return result;
     }
 
-    private getCreaturesList(): IDrawableInField[] {
-        return [this.gameState.player, ...this.gameState.creatures];
-    }
-
-    public update(): void {
-        for (let y = 0; y < this.map.getSize().y; ++y) {
-            for (let x = 0; x < this.map.getSize().x; ++x) {
-                let mapCell = this.map.getCell({ x: x, y: y });
+    public update(map: Map, creatures: IDrawableInField[]): void {
+        for (let y = 0; y < map.getSize().y; ++y) {
+            for (let x = 0; x < map.getSize().x; ++x) {
+                let mapCell = map.getCell({ x: x, y: y });
                 let HTMLCell = this.getCell({ x: x, y: y });
                 HTMLCell.innerHTML = "";
                 HTMLCell.appendChild(FieldRenderer.getHTMLSprite(mapCell));
             }
         }
-        const creaturesList = this.getCreaturesList();
-        for (let i = 0; i < creaturesList.length; ++i) {
-            let creature = creaturesList[i];
+        for (let i = 0; i < creatures.length; ++i) {
+            let creature = creatures[i];
             this.getCell(creature.getCoordinates()).appendChild(FieldRenderer.getHTMLSprite(creature));
         }
-        this.updateInfo();
     }
 
     /**
      * Updates cells only at specific coordinates. Needed to draw CSS animation only for specific cells.
+     * @param map
      * @param coordinates
+     * @param creatures
      */
-    public updateCells(coordinates: I2DCoordinates[]): void {
+    public updateCells(map: Map, coordinates: I2DCoordinates[], creatures: IDrawableInField[]): void {
         for (let i = 0; i < coordinates.length; ++i) {
-            let mapCell = this.map.getCell(coordinates[i]);
+            let mapCell = map.getCell(coordinates[i]);
             let HTMLCell = this.getCell(coordinates[i]);
             HTMLCell.innerHTML = "";
             HTMLCell.appendChild(FieldRenderer.getHTMLSprite(mapCell));
 
-            const creaturesList = this.getCreaturesList();
-            for (let j = 0; j < creaturesList.length; ++j) {
-                if (Compare.shallowEqual(creaturesList[j].getCoordinates(), coordinates[i])) {
-                    HTMLCell.appendChild(FieldRenderer.getHTMLSprite(creaturesList[j]));
+            for (let j = 0; j < creatures.length; ++j) {
+                if (Compare.shallowEqual(creatures[j].getCoordinates(), coordinates[i])) {
+                    HTMLCell.appendChild(FieldRenderer.getHTMLSprite(creatures[j]));
                 }
             }
         }
     }
 
-    public updateInfo(): void {
-        this.getInfoElement().innerHTML = `Available moves: ${this.gameState.player.availableMoves}`;
+    public updateInfo(player: Player): void {
+        this.getInfoElement().innerHTML = `Available moves: ${player.availableMoves}`;
     }
 }
