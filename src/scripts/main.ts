@@ -13,7 +13,7 @@ import {I2DCoordinates} from './interfaces';
 
 import {Fight} from './logic/fight';
 
-import {firebase} from './firebase';
+import {firebase, firebaseConnection} from './firebase';
 
 /* Global variables */
 const gameState = new GameState(
@@ -49,13 +49,26 @@ function startButtonClickListener() {
     button.classList.toggle("hide");
     let loader = document.getElementById("loader");
     loader.classList.toggle("hide");
-    let provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider).then(function (result) {
-        console.log(result);
-    }).catch(function (error) {
-        console.log(error);
-        console.log("Bad!");
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            let uid = user.uid;
+            console.log(uid);
+            firebaseConnection.createUser(createlobby);
+        } else {
+            let provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider).then(function (result) {
+                console.log(result);
+                firebaseConnection.createUser(createlobby);
+            }).catch(function (error) {
+                console.log(error);
+                console.log("Bad!");
+            });
+        }
     });
+}
+
+function createlobby() {
+    console.log('creating lobby');
 }
 
 /* Click Listener for all cells in field */
