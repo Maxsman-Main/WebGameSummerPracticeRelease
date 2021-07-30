@@ -23,16 +23,7 @@ if (!firebase.apps.length) {
 
 class FirebaseConnection {
     private readonly db: firebase.firestore.Firestore;
-    private collections: any;
-
-    private static DEFAULT_POSITION = {
-        host: {
-            x: 0, y: 0
-        },
-        guest: {
-            x: 0, y: 4
-        }
-    };
+    private readonly collections: any;
 
     constructor(db: firebase.firestore.Firestore) {
         this.db = db;
@@ -52,14 +43,36 @@ class FirebaseConnection {
         return firebase.auth().currentUser;
     }
 
-    public tryConnect(callbackStartAsHost: (room: DocumentData) => void,
-                      callbackStartAsGuest: (room: DocumentData) => void) {
+    public getCollections() {
+        return this.collections;
+    }
+
+    public subscribeToUpdateCoordinates(room: DocumentReference<DocumentData>,
+                                        user_uid: string,
+                                        callback: () => void) {
+        room.collection('user_pos').doc(user_uid)
+            .get()
+            .then((value: DocumentSnapshot<DocumentData>) => {
+                value.ref.onSnapshot((doc: DocumentSnapshot<DocumentData>) => {
+                    console.log(doc);
+                });
+            })
+            .catch((error: any) => {
+                console.log(`error: subscribe to coordinates (${error})`);
+            });
+    }
+
+    public tryConnect(callbackStartAsHost: (roomRef: DocumentReference<DocumentData>, roomDoc: DocumentData) => void,
+                      callbackStartAsGuest: (roomRef: DocumentReference<DocumentData>, roomDoc: DocumentData) => void) {
         this.tryCreateUser(() => {
             this.tryGetRoomForJoin((room: DocumentReference<DocumentData>) => {
                 if (room != null) {
                     // connect
                     this.tryConnectToRoom(room, (room) => {
-                        callbackStartAsGuest(room);
+                        room.get()
+                            .then((value: DocumentSnapshot<DocumentData>) => {
+                                callbackStartAsGuest(room, value.data());
+                            });
                     });
                 } else {
                     // create and wait guest connection
@@ -67,7 +80,7 @@ class FirebaseConnection {
                         console.log('Room is created. I wait guest connection');
                         room.onSnapshot((doc: DocumentSnapshot<DocumentData>) => {
                             if (doc.data().guest_uid != '') {
-                                callbackStartAsHost(room);
+                                callbackStartAsHost(room, doc.data());
                             }
                         })
                     });
@@ -94,9 +107,7 @@ class FirebaseConnection {
 
         const room = {
             'host_uid': this.getCurrentUser().uid,
-            'host_pos': FirebaseConnection.DEFAULT_POSITION.host,
             'guest_uid': '',
-            'guest_pos': FirebaseConnection.DEFAULT_POSITION.guest
         }
 
         this.collections.rooms.add(room)
