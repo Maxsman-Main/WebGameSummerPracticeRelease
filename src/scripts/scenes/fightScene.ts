@@ -1,17 +1,21 @@
 import {Monster} from "../creatures/monster";
-import {IRenderer} from "../interfaces";
+import {IScene} from "../interfaces";
 
-export class FightRenderer implements IRenderer {
+export class FightScene implements IScene {
     private element: HTMLElement;
     private monsters: [Monster, Monster];
     private readonly NESZButtonClickListener: any;
     private readonly NESXButtonClickListener: any;
 
-    constructor(gameFight: HTMLElement, monsters: [Monster, Monster], listener_1: any, listener_2: any) {
+    constructor(gameFight: HTMLElement, listener_1: any, listener_2: any) {
         this.element = gameFight;
-        this.monsters = monsters;
+        this.monsters = [null, null];
         this.NESZButtonClickListener = listener_1;
         this.NESXButtonClickListener = listener_2;
+    }
+
+    public setMonsters(monsters: [Monster, Monster]) {
+        this.monsters = monsters;
     }
 
     public render(): void {
@@ -50,9 +54,9 @@ export class FightRenderer implements IRenderer {
     public update(): void {
         let monsterDivs = this.getMonsterDivs();
         for (let i = 0; i < monsterDivs.length; ++i) {
-            let sprite = FightRenderer.getSprite(monsterDivs[i]);
-            let health = FightRenderer.getHealth(monsterDivs[i]);
-            let defense = FightRenderer.getDefense(monsterDivs[i]);
+            let sprite = FightScene.getSprite(monsterDivs[i]);
+            let health = FightScene.getHealth(monsterDivs[i]);
+            let defense = FightScene.getDefense(monsterDivs[i]);
 
             sprite.className = `sprite ${this.monsters[i].cssClass}`;
             if (i == 1) {
@@ -61,5 +65,9 @@ export class FightRenderer implements IRenderer {
             health.innerHTML = `${this.monsters[i].health}`;
             defense.innerHTML = `${this.monsters[i].defense}`;
         }
+    }
+
+    public getElement(): Element {
+        return this.element;
     }
 }

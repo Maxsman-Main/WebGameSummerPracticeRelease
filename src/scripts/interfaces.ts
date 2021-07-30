@@ -10,17 +10,16 @@ export interface IDrawableInField extends IHasCoordinates, IHasCssClass {
 
 }
 
+export interface IScene {
+    getElement(): Element;
+}
+
 export interface ISceneInfo {
+    scene: IScene;
     name: string;
-    element: HTMLElement;
 }
 
 export interface I2DCoordinates {
     x: number;
     y: number;
-}
-
-export interface IRenderer {
-    render(): void;
-    update(): void;
 }

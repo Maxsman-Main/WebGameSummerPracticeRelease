@@ -1,9 +1,9 @@
 import {Map} from '../map/map';
-import {I2DCoordinates, IDrawableInField, IHasCssClass, IRenderer} from '../interfaces';
+import {I2DCoordinates, IDrawableInField, IHasCssClass, IScene} from '../interfaces';
 import {Compare} from "../utils/compare";
 import {Player} from "../creatures/player";
 
-export class FieldRenderer implements IRenderer {
+export class FieldScene implements IScene {
     private element: Element;
     private readonly cellClickListener: any;
     private readonly buttonZClickListener: any;
@@ -14,6 +14,10 @@ export class FieldRenderer implements IRenderer {
         this.cellClickListener = mouseListener;
         this.buttonZClickListener = buttonZClickListener;
         this.buttonXClickListener = buttonXClickListener;
+    }
+
+    public getElement(): Element {
+        return this.element;
     }
 
     /**
@@ -81,12 +85,12 @@ export class FieldRenderer implements IRenderer {
                 let mapCell = map.getCell({ x: x, y: y });
                 let HTMLCell = this.getCell({ x: x, y: y });
                 HTMLCell.innerHTML = "";
-                HTMLCell.appendChild(FieldRenderer.getHTMLSprite(mapCell));
+                HTMLCell.appendChild(FieldScene.getHTMLSprite(mapCell));
             }
         }
         for (let i = 0; i < creatures.length; ++i) {
             let creature = creatures[i];
-            this.getCell(creature.getCoordinates()).appendChild(FieldRenderer.getHTMLSprite(creature));
+            this.getCell(creature.getCoordinates()).appendChild(FieldScene.getHTMLSprite(creature));
         }
     }
 
@@ -101,11 +105,11 @@ export class FieldRenderer implements IRenderer {
             let mapCell = map.getCell(coordinates[i]);
             let HTMLCell = this.getCell(coordinates[i]);
             HTMLCell.innerHTML = "";
-            HTMLCell.appendChild(FieldRenderer.getHTMLSprite(mapCell));
+            HTMLCell.appendChild(FieldScene.getHTMLSprite(mapCell));
 
             for (let j = 0; j < creatures.length; ++j) {
                 if (Compare.shallowEqual(creatures[j].getCoordinates(), coordinates[i])) {
-                    HTMLCell.appendChild(FieldRenderer.getHTMLSprite(creatures[j]));
+                    HTMLCell.appendChild(FieldScene.getHTMLSprite(creatures[j]));
                 }
             }
         }
