@@ -18,7 +18,7 @@ const DEFAULT_START_AVAILABLE_MOVES = 5;
 const DEFAULT_PLAYER_1_POS: [number, number] = [0, 0];
 const DEFAULT_PLAYER_2_POS: [number, number] = [0, 4];
 const DEFAULT_MAP_SIZE: [number, number] = [5, 5];
-let gm: GameState = null;
+let gs: GameState = null;
 
 /**
  * Scenes
@@ -73,23 +73,36 @@ sceneManager.showScene('start');
  * Start scene
  */
 
-function createGameStateForHost() {
-    let player_1 = new Player('Host', 'hero_1', ...DEFAULT_PLAYER_1_POS,
+function createGameState(amIHost: boolean, map: Map, roomRef: DocumentReference<DocumentData>, roomDoc: DocumentData) {
+    let player = new Player('Host', 'hero_1', ...DEFAULT_PLAYER_1_POS,
         DEFAULT_START_AVAILABLE_MOVES);
-    let player_2 = new Player('Guest', 'hero_2', ...DEFAULT_PLAYER_2_POS, 0)
-    let map = new Map(...DEFAULT_MAP_SIZE);
-    gm = new GameState(player_1, player_2, map);
+    let player2 = new Player('Guest', 'hero_2', ...DEFAULT_PLAYER_2_POS, 0)
+    let player_uid = roomDoc.player_uid;
+    let player2_uid = roomDoc.player2_uid;
+    if (amIHost) {
+        gs = new GameState(player, player_uid, player2, player2_uid, map, roomRef, roomDoc);
+    } else {
+        gs = new GameState(player2, player2_uid, player, player_uid, map, roomRef, roomDoc);
+    }
 }
 
 function startButtonClickListener() {
 
     function tryConnect() {
         firebaseConnection.tryConnect(
-            (room: DocumentReference<DocumentData>) => {
-                console.log(`I am host. My room is ${room.id}`);
+            (roomRef: DocumentReference<DocumentData>, roomDoc: DocumentData) => {
+                // as host!
+                console.log(`I am host. My room is ${roomRef.id}`);
+                console.log(`${roomDoc.guest_uid}`);
+                createGameState(true, new Map(...DEFAULT_MAP_SIZE), roomRef, roomDoc);
+                fieldScene.render(gs.map);
+                fieldScene.update(gs.map, [gs.player, gs.player2]);
+                sceneManager.showScene('field');
             },
-            (room: DocumentReference<DocumentData>) => {
-                console.log(`I am guest. My room is ${room.id}`);
+            (roomRef: DocumentReference<DocumentData>, roomDoc:DocumentData) => {
+                // as guest!
+                console.log(`I am guest. My room is ${roomRef.id}`);
+                console.log(`${roomDoc.host_uid}`);
             }
         )
     }
