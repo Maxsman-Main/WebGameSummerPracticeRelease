@@ -41,10 +41,16 @@ class FirebaseConnection {
         return firebase.auth().currentUser;
     }
 
-    public tryConnect(callback_found: () => void, callback_created: () => void, callback_error: () => void) {
+    public tryConnect(callback_found: () => void, callback_created: () => void,
+                      callback_reconnect: () => void, callback_error: () => void) {
         this.createUser(() => {
-            this.tryFindRoom(callback_found, () => {
+            this.tryFindRoom(
+                callback_found,
+                () => {
                     this.tryCreateRoom(callback_created, callback_error);
+                },
+                () => {
+                    callback_reconnect();
                 },
                 callback_error
             );
@@ -70,16 +76,32 @@ class FirebaseConnection {
         });
     }
 
-    public tryFindRoom(callback_found: () => void, callback_not_found: () => void, callback_error: () => void) {
+    public tryFindRoom(callback_found: () => void, callback_not_found: () => void,
+                       callback_reconnect: () => void, callback_error: () => void) {
         this.collections.rooms.where("guest_uid", "==", "")
             .get()
             .then((querySnapshot: QuerySnapshot<DocumentData>) => {
                 console.log(`free rooms: ${querySnapshot.size}`);
                 if (querySnapshot.size >= 1) { // connect
-                    let uid = querySnapshot.docs[0].id;
-                    this.collections.room(uid).set({
-                        'guest_uid': this.getCurrentUser().uid
-                    }, { merge: true });
+
+                    let wasCreatedByCurrentUser = false;
+
+                    querySnapshot.forEach((result) => {
+                        console.log(result.data().host_uid);
+                        if (result.data().host_uid == this.getCurrentUser().uid) {
+                            wasCreatedByCurrentUser = true;
+                        }
+                    });
+
+                    if (wasCreatedByCurrentUser) {
+                        callback_reconnect();
+                    } else {
+                        let uid = querySnapshot.docs[0].id;
+                        this.collections.room(uid).set({
+                            'guest_uid': this.getCurrentUser().uid
+                        }, { merge: true });
+                        callback_found();
+                    }
                 } else {
                     callback_not_found();
                 }

@@ -52,12 +52,10 @@ function startButtonClickListener() {
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
             let uid = user.uid;
-            console.log(uid);
             tryConnect();
         } else {
             let provider = new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(provider).then(function (result) {
-                console.log(result);
                 tryConnect();
             }).catch(function (error) {
                 console.log(error);
@@ -76,8 +74,11 @@ function tryConnect() {
             console.log("created");
         },
         () => {
+            console.log("reconnected");
+        },
+        () => {
             console.log("error");
-        }
+        },
     )
 }
 
