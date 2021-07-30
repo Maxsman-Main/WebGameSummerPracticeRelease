@@ -53,12 +53,12 @@ function startButtonClickListener() {
         if (user) {
             let uid = user.uid;
             console.log(uid);
-            firebaseConnection.createUser(createLobby);
+            tryConnect();
         } else {
             let provider = new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(provider).then(function (result) {
                 console.log(result);
-                firebaseConnection.createUser(createLobby);
+                tryConnect();
             }).catch(function (error) {
                 console.log(error);
                 console.log("Bad!");
@@ -67,8 +67,18 @@ function startButtonClickListener() {
     });
 }
 
-function createLobby() {
-    console.log('creating lobby');
+function tryConnect() {
+    firebaseConnection.tryConnect(
+        () => {
+            console.log("founded");
+        },
+        () => {
+            console.log("created");
+        },
+        () => {
+            console.log("error");
+        }
+    )
 }
 
 /* Click Listener for all cells in field */

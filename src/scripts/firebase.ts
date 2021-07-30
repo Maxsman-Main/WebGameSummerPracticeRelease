@@ -28,6 +28,7 @@ class FirebaseConnection {
         this.collections = {
             users: this.db.collection('users'),
             rooms: this.db.collection('rooms'),
+            room: (uid: string) => this.db.collection('rooms').doc(uid),
             cells: (uid: string) => this.db.collection('rooms').doc(uid).collection('cells')
         };
     }
@@ -38,6 +39,16 @@ class FirebaseConnection {
 
     public getCurrentUser() {
         return firebase.auth().currentUser;
+    }
+
+    public tryConnect(callback_found: () => void, callback_created: () => void, callback_error: () => void) {
+        this.createUser(() => {
+            this.tryFindRoom(callback_found, () => {
+                    this.tryCreateRoom(callback_created, callback_error);
+                },
+                callback_error
+            );
+        });
     }
 
     public createUser(callback_func: () => void) {
@@ -59,13 +70,43 @@ class FirebaseConnection {
         });
     }
 
+    public tryFindRoom(callback_found: () => void, callback_not_found: () => void, callback_error: () => void) {
+        this.collections.rooms.where("guest_uid", "==", "")
+            .get()
+            .then((querySnapshot: QuerySnapshot<DocumentData>) => {
+                console.log(`free rooms: ${querySnapshot.size}`);
+                if (querySnapshot.size >= 1) { // connect
+                    let uid = querySnapshot.docs[0].id;
+                    this.collections.room(uid).set({
+                        'guest_uid': this.getCurrentUser().uid
+                    }, { merge: true });
+                } else {
+                    callback_not_found();
+                }
+            })
+            .catch((error: any) => {
+                callback_error();
+                console.log(error);
+            });
+    }
+
+    public tryCreateRoom(callback_created: () => void, callback_error: () => void) {
+        this.collections.rooms.add({
+            'host_uid': this.getCurrentUser().uid,
+            'guest_uid': ''
+        })
+            .then(() => {
+                callback_created();
+            }).catch((error: any) => {
+                callback_error();
+                console.log(error);
+            });
+    }
+
     public ifUserIsNotExist(callback_func: (created: boolean) => void) {
         this.collections.users.where("uid", "==", this.getCurrentUser().uid)
             .get()
             .then((querySnapshot: QuerySnapshot<DocumentData>) => {
-                querySnapshot.forEach((doc) => {
-                    console.log(doc.id, " => ", doc.data());
-                });
                 console.assert(querySnapshot.size == 1 || querySnapshot.size == 0);
                 callback_func(querySnapshot.size != 0);
             })
