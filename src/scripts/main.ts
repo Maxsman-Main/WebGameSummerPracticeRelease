@@ -12,7 +12,10 @@ import {I2DCoordinates} from './interfaces';
 
 import {Fight} from './logic/fight';
 
+import {firebase, firebaseConnection} from './firebase';
+
 /* Global variables */
+const DEFAULT_START_AVAILABLE_MOVES = 5;
 const gameState = new GameState(
     new Player("Steve", "hero_1", 0, 0, 4, [new Shark()]),
     []
@@ -29,11 +32,55 @@ const fieldRenderer = new FieldRenderer(
 );
 let fightRenderer: FightRenderer = null;
 let selectMonsterRenderer: SelectMonsterRenderer = null;
+let startRenderer = new StartRenderer(
+    sceneManager.getSceneInfo('start').element,
+    startButtonClickListener
+);
+startRenderer.render();
 
 /* Prepare field */
 fieldRenderer.render();
 fieldRenderer.update();
-sceneManager.showScene('field');
+sceneManager.showScene('start');
+
+/* Start button */
+function startButtonClickListener() {
+    let button = document.getElementById("start-btn");
+    button.classList.toggle("hide");
+    let loader = document.getElementById("loader");
+    loader.classList.toggle("hide");
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            let uid = user.uid;
+            tryConnect();
+        } else {
+            let provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider).then(function (result) {
+                tryConnect();
+            }).catch(function (error) {
+                console.log(error);
+                console.log("Bad!");
+            });
+        }
+    });
+}
+
+function tryConnect() {
+    firebaseConnection.tryConnect(
+        () => {
+            console.log("founded");
+        },
+        () => {
+            console.log("created");
+        },
+        () => {
+            console.log("reconnected");
+        },
+        () => {
+            console.log("error");
+        },
+    )
+}
 
 /* Click Listener for all cells in field */
 function cellClickListener(event: MouseEvent) {
