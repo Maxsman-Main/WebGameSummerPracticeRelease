@@ -5,22 +5,24 @@ import {SelectMonsterScene} from './scenes/selectMonsterScene'
 import {StartScene} from "./scenes/startScene";
 
 import {GameState} from './gameState';
+
 import {Player} from "./creatures/player";
 import {Map} from "./map/map";
-
-import {firebase, firebaseConnection} from './firebase';
-import DocumentData = firebase.firestore.DocumentData;
-import DocumentReference = firebase.firestore.DocumentReference;
-import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
-import {Cell} from "./map/cell";
 import {I2DCoordinates} from "./interfaces";
+import {Monster} from "./creatures/monster";
+import {Fight} from "./logic/fight";
 
 /* Global variables */
 const DEFAULT_START_AVAILABLE_MOVES = 5;
 const DEFAULT_PLAYER_1_POS: [number, number] = [0, 0];
 const DEFAULT_PLAYER_2_POS: [number, number] = [0, 4];
 const DEFAULT_MAP_SIZE: [number, number] = [5, 5];
-let gs: GameState = null;
+let gs: GameState = new GameState(
+    new Player("Steve", "hero_1", ...DEFAULT_PLAYER_1_POS, DEFAULT_START_AVAILABLE_MOVES),
+    new Player("John", "hero_2", ...DEFAULT_PLAYER_2_POS, DEFAULT_START_AVAILABLE_MOVES),
+    new Map(...DEFAULT_MAP_SIZE)
+);
+
 
 /**
  * Scenes
@@ -74,96 +76,37 @@ sceneManager.showScene('start');
 /**
  * Start scene
  */
-
-function createGameState(amIHost: boolean, map: Map, roomRef: DocumentReference<DocumentData>, roomDoc: DocumentData) {
-    let player = new Player('Host', 'hero_1', ...DEFAULT_PLAYER_1_POS,
-        DEFAULT_START_AVAILABLE_MOVES);
-    let player2 = new Player('Guest', 'hero_2', ...DEFAULT_PLAYER_2_POS, 0)
-    let player_uid = roomDoc.player_uid;
-    let player2_uid = roomDoc.player2_uid;
-    if (amIHost) {
-        gs = new GameState(player, player_uid, player2, player2_uid, map, roomRef, roomDoc);
-    } else {
-        gs = new GameState(player2, player2_uid, player, player_uid, map, roomRef, roomDoc);
-    }
-}
-
-function subscribe(isHost: boolean, roomRef: DocumentReference<DocumentData>) {
-    firebaseConnection.subscribeToUpdateCoordinates(
-        roomRef,
-        isHost,
-        (coordinates:I2DCoordinates) => {
-            if (gs != null) {
-                gs.player2.move(coordinates, 0);
-                if (fieldScene != null)
-                    fieldScene.update(gs.map, [gs.player, gs.player2]);
-            }
-        });
-}
-
 function startButtonClickListener() {
-
-    function tryConnect() {
-        firebaseConnection.tryConnect(
-            (roomRef: DocumentReference<DocumentData>, roomDoc: DocumentData) => {
-                // as host!
-                console.log(`I am host. My room is ${roomRef.id}`);
-                console.log(`${roomDoc.guest_uid}`);
-                createGameState(true, new Map(...DEFAULT_MAP_SIZE), roomRef, roomDoc);
-                fieldScene.render(gs.map);
-                fieldScene.update(gs.map, [gs.player, gs.player2]);
-                sceneManager.showScene('field');
-                // send map
-                subscribe(false, roomRef);
-            },
-            (roomRef: DocumentReference<DocumentData>, roomDoc:DocumentData) => {
-                // as guest!
-                console.log(`I am guest. My room is ${roomRef.id}`);
-                console.log(`${roomDoc.host_uid}`);
-                // get map
-                createGameState(false, new Map(...DEFAULT_MAP_SIZE), roomRef, roomDoc);
-                fieldScene.render(gs.map);
-                fieldScene.update(gs.map, [gs.player, gs.player2]);
-                sceneManager.showScene('field');
-                subscribe(true, roomRef);
-            }
-        )
-    }
-
-    let button = document.getElementById("start-btn");
-    button.classList.toggle("hide");
-    let loader = document.getElementById("loader");
-    loader.classList.toggle("hide");
-
-    firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            console.log('was already logged in');
-            tryConnect();
-        } else {
-            let provider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup(provider).then(function (result) {
-                console.log('logged in');
-                tryConnect();
-            }).catch(function (error) {
-                console.log(error);
-                console.log("Bad!");
-            });
-        }
-    });
+    sceneManager.showScene('field');
+    fieldScene.render(gs.map);
+    fieldScene.update(gs.map, [gs.player, gs.player2]);
+    fieldScene.updateInfo(gs.getCurrent());
 }
 
 /**
  * Fight Scene
  */
 function NESZButtonInFightClickListener() {
+    gs.fight.attackCurrent();
+    if (gs.fight.isFinish()) {
+        gs.fight.finish();
+        fieldScene.updateInfo(gs.getCurrent());
+        sceneManager.showScene('field');
+    }
+    gs.fight.swap();
+    fightScene.update();
 }
 function NESXButtonInFightClickListener() {
+    gs.fight.defendCurrent();
+    gs.fight.swap();
+    fightScene.update();
 }
 
 /**
  * Field Scene
  */
 function cellClickListener(event: MouseEvent) {
+
     function getCoordinatesOfCell(target: EventTarget): I2DCoordinates {
         let element = <HTMLElement>target;
         const td = <HTMLTableCellElement>element.parentElement;
@@ -172,20 +115,40 @@ function cellClickListener(event: MouseEvent) {
     }
 
     const coordinates = getCoordinatesOfCell(event.target);
-    if (gs.moveManager.move(coordinates)) {
-        fieldScene.updateInfo(gs.player);
-        fieldScene.update(gs.map, [gs.player, gs.player2]);
-        firebaseConnection.updateCoordinate(gs.roomRef, gs.player.name == "Host", coordinates);
-        //fieldRenderer.updateCells([old_coordinate, gs.player.getCoordinates()]);
+    let old_coordinate: I2DCoordinates = gs.getCurrent().getCoordinates();
+    if (gs.moveManager.move(gs.getCurrent(), coordinates)) {
+        fieldScene.updateInfo(gs.getCurrent());
+        fieldScene.updateCells(gs.map, [old_coordinate, gs.getCurrent().getCoordinates()], gs.getCreatures());
     }
 }
 function NESZButtonInFieldClickListener() {
+    let coordinates = gs.getCurrent().getCoordinates();
+    if (gs.map.getCell(coordinates).monster.looted)
+        return;
+    if (gs.getCurrent().availableMoves <= 0)
+        return;
+    selectMonsterScene.setPlayer(gs.getCurrent());
+    selectMonsterScene.update();
+    sceneManager.showScene('select');
 }
 function NESXButtonInFieldClickListener() {
+    gs.getCurrent().resetAvailableMoves();
+    gs.swapPlayers();
+    gs.getCurrent().setAvailableMoves(DEFAULT_START_AVAILABLE_MOVES);
+    fieldScene.updateInfo(gs.getCurrent());
 }
 
 /**
  * Select Scene
  */
 function OKButtonInSelectClickListener() {
+    sceneManager.showScene('fight');
+    let monsters: [Monster, Monster] = [
+        selectMonsterScene.getChosenMonster(),
+        gs.map.getCell(gs.getCurrent().getCoordinates()).monster
+    ]
+    fightScene.setMonsters(monsters);
+    fightScene.render();
+    fightScene.update();
+    gs.fight = new Fight(gs.getCurrent(), ...monsters);
 }

@@ -3,35 +3,40 @@ import {Map} from './map/map';
 import {MoveManager} from './logic/moveManager';
 import {IDrawableInField} from './interfaces';
 import {Fight} from "./logic/fight";
-import firebase from "firebase";
-import DocumentReference = firebase.firestore.DocumentReference;
-import DocumentData = firebase.firestore.DocumentData;
 
 export class GameState {
     public player: Player;
     public player2: Player;
-    public player_uid: string;
-    public player2_uid: string;
+    public currentPlayer: Player;
     public map: Map;
     public moveManager: MoveManager;
     public fight: Fight;
-    public roomRef: DocumentReference<DocumentData>;
-    public roomDoc: DocumentData;
+    public blocked: boolean;
 
-    constructor(player: Player, player_uid: string, player2: Player, player2_uid: string, map: Map,
-                roomRef: DocumentReference<DocumentData>, roomDoc: DocumentData) {
+    constructor(player: Player, player2: Player, map: Map) {
         this.player = player;
-        this.player_uid = player_uid;
         this.player2 = player2;
-        this.player2_uid = player2_uid;
+        this.currentPlayer = player;
         this.map = map;
         this.moveManager = new MoveManager(this.map, this.player);
         this.fight = null;
-        this.roomRef = roomRef;
-        this.roomDoc = roomDoc;
+        this.blocked = false;
     }
 
     public getCreatures(): IDrawableInField[] {
         return [this.player, this.player2];
+    }
+
+    public getNext() {
+        return (this.currentPlayer == this.player) ? this.player2 : this.player;
+    }
+
+    public getCurrent() {
+        return this.currentPlayer;
+    }
+
+    public swapPlayers() {
+        this.currentPlayer.resetAvailableMoves();
+        this.currentPlayer = this.getNext();
     }
 }

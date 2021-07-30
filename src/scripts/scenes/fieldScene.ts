@@ -96,7 +96,9 @@ export class FieldScene implements IScene {
 
     /**
      * Updates cells only at specific coordinates. Needed to draw CSS animation only for specific cells.
+     * @param map
      * @param coordinates
+     * @param creatures
      */
     public updateCells(map: Map, coordinates: I2DCoordinates[], creatures: IDrawableInField[]): void {
         for (let i = 0; i < coordinates.length; ++i) {
@@ -114,6 +116,6 @@ export class FieldScene implements IScene {
     }
 
     public updateInfo(player: Player): void {
-        this.getInfoElement().innerHTML = `Available moves: ${player.availableMoves}`;
+        this.getInfoElement().innerHTML = `Player: ${player.name}<br>Available moves: ${player.availableMoves}`;
     }
 }

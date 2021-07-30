@@ -77,10 +77,7 @@ export class Map {
             { x: sizeX - 1, y: 2, obj: BossCell}
         ]
         for (let i = 0; i < defaultPositions.length; ++i) {
-            console.log(defaultPositions[i]);
             let objectForCreate = defaultPositions[i].obj;
-            console.log(objectForCreate);
-
             data[defaultPositions[i].y][defaultPositions[i].x] = new objectForCreate();
         }
         console.log(`Map: generated, (${sizeX}, ${sizeY})`);
