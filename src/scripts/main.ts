@@ -5,12 +5,20 @@ import {SelectMonsterScene} from './scenes/selectMonsterScene'
 import {StartScene} from "./scenes/startScene";
 
 import {GameState} from './gameState';
+import {Player} from "./creatures/player";
+import {Map} from "./map/map";
 
 import {firebase, firebaseConnection} from './firebase';
+import DocumentData = firebase.firestore.DocumentData;
+import DocumentReference = firebase.firestore.DocumentReference;
+import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 /* Global variables */
 const DEFAULT_START_AVAILABLE_MOVES = 5;
-const gameState: GameState = null;
+const DEFAULT_PLAYER_1_POS: [number, number] = [0, 0];
+const DEFAULT_PLAYER_2_POS: [number, number] = [0, 4];
+const DEFAULT_MAP_SIZE: [number, number] = [5, 5];
+let gm: GameState = null;
 
 /**
  * Scenes
@@ -64,22 +72,25 @@ sceneManager.showScene('start');
 /**
  * Start scene
  */
+
+function createGameStateForHost() {
+    let player_1 = new Player('Host', 'hero_1', ...DEFAULT_PLAYER_1_POS,
+        DEFAULT_START_AVAILABLE_MOVES);
+    let player_2 = new Player('Guest', 'hero_2', ...DEFAULT_PLAYER_2_POS, 0)
+    let map = new Map(...DEFAULT_MAP_SIZE);
+    gm = new GameState(player_1, player_2, map);
+}
+
 function startButtonClickListener() {
 
     function tryConnect() {
         firebaseConnection.tryConnect(
-            () => {
-                console.log("founded");
+            (room: DocumentReference<DocumentData>) => {
+                console.log(`I am host. My room is ${room.id}`);
             },
-            () => {
-                console.log('created');
-            },
-            () => {
-                console.log("reconnected");
-            },
-            () => {
-                console.log("error");
-            },
+            (room: DocumentReference<DocumentData>) => {
+                console.log(`I am guest. My room is ${room.id}`);
+            }
         )
     }
 

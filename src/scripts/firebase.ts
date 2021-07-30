@@ -4,6 +4,8 @@ import 'firebase/firestore'
 import 'firebase/database'
 import DocumentData = firebase.firestore.DocumentData;
 import QuerySnapshot = firebase.firestore.QuerySnapshot;
+import DocumentReference = firebase.firestore.DocumentReference;
+import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 const firebaseConfig = {
     apiKey: "AIzaSyD3q-5oL3uBVysZM_rb486eG_FtespBNg4",
@@ -50,90 +52,94 @@ class FirebaseConnection {
         return firebase.auth().currentUser;
     }
 
-    public tryConnect(callback_found: () => void, callback_created: () => void,
-                      callback_reconnect: () => void, callback_error: () => void) {
-        this.createUser(() => {
-            this.tryFindRoom(
-                callback_found,
-                () => {
-                    this.tryCreateRoom(callback_created, callback_error);
-                },
-                () => {
-                    callback_reconnect();
-                },
-                callback_error
-            );
-        });
-    }
-
-    public createUser(callback_func: () => void) {
-        this.ifUserIsNotExist(
-            (created: boolean) => {
-                if (!created) {
-                    this.collections.users.add({
-                            'uid': this.getCurrentUser().uid,
-                            'name': this.getCurrentUser().displayName
-                        }
-                    ).then(() => {
-                        callback_func();
-                    }).catch((error: any) => {
-                        console.log(error);
-                    })
-                } else {
-                    callback_func();
-                }
-        });
-    }
-
-    public tryFindRoom(callback_found: () => void, callback_not_found: () => void,
-                       callback_reconnect: () => void, callback_error: () => void) {
-        this.collections.rooms.where("guest_uid", "==", "")
-            .get()
-            .then((querySnapshot: QuerySnapshot<DocumentData>) => {
-                console.log(`free rooms: ${querySnapshot.size}`);
-                if (querySnapshot.size >= 1) { // connect
-
-                    let wasCreatedByCurrentUser = false;
-
-                    querySnapshot.forEach((result) => {
-                        console.log(result.data().host_uid);
-                        if (result.data().host_uid == this.getCurrentUser().uid) {
-                            wasCreatedByCurrentUser = true;
-                        }
+    public tryConnect(callbackStartAsHost: (room: DocumentData) => void,
+                      callbackStartAsGuest: (room: DocumentData) => void) {
+        this.tryCreateUser(() => {
+            this.tryGetRoomForJoin((room: DocumentReference<DocumentData>) => {
+                if (room != null) {
+                    // connect
+                    this.tryConnectToRoom(room, (room) => {
+                        callbackStartAsGuest(room);
                     });
-
-                    if (wasCreatedByCurrentUser) {
-                        callback_reconnect();
-                    } else {
-                        let uid = querySnapshot.docs[0].id;
-                        this.collections.room(uid).set({
-                            'guest_uid': this.getCurrentUser().uid,
-                            'guest_pos': FirebaseConnection.DEFAULT_POSITION.guest
-                        }, { merge: true });
-                        callback_found();
-                    }
                 } else {
-                    callback_not_found();
+                    // create and wait guest connection
+                    this.tryCreateRoom((room) => {
+                        console.log('Room is created. I wait guest connection');
+                        room.onSnapshot((doc: DocumentSnapshot<DocumentData>) => {
+                            if (doc.data().guest_uid != '') {
+                                callbackStartAsHost(room);
+                            }
+                        })
+                    });
+                }
+            });
+        });
+    }
+
+    public tryConnectToRoom(room: DocumentReference<DocumentData>,
+                            callback: (room: DocumentReference<DocumentData>) => void) {
+        let newData = {
+            'guest_uid': this.getCurrentUser().uid
+        }
+        room.update(newData)
+            .then(() => {
+                callback(room);
+            })
+            .catch((error: any) => {
+                console.log(`error: connect to room (${error})`);
+            });
+    }
+
+    public tryCreateRoom(callback: (docRef: DocumentReference<DocumentData>) => void) {
+
+        const room = {
+            'host_uid': this.getCurrentUser().uid,
+            'host_pos': FirebaseConnection.DEFAULT_POSITION.host,
+            'guest_uid': '',
+            'guest_pos': FirebaseConnection.DEFAULT_POSITION.guest
+        }
+
+        this.collections.rooms.add(room)
+            .then((docRef: DocumentReference<DocumentData>) => {
+                callback(docRef);
+            })
+            .catch((error: any) => {
+                console.log(`error: create room (${error})`);
+            });
+    }
+
+    public tryGetRoomForJoin(callback: (room: DocumentReference<DocumentData>) => void) {
+        this.collections.rooms.where('guest_uid', '==', '')
+            .get()
+            .then((querySnapshot: QuerySnapshot) => {
+                if (querySnapshot.size >= 1) {
+                    callback(querySnapshot.docs[0].ref);
+                } else {
+                    callback(null);
                 }
             })
             .catch((error: any) => {
-                callback_error();
-                console.log(error);
+                console.log(`error: get room for joint (${error})`);
             });
     }
 
-    public tryCreateRoom(callback_created: () => void, callback_error: () => void) {
-        this.collections.rooms.add({
-            'host_uid': this.getCurrentUser().uid,
-            'host_post': FirebaseConnection.DEFAULT_POSITION.host,
-            'guest_uid': ''
-        })
-            .then(() => {
-                callback_created();
-            }).catch((error: any) => {
-                callback_error();
-                console.log(error);
-            });
+    public tryCreateUser(callback_ok: () => void) {
+        this.ifUserIsNotExist((created: boolean) => {
+            const user = {
+                'uid': this.getCurrentUser().uid,
+                'name': this.getCurrentUser().displayName
+            };
+            if (!created) {
+                this.collections.users.add(user)
+                    .then(() => {
+                        callback_ok();
+                    }).catch((error: any) => {
+                        console.log(`error: create user (${error})`);
+                    });
+            } else {
+                callback_ok();
+            }
+        });
     }
 
     public ifUserIsNotExist(callback_func: (created: boolean) => void) {
