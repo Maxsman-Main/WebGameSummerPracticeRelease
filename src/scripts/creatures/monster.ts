@@ -77,7 +77,7 @@ export class Monster extends Creature {
 
 export class Shark extends Monster {
     constructor() {
-        super('Shark', 'shark', 'red', 10, 10, 10, 30, true);
+        super('Shark', 'shark', 'red', 10, 10, 10, 30, false);
     }
 }
 
@@ -113,24 +113,24 @@ export class Horse extends Monster{
 
 export class Lion extends Monster{
     constructor(){
-        super('Dragon', 'dragon', 'red', 100, 4, 20, 10, false);
+        super('Lion', 'lion', 'red', 100, 4, 20, 10, false);
     }
 }
 
 export class Medusa extends Monster{
     constructor(){
-        super('Dragon', 'dragon', 'red', 100, 4, 20, 10, false);
+        super('Medusa', 'medusa', 'red', 100, 4, 20, 10, false);
     }
 }
 
 export class Plant extends Monster{
     constructor(){
-        super('Dragon', 'dragon', 'red', 100, 4, 20, 10, false);
+        super('Plant', 'plant', 'red', 100, 4, 20, 10, false);
     }
 }
 
 export class Snake extends Monster{
     constructor(){
-        super('Dragon', 'dragon', 'red', 100, 4, 20, 10, false);
+        super('Snake', 'snake', 'red', 100, 4, 20, 10, false);
     }
 }

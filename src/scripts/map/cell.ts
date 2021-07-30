@@ -1,4 +1,4 @@
-import {Dragon, Monster} from '../creatures/monster';
+import {BlackDragon, Cat, Dog, Dragon, Horse, Lion, Medusa, Monster, Plant, Shark, Snake} from '../creatures/monster';
 import {Random} from '../utils/random';
 import {IHasCssClass} from '../interfaces';
 
@@ -21,7 +21,7 @@ export class Cell implements IHasCssClass {
     public get monster(): Monster{
         return this._monster;
     }
-
+    
     /**
      *
      * @param cssClass
@@ -37,35 +37,35 @@ export class Cell implements IHasCssClass {
 
 export class LandCell extends Cell {
     constructor() {
-        super('land', [1, 2], [new Dragon()]);
+        super('land', [1, 2], [new Plant(), new Snake()]);
     }
 }
 
 export class VolcanoCell extends Cell {
     constructor() {
-        super('volcano', [3, 5], [new Dragon()]);
+        super('volcano', [3, 5], [new Lion(), new Dragon()]);
     }
 }
 
 export class ForestCell extends Cell {
     constructor() {
-        super('forest', [3, 5], [new Dragon()]);
+        super('forest', [3, 5], [new Plant(), new Snake()]);
     }
 }
-
+    
 export class LakeCell extends Cell {
     constructor() {
-        super('lake', [3, 5], [new Dragon()]);
+        super('lake', [3, 5], [new Shark(), new Medusa()]);
     }
 }
 export class DarkCastleCell extends Cell {
     constructor() {
-        super('dark_castle', [3, 5], [new Dragon()]);
+        super('dark_castle', [3, 5], [new Dog(), new BlackDragon()]);
     }
 }
 
 export class WhiteCastleCell extends Cell {
     constructor() {
-        super('white_castle', [3, 5], [new Dragon()]);
+        super('white_castle', [3, 5], [new Cat(), new Horse()]);
     }
 }

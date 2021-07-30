@@ -2,7 +2,7 @@ import {Cell, LandCell, VolcanoCell, ForestCell, LakeCell, WhiteCastleCell, Dark
 import {I2DCoordinates} from '../interfaces';
 import {Random} from '../utils/random';
 import {Compare} from '../utils/compare';
-import {ComplexityChanger} from '../complexityChanger'
+import {ComplexityChanger} from '../complexityChanger';
 
 export class Map {
     private readonly sizeX: number;
@@ -85,6 +85,7 @@ export class Map {
         console.log(`Map: generated, (${sizeX}, ${sizeY})`);
         let compChanger = new ComplexityChanger(data);
         compChanger.balanceMap();
+        console.log(data);
         return data;
     }
 }
