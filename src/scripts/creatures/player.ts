@@ -1,5 +1,5 @@
 import {Creature} from "./creature";
-import {Monster} from "./monster";
+import {Monster,Shark} from "./monster";
 import {I2DCoordinates, IDrawableInField} from "../interfaces";
 
 export class Player extends Creature implements IDrawableInField {
@@ -22,13 +22,14 @@ export class Player extends Creature implements IDrawableInField {
         return this._availableMonsters;
     }
 
-    constructor(name: string, cssClass: string, x: number, y: number, availableMoves: number,
-                availableMonsters: Monster[]) {
+    constructor(name: string, cssClass: string, x: number, y: number, availableMoves: number) {
         super(name, cssClass);
         this.x = x;
         this.y = y;
         this._availableMoves = availableMoves;
-        this._availableMonsters = availableMonsters;
+        let shark = new Shark();
+        shark.loot();
+        this._availableMonsters = [shark];
     }
 
     /**
