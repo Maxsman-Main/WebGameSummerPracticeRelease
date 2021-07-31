@@ -46,6 +46,7 @@ export class Fight {
          *
          * If the monster was once looted, then this is the player's monster.
          */
+        console.log(this.defenseMonster, this.currentMonster);
         if (this._winner.looted) {
             this.defenseMonster.loot();
             this._player.addMonster(this.defenseMonster);

@@ -11,18 +11,22 @@ import {Map} from "./map/map";
 import {I2DCoordinates} from "./interfaces";
 import {Monster} from "./creatures/monster";
 import {Fight} from "./logic/fight";
+import {BossCell} from "./map/cell";
 
 /* Global variables */
 const DEFAULT_START_AVAILABLE_MOVES = 5;
 const DEFAULT_PLAYER_1_POS: [number, number] = [0, 0];
 const DEFAULT_PLAYER_2_POS: [number, number] = [0, 4];
 const DEFAULT_MAP_SIZE: [number, number] = [5, 5];
-let gs: GameState = new GameState(
-    new Player("Steve", "hero_1", ...DEFAULT_PLAYER_1_POS, DEFAULT_START_AVAILABLE_MOVES),
-    new Player("John", "hero_2", ...DEFAULT_PLAYER_2_POS, DEFAULT_START_AVAILABLE_MOVES),
-    new Map(...DEFAULT_MAP_SIZE)
-);
+let gs: GameState = null;
 
+function initGS() {
+    gs = new GameState(
+        new Player("Steve", "hero_1", ...DEFAULT_PLAYER_1_POS, DEFAULT_START_AVAILABLE_MOVES),
+        new Player("John", "hero_2", ...DEFAULT_PLAYER_2_POS, DEFAULT_START_AVAILABLE_MOVES),
+        new Map(...DEFAULT_MAP_SIZE)
+    );
+}
 
 /**
  * Scenes
@@ -74,10 +78,18 @@ let sceneManager = new SceneManager([
 sceneManager.showScene('start');
 
 /**
+ * ENDED
+ */
+function showResult(player: Player, reason: string) {
+    alert(`${player.name} is win. ${reason}`);
+}
+
+/**
  * Start scene
  */
 function startButtonClickListener() {
-    if (gs.blocked) return;
+    if (gs != null && gs.blocked) return;
+    initGS();
     sceneManager.showScene('field');
     fieldScene.render(gs.map);
     fieldScene.update(gs.map, [gs.player, gs.player2]);
@@ -87,10 +99,7 @@ function startButtonClickListener() {
 /**
  * Fight Scene
  */
-function NESZButtonInFightClickListener() {
-    if (gs.blocked) return;
-    gs.fight.attackCurrent();
-    fightScene.shakeMonster(gs.fight.defenseMonster);
+function fightFinishCheck() {
     if (gs.fight.isFinish()) {
         fieldScene.updateInfo(gs.getCurrent());
         fightScene.update();
@@ -98,11 +107,27 @@ function NESZButtonInFightClickListener() {
         setTimeout(() => {
             gs.blocked = false;
             gs.fight.finish();
+            if (gs.getCurrent().availableMonsters.length == 0) {
+                showResult(gs.getNext(), "The other player no longer has monsters");
+            }
+            let currentCell = gs.map.getCell(gs.getCurrent().getCoordinates());
+            if (currentCell instanceof BossCell && currentCell.monster.looted == true) {
+                showResult(gs.getCurrent(), "Boss killed");
+            }
             sceneManager.showScene('field');
+            fieldScene.updateInfo(gs.getCurrent());
         }, 1000);
     }
-    gs.fight.swap();
-    fightScene.update();
+    return gs.fight.isFinish();
+}
+function NESZButtonInFightClickListener() {
+    if (gs.blocked) return;
+    gs.fight.attackCurrent();
+    fightScene.shakeMonster(gs.fight.defenseMonster);
+    if (!fightFinishCheck()) {
+        gs.fight.swap();
+        fightScene.update();
+    }
 }
 function NESXButtonInFightClickListener() {
     if (gs.blocked) return;
