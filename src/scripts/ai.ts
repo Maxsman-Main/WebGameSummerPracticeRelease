@@ -39,13 +39,18 @@ class AI {
     }
 
     public tryMove() {
+        function getDistance(p1: I2DCoordinates, p2: I2DCoordinates) {
+            return Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
+        }
+
         let currentCoordinate = this.player.getCoordinates();
         let dx = [0, -1];
         let dy = [1,  0];
         let goodCoordinates: I2DCoordinates[] = [];
         for (let i = 0; i < dx.length; ++i) {
             let coordinate = { x: currentCoordinate.x + dx[i], y: currentCoordinate.y + dy[i] }
-            if (this.moveManager.isCorrectCoordinates(this.player, coordinate)) {
+            if (this.moveManager.isCorrectCoordinates(this.player, coordinate),
+                getDistance(currentCoordinate, { x: 4, y: 2}) >= getDistance(coordinate, { x: 4, y: 2})) {
                 goodCoordinates.push(coordinate);
             }
         }
