@@ -70,4 +70,13 @@ export class FightScene implements IScene {
     public getElement(): Element {
         return this.element;
     }
+
+    public shakeMonster(monster: Monster) {
+        let index = this.monsters.indexOf(monster);
+        let parentDiv = FightScene.getSprite(this.getMonsterDivs()[index]);
+        parentDiv.classList.remove('shake');
+        setTimeout(() => {
+            parentDiv.classList.add('shake');
+        }, 50);
+    }
 }

@@ -77,6 +77,7 @@ sceneManager.showScene('start');
  * Start scene
  */
 function startButtonClickListener() {
+    if (gs.blocked) return;
     sceneManager.showScene('field');
     fieldScene.render(gs.map);
     fieldScene.update(gs.map, [gs.player, gs.player2]);
@@ -87,16 +88,24 @@ function startButtonClickListener() {
  * Fight Scene
  */
 function NESZButtonInFightClickListener() {
+    if (gs.blocked) return;
     gs.fight.attackCurrent();
+    fightScene.shakeMonster(gs.fight.defenseMonster);
     if (gs.fight.isFinish()) {
-        gs.fight.finish();
         fieldScene.updateInfo(gs.getCurrent());
-        sceneManager.showScene('field');
+        fightScene.update();
+        gs.blocked = true;
+        setTimeout(() => {
+            gs.blocked = false;
+            gs.fight.finish();
+            sceneManager.showScene('field');
+        }, 1000);
     }
     gs.fight.swap();
     fightScene.update();
 }
 function NESXButtonInFightClickListener() {
+    if (gs.blocked) return;
     gs.fight.defendCurrent();
     gs.fight.swap();
     fightScene.update();
@@ -106,6 +115,7 @@ function NESXButtonInFightClickListener() {
  * Field Scene
  */
 function cellClickListener(event: MouseEvent) {
+    if (gs.blocked) return;
 
     function getCoordinatesOfCell(target: EventTarget): I2DCoordinates {
         let element = <HTMLElement>target;
@@ -122,6 +132,7 @@ function cellClickListener(event: MouseEvent) {
     }
 }
 function NESZButtonInFieldClickListener() {
+    if (gs.blocked) return;
     let coordinates = gs.getCurrent().getCoordinates();
     if (gs.map.getCell(coordinates).monster.looted)
         return;
@@ -132,6 +143,7 @@ function NESZButtonInFieldClickListener() {
     sceneManager.showScene('select');
 }
 function NESXButtonInFieldClickListener() {
+    if (gs.blocked) return;
     gs.getCurrent().resetAvailableMoves();
     gs.swapPlayers();
     gs.getCurrent().setAvailableMoves(DEFAULT_START_AVAILABLE_MOVES);
@@ -142,11 +154,9 @@ function NESXButtonInFieldClickListener() {
  * Select Scene
  */
 function OKButtonInSelectClickListener() {
+    if (gs.blocked) return;
     sceneManager.showScene('fight');
-    let monsters: [Monster, Monster] = [
-        selectMonsterScene.getChosenMonster(),
-        gs.map.getCell(gs.getCurrent().getCoordinates()).monster
-    ]
+    let monsters: [Monster, Monster] = [selectMonsterScene.getChosenMonster(), gs.map.getCell(gs.getCurrent().getCoordinates()).monster]
     fightScene.setMonsters(monsters);
     fightScene.render();
     fightScene.update();
