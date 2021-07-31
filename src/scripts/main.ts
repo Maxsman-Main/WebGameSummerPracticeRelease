@@ -12,12 +12,14 @@ import {I2DCoordinates} from "./interfaces";
 import {Monster} from "./creatures/monster";
 import {Fight} from "./logic/fight";
 import {BossCell} from "./map/cell";
+import {FightAI} from "./logic/fightAI";
 
 /* Global variables */
 const DEFAULT_START_AVAILABLE_MOVES = 5;
 const DEFAULT_PLAYER_1_POS: [number, number] = [0, 0];
 const DEFAULT_PLAYER_2_POS: [number, number] = [0, 4];
 const DEFAULT_MAP_SIZE: [number, number] = [5, 5];
+const EnemyAI = new FightAI(); 
 let gs: GameState = null;
 
 function initGS() {
@@ -125,14 +127,25 @@ function NESZButtonInFightClickListener() {
     gs.fight.attackCurrent();
     fightScene.shakeMonster(gs.fight.defenseMonster);
     if (!fightFinishCheck()) {
-        gs.fight.swap();
+        if(!gs.fight.defenseMonster.looted){
+            EnemyAI.useAI(gs.fight);
+            fightScene.shakeMonster(gs.fight.currentMonster);
+        }
+        else{
+            gs.fight.swap();
+        }
         fightScene.update();
     }
 }
 function NESXButtonInFightClickListener() {
     if (gs.blocked) return;
     gs.fight.defendCurrent();
-    gs.fight.swap();
+    if(!gs.fight.defenseMonster.looted){
+        EnemyAI.useAI(gs.fight);
+    }
+    else{
+        gs.fight.swap();
+    }
     fightScene.update();
 }
 
