@@ -18,7 +18,7 @@ export class GameState {
         this.player2 = player2;
         this.currentPlayer = player;
         this.map = map;
-        this.moveManager = new MoveManager(this.map, this.player);
+        this.moveManager = new MoveManager(this.map);
         this.fight = null;
         this.blocked = false;
     }

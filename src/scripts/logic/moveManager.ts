@@ -7,7 +7,7 @@ export class MoveManager {
 
     private map: Map;
 
-    constructor(map: Map, player: Player) {
+    constructor(map: Map) {
         this.map = map;
     }
 
